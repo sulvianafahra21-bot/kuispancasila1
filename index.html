@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Belajar Pancasila Interaktif</title>
+  <style>
+    /* Reset & Dasar */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header Website */
+    header {
+      background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin-bottom: 5px;
+      font-size: 28px;
+    }
+    header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* Tata Letak Utama (Flexbox) */
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 30px auto;
+      gap: 25px;
+      padding: 0 20px;
+    }
+
+    /* Sisi Kiri: Konten Utama */
+    .main-content {
+      flex: 7;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .main-content h2 {
+      color: #b71c1c;
+      margin-bottom: 15px;
+    }
+    .main-content p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    /* Sisi Kanan: Sidebar untuk Kuis */
+    .sidebar {
+      flex: 3;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      height: fit-content;
+    }
+    .sidebar h3 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 18px;
+      border-bottom: 2px solid #f4f7f6;
+      padding-bottom: 10px;
+    }
+
+    /* Pengaturan Bingkai Kuis (Iframe) */
+    iframe {
+      width: 100%;
+      height: 720px; /* Tinggi disesuaikan agar pas tanpa scroll internal */
+      border: none;
+      border-radius: 6px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      background-color: #1a1a2e;
+      color: #888;
+      font-size: 13px;
+    }
+
+    /* Responsif: Layar HP / Tablet Sempit */
+    @media (max-width: 850px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Portal Edukasi Kewarganegaraan</h1>
+    <p>Media Pembelajaran Pancasila Interaktif & Menyenangkan</p>
+  </header>
+
+  <div class="container">
+    <!-- KONTEN UTAMA WEBSITE -->
+    <div class="main-content">
+      <h2>Pentingnya Memahami Nilai-Nilai Pancasila</h2>
+      <p>Pancasila bukan sekadar hafalan, melainkan fondasi utama dalam kehidupan berbangsa dan bernegara di Indonesia. Memahami Pancasila sejak dini membantu kita untuk tetap bersatu di tengah keberagaman budaya, ras, dan agama.</p>
+      <p>Melalui portal ini, kami menyediakan ruang belajar yang interaktif bagi siapa saja yang ingin menguji kembali pengetahuan dasar mereka mengenai poin-poin penting dalam Pancasila.</p>
+      <br>
+      <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 15px;">
+      <p style="font-style: italic; color: #666;">Petunjuk: Lihat kolom di bagian kanan halaman ini (atau scroll ke paling bawah jika Anda menggunakan handphone) untuk mencoba kuis pilihan ganda yang sudah kami sediakan.</p>
+    </div>
+
+    <!-- SIDEBAR TEMPAT KUIS JALAN -->
+    <div class="sidebar">
+      <h3>Uji Kemampuan Anda</h3>
+      
+      <!-- Menggunakan Link Resmi Google Apps Script Anda -->
+      <iframe src="https://script.google.com/macros/s/AKfycbxYRuMMfzy6V21Ksh1_rwa9F-tM3D7_EtZhvSX35wgFS3_8IA6hXwvt-tLxmTrim06UnQ/exec"></iframe>
+      
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Portal Pancasila Interaktif. Di-host gratis melalui GitHub Pages.
+  </footer>
+
+</body>
+</html>
