@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Belajar Pancasila Interaktif</title>
+  <title>Aplikasi Edukasi Pancasila</title>
   <style>
-    /* Reset & Dasar */
+    /* Reset Dasar */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,132 +13,280 @@
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7f6;
+      background-color: #f8f9fa;
       color: #333;
-      line-height: 1.6;
-    }
-
-    /* Header Website */
-    header {
-      background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    header h1 {
-      margin-bottom: 5px;
-      font-size: 28px;
-    }
-    header p {
-      font-size: 14px;
-      opacity: 0.9;
-    }
-
-    /* Tata Letak Utama (Flexbox) */
-    .container {
       display: flex;
-      max-width: 1200px;
-      margin: 30px auto;
-      gap: 25px;
-      padding: 0 20px;
+      height: 100vh;
+      overflow: hidden; /* Mencegah double scrollbar di halaman utama */
     }
 
-    /* Sisi Kiri: Konten Utama */
+    /* BARU: SIDEBAR DI SISI KIRI */
+    .sidebar {
+      width: 260px;
+      background-color: #1a1a2e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    /* Logo / Judul Web di Atas Sidebar */
+    .sidebar-brand {
+      padding: 25px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      background-color: #161626;
+      border-bottom: 1px solid #25253b;
+      letter-spacing: 0.5px;
+    }
+
+    /* Menu Navigasi */
+    .sidebar-menu {
+      list-style: none;
+      padding: 15px 0;
+      flex: 1;
+    }
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      color: #b0b3b8;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    /* Efek Hover Menu */
+    .sidebar-menu a:hover {
+      background-color: #25253b;
+      color: #ffffff;
+    }
+    /* Menu Aktif saat Diklik */
+    .sidebar-menu li.active a {
+      background-color: #2e2e4f;
+      color: #ffffff;
+      border-left: 4px solid #d32f2f; /* Garis indikator merah */
+    }
+
+    /* Info Akun / Footer Kecil di Bawah Sidebar */
+    .sidebar-footer {
+      padding: 15px 20px;
+      background-color: #161626;
+      font-size: 12px;
+      color: #6c757d;
+      text-align: center;
+    }
+
+    /* KOLOM KANAN: KONTEN UTAMA */
     .main-content {
-      flex: 7;
-      background-color: white;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; /* Scroll hanya di sisi konten saja */
+    }
+
+    /* Topbar / Header di Sisi Kanan */
+    .topbar {
+      background-color: #ffffff;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      border-bottom: 1px solid #eef0f3;
+    }
+    .topbar h2 {
+      font-size: 20px;
+      color: #495057;
+    }
+
+    /* Area Wadah Konten Dinamis */
+    .content-body {
+      padding: 30px;
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Pengaturan Sembunyikan/Munculkan Konten */
+    .content-section {
+      display: none; /* Default disembunyikan */
+      animation: fadeIn 0.4s ease;
+    }
+    .content-section.active {
+      display: block; /* Muncul jika aktif */
+    }
+
+    /* Desain Kartu Konten */
+    .card {
+      background-color: #ffffff;
       padding: 30px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+      border: 1px solid #eef0f3;
     }
-    .main-content h2 {
-      color: #b71c1c;
+    .card h3 {
+      color: #d32f2f;
       margin-bottom: 15px;
     }
-    .main-content p {
+    .card p {
+      line-height: 1.7;
+      color: #495057;
       margin-bottom: 15px;
-      text-align: justify;
     }
 
-    /* Sisi Kanan: Sidebar untuk Kuis */
-    .sidebar {
-      flex: 3;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      height: fit-content;
-    }
-    .sidebar h3 {
-      text-align: center;
-      margin-bottom: 15px;
-      color: #333;
-      font-size: 18px;
-      border-bottom: 2px solid #f4f7f6;
-      padding-bottom: 10px;
-    }
-
-    /* Pengaturan Bingkai Kuis (Iframe) */
+    /* Iframe Kuis dioptimalkan penuh */
     iframe {
       width: 100%;
-      height: 720px; /* Tinggi disesuaikan agar pas tanpa scroll internal */
+      height: 750px;
       border: none;
       border-radius: 6px;
     }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-      background-color: #1a1a2e;
-      color: #888;
-      font-size: 13px;
+    /* Efek Animasi Transisi Halus */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsif: Layar HP / Tablet Sempit */
-    @media (max-width: 850px) {
-      .container {
+    /* Responsif untuk Layar HP */
+    @media (max-width: 768px) {
+      body {
         flex-direction: column;
+        overflow: auto;
       }
       .sidebar {
         width: 100%;
+        height: auto;
+      }
+      .sidebar-brand {
+        padding: 15px;
+      }
+      .sidebar-menu {
+        display: flex;
+        padding: 0;
+        overflow-x: auto;
+      }
+      .sidebar-menu li {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+      .sidebar-menu a {
+        padding: 12px 15px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+      }
+      .sidebar-menu li.active a {
+        background-color: #2e2e4f;
+        border-left: none;
+        border-bottom: 3px solid #d32f2f;
+      }
+      .topbar {
+        display: none; /* Sembunyikan topbar di HP agar hemat ruang */
+      }
+      .content-body {
+        padding: 15px;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Portal Edukasi Kewarganegaraan</h1>
-    <p>Media Pembelajaran Pancasila Interaktif & Menyenangkan</p>
-  </header>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      EduPancasila v1.0
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li class="menu-item active" data-target="beranda"><a href="#">🏠 Beranda</a></li>
+      <li class="menu-item" data-target="kuis"><a href="#">📝 Kuis Interaktif</a></li>
+      <li class="menu-item" data-target="materi"><a href="#">📚 Materi Pembelajaran</a></li>
+      <li class="menu-item" data-target="tentang"><a href="#">ℹ️ Tentang Aplikasi</a></li>
+    </ul>
 
-  <div class="container">
-    <!-- KONTEN UTAMA WEBSITE -->
-    <div class="main-content">
-      <h2>Pentingnya Memahami Nilai-Nilai Pancasila</h2>
-      <p>Pancasila bukan sekadar hafalan, melainkan fondasi utama dalam kehidupan berbangsa dan bernegara di Indonesia. Memahami Pancasila sejak dini membantu kita untuk tetap bersatu di tengah keberagaman budaya, ras, dan agama.</p>
-      <p>Melalui portal ini, kami menyediakan ruang belajar yang interaktif bagi siapa saja yang ingin menguji kembali pengetahuan dasar mereka mengenai poin-poin penting dalam Pancasila.</p>
-      <br>
-      <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 15px;">
-      <p style="font-style: italic; color: #666;">Petunjuk: Lihat kolom di bagian kanan halaman ini (atau scroll ke paling bawah jika Anda menggunakan handphone) untuk mencoba kuis pilihan ganda yang sudah kami sediakan.</p>
+    <div class="sidebar-footer">
+      &copy; 2026 Sulviana Fahra
+    </div>
+  </aside>
+
+  <main class="main-content">
+    
+    <div class="topbar">
+      <h2 id="page-title">Beranda</h2>
     </div>
 
-    <!-- SIDEBAR TEMPAT KUIS JALAN -->
-    <div class="sidebar">
-      <h3>Uji Kemampuan Anda</h3>
+    <div class="content-body">
       
-      <!-- Menggunakan Link Resmi Google Apps Script Anda -->
-      <iframe src="https://script.google.com/macros/s/AKfycbxYRuMMfzy6V21Ksh1_rwa9F-tM3D7_EtZhvSX35wgFS3_8IA6hXwvt-tLxmTrim06UnQ/exec"></iframe>
-      
-    </div>
-  </div>
+      <section id="beranda" class="content-section active">
+        <div class="card">
+          <h3>Selamat Datang di Platform Edukasi</h3>
+          <p>Halo! Ini adalah ruang digital terintegrasi yang dirancang untuk mempermudah proses belajar mengajar secara interaktif. Di sini, Anda dapat mengakses ringkasan materi penting sekaligus menguji pemahaman secara langsung.</p>
+          <p>Silakan gunakan menu navigasi di panel sebelah kiri untuk beralih ke halaman kuis atau membaca modul belajar yang tersedia.</p>
+        </div>
+      </section>
 
-  <footer>
-    &copy; 2026 Portal Pancasila Interaktif. Di-host gratis melalui GitHub Pages.
-  </footer>
+      <section id="kuis" class="content-section">
+        <iframe src="https://script.google.com/macros/s/AKfycbxYRuMMfzy6V21Ksh1_rwa9F-tM3D7_EtZhvSX35wgFS3_8IA6hXwvt-tLxmTrim06UnQ/exec"></iframe>
+      </section>
+
+      <section id="materi" class="content-section">
+        <div class="card">
+          <h3>E-Modul: Memahami Arti Pancasila</h3>
+          <p><strong>1. Ketuhanan Yang Maha Esa:</strong> Menekankan pada toleransi antarumat beragama di Indonesia.</p>
+          <p><strong>2. Kemanusiaan yang Adil dan Beradab:</strong> Menghargai hak asasi manusia dan menyuarakan tenggang rasa.</p>
+          <p><strong>3. Persatuan Indonesia:</strong> Mengutamakan kepentingan bersama di atas golongan demi menjaga keutuhan NKRI.</p>
+          <p><em>Materi lengkap lainnya akan diperbarui secara berkala oleh admin.</em></p>
+        </div>
+      </section>
+
+      <section id="tentang" class="content-section">
+        <div class="card">
+          <h3>Tentang Aplikasi</h3>
+          <p>Aplikasi ini dibangun menggunakan teknologi web statis modern dengan integrasi serverless melalui Google Apps Script. Keunggulan dari sistem ini adalah performa yang sangat cepat, ringan, serta efisiensi biaya perawatan hosting karena memanfaatkan infrastruktur awan gratis dari GitHub dan Google.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // Mengambil semua elemen menu dan semua elemen section konten
+    const menuItems = document.querySelectorAll('.menu-item');
+    const sections = document.querySelectorAll('.content-section');
+    const pageTitle = document.getElementById('page-title');
+
+    // Menambahkan fungsi deteksi klik pada setiap menu di sidebar
+    menuItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault(); // Mencegah reload halaman
+
+        // 1. Ubah status menu aktif di sidebar
+        menuItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+
+        // 2. Ambil ID target dari menu yang diklik
+        const targetId = this.getAttribute('data-target');
+
+        // 3. Sembunyikan semua konten, lalu munculkan konten yang sesuai target
+        sections.forEach(section => {
+          section.classList.remove('active');
+          if(section.getAttribute('id') === targetId) {
+            section.classList.add('active');
+          }
+        });
+
+        // 4. Ubah teks judul di Topbar atas sesuai nama menu yang diklik
+        const menuText = this.innerText.replace(/[^\w\s]/g, '').trim(); // Menghapus emoji untuk judul topbar
+        pageTitle.innerText = menuText;
+      });
+    });
+  </script>
 
 </body>
 </html>
