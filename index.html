@@ -200,7 +200,7 @@
 
   <aside class="sidebar">
     <div class="sidebar-brand">
-      Quiz Dasar Pancasila
+      EduPancasila v1.0
     </div>
     
     <ul class="sidebar-menu">
@@ -222,3 +222,71 @@
     </div>
 
     <div class="content-body">
+      
+      <section id="beranda" class="content-section active">
+        <div class="card">
+          <h3>Selamat Datang di Platform Edukasi</h3>
+          <p>Halo! Ini adalah ruang digital terintegrasi yang dirancang untuk mempermudah proses belajar mengajar secara interaktif. Di sini, Anda dapat mengakses ringkasan materi penting sekaligus menguji pemahaman secara langsung.</p>
+          <p>Silakan gunakan menu navigasi di panel sebelah kiri untuk beralih ke halaman kuis atau membaca modul belajar yang tersedia.</p>
+        </div>
+      </section>
+
+      <section id="kuis" class="content-section">
+        <iframe src="https://script.google.com/macros/s/AKfycbySCdhR1Xe-iwxZZoWQjhKwZNjg59Lt8oLjUrdrJ7Dywl_R4s0H9iXwL618Z0wfvUGu/exec"></iframe>
+      </section>
+
+      <section id="materi" class="content-section">
+        <div class="card">
+          <h3>E-Modul: Memahami Arti Pancasila</h3>
+          <p><strong>1. Ketuhanan Yang Maha Esa:</strong> Menekankan pada toleransi antarumat beragama di Indonesia.</p>
+          <p><strong>2. Kemanusiaan yang Adil dan Beradab:</strong> Menghargai hak asasi manusia dan menyuarakan tenggang rasa.</p>
+          <p><strong>3. Persatuan Indonesia:</strong> Mengutamakan kepentingan bersama di atas golongan demi menjaga keutuhan NKRI.</p>
+          <p><em>Materi lengkap lainnya akan diperbarui secara berkala oleh admin.</em></p>
+        </div>
+      </section>
+
+      <section id="tentang" class="content-section">
+        <div class="card">
+          <h3>Tentang Aplikasi</h3>
+          <p>Aplikasi ini dibangun menggunakan teknologi web statis modern dengan integrasi serverless melalui Google Apps Script. Keunggulan dari sistem ini adalah performa yang sangat cepat, ringan, serta efisiensi biaya perawatan hosting karena memanfaatkan infrastruktur awan gratis dari GitHub dan Google.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // Mengambil semua elemen menu dan semua elemen section konten
+    const menuItems = document.querySelectorAll('.menu-item');
+    const sections = document.querySelectorAll('.content-section');
+    const pageTitle = document.getElementById('page-title');
+
+    // Menambahkan fungsi deteksi klik pada setiap menu di sidebar
+    menuItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault(); // Mencegah reload halaman
+
+        // 1. Ubah status menu aktif di sidebar
+        menuItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+
+        // 2. Ambil ID target dari menu yang diklik
+        const targetId = this.getAttribute('data-target');
+
+        // 3. Sembunyikan semua konten, lalu munculkan konten yang sesuai target
+        sections.forEach(section => {
+          section.classList.remove('active');
+          if(section.getAttribute('id') === targetId) {
+            section.classList.add('active');
+          }
+        });
+
+        // 4. Ubah teks judul di Topbar atas sesuai nama menu yang diklik
+        const menuText = this.innerText.replace(/[^\w\s]/g, '').trim(); // Menghapus emoji untuk judul topbar
+        pageTitle.innerText = menuText;
+      });
+    });
+  </script>
+
+</body>
+</html>
