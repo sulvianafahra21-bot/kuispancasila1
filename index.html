@@ -4,12 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - EduPancasila</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Deklarasi Warna Tema Biru --- */
+        :root {
+            --primary-blue: #0A2540;
+            --secondary-blue: #1164A3;
+            --light-blue: #E0F2FE;
+            --white: #ffffff;
+        }
+
+        /* --- Reset Dasar --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* --- Pengaturan Background Halaman Login --- */
+        body.login-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--primary-blue);
+        }
+
+        /* --- Kotak Form Login --- */
+        .login-container {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            width: 350px;
+        }
+
+        .login-container h2 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .login-container p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        /* --- Input Teks & Password --- */
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .login-container input:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 5px rgba(17, 100, 163, 0.3);
+        }
+
+        /* --- Tombol Masuk --- */
+        .btn-blue {
+            background-color: var(--secondary-blue);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-blue:hover {
+            background-color: var(--primary-blue);
+        }
+    </style>
 </head>
 <body class="login-body">
     <div class="login-container">
         <h2>Portal Login</h2>
         <p>Silakan masuk untuk memulai kuis.</p>
+        
         <form action="dashboard.html" method="GET">
             <input type="text" placeholder="Masukkan Nama Anda" required>
             <input type="password" placeholder="Masukkan Password" required>
