@@ -5,23 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - EduPancasila</title>
     <style>
-        /* --- Deklarasi Warna Tema Biru --- */
         :root {
             --primary-blue: #0A2540;
             --secondary-blue: #1164A3;
             --light-blue: #E0F2FE;
             --white: #ffffff;
+            --danger: #ef4444;
         }
 
-        /* --- Reset Dasar --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-        /* --- Pengaturan Background Halaman Login --- */
         body.login-body {
             display: flex;
             justify-content: center;
@@ -30,75 +23,95 @@
             background-color: var(--primary-blue);
         }
 
-        /* --- Kotak Form Login --- */
         .login-container {
             background: var(--white);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             text-align: center;
-            width: 350px;
+            width: 380px;
+            transition: all 0.3s ease;
         }
 
-        .login-container h2 {
-            color: var(--primary-blue);
-            margin-bottom: 10px;
-        }
+        .login-container h2 { color: var(--primary-blue); margin-bottom: 8px; font-weight: 700; }
+        .login-container p { color: #64748b; margin-bottom: 25px; font-size: 14px; line-height: 1.4; }
 
-        .login-container p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        /* --- Input Teks --- */
+        .input-group { position: relative; margin: 12px 0; }
+        
         .login-container input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            width: 100%; padding: 14px;
+            border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;
+            transition: all 0.2s;
         }
 
         .login-container input:focus {
-            outline: none;
-            border-color: var(--secondary-blue);
-            box-shadow: 0 0 5px rgba(17, 100, 163, 0.3);
+            outline: none; border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(17, 100, 163, 0.15);
         }
 
-        /* --- Tombol Masuk --- */
         .btn-blue {
-            background-color: var(--secondary-blue);
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            background-color: var(--secondary-blue); color: white; padding: 14px;
+            border: none; border-radius: 8px; cursor: pointer; width: 100%;
+            margin-top: 15px; font-size: 15px; font-weight: 600;
+            transition: background-color 0.2s;
         }
 
-        .btn-blue:hover {
-            background-color: var(--primary-blue);
+        .btn-blue:hover { background-color: #0d5287; }
+        
+        .error-message {
+            color: var(--danger); font-size: 13px; text-align: left;
+            margin-top: 5px; display: none; font-weight: 500;
         }
     </style>
 </head>
 <body class="login-body">
     <div class="login-container">
         <h2>Portal Login</h2>
-        <p>Silakan isi data diri untuk memulai kuis.</p>
+        <p id="login-instruction">Silakan masukkan password akses portal kuis.</p>
         
-        <form action="dashboard.html" method="GET">
-            <input type="text" name="username" placeholder="Masukkan Nama Anda" required>
-            
-            <input type="text" name="nim" placeholder="Masukkan NIM Anda" required>
-            
-            <button type="submit" class="btn-blue">Masuk</button>
+        <!-- TAHAP 1: INPUT PASSWORD UTAMA -->
+        <div id="phase-password">
+            <div class="input-group">
+                <input type="password" id="access-password" placeholder="Masukkan Password Akses" required>
+                <div id="password-error" class="error-message">⚠️ Password salah! Hubungi pemilik web.</div>
+            </div>
+            <button type="button" onclick="verifyAccessPassword()" class="btn-blue">Verifikasi Gerbang Akses</button>
+        </div>
+
+        <!-- TAHAP 2: INPUT DATA DIRI (MUNCUL SETELAH TAHAP 1 LOLOS) -->
+        <form action="dashboard.html" method="GET" id="phase-identity" style="display: none;">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Masukkan Nama Lengkap Anda" required>
+            </div>
+            <div class="input-group">
+                <input type="text" name="nim" placeholder="Masukkan NIM Anda" required>
+            </div>
+            <button type="submit" class="btn-blue">Masuk ke Dashboard</button>
         </form>
     </div>
+
+    <script>
+        function verifyAccessPassword() {
+            const passwordInput = document.getElementById('access-password').value;
+            const errorElement = document.getElementById('password-error');
+            const phasePassword = document.getElementById('phase-password');
+            const phaseIdentity = document.getElementById('phase-identity');
+            const instruction = document.getElementById('login-instruction');
+
+            // Proteksi password sesuai instruksi Anda
+            if (passwordInput === "kuispancasila") {
+                errorElement.style.display = "none";
+                phasePassword.style.display = "none";
+                
+                // Tampilkan form pengisian identitas peserta
+                phaseIdentity.style.display = "block";
+                instruction.innerText = "Password benar! Sekarang, silakan lengkapi identitas Anda untuk mendata nilai kuis.";
+                instruction.style.color = "#10b981";
+            } else {
+                errorElement.style.display = "block";
+                document.getElementById('access-password').focus();
+            }
+        }
+    </script>
 </body>
 </html>
