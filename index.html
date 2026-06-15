@@ -51,7 +51,7 @@
             font-size: 14px;
         }
 
-        /* --- Input Teks & Password --- */
+        /* --- Input Teks --- */
         .login-container input {
             width: 100%;
             padding: 12px;
@@ -90,11 +90,13 @@
 <body class="login-body">
     <div class="login-container">
         <h2>Portal Login</h2>
-        <p>Silakan masuk untuk memulai kuis.</p>
+        <p>Silakan isi data diri untuk memulai kuis.</p>
         
         <form action="dashboard.html" method="GET">
-            <input type="text" placeholder="akb" required>
-            <input type="password" placeholder="kuispancasila" required>
+            <input type="text" name="username" placeholder="Masukkan Nama Anda" required>
+            
+            <input type="text" name="nim" placeholder="Masukkan NIM Anda" required>
+            
             <button type="submit" class="btn-blue">Masuk</button>
         </form>
     </div>
