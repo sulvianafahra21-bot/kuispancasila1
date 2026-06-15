@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sulviana Fahra Dashboard</title>
+    <title>EduPancasila Dashboard</title>
     <style>
         /* --- PREMIUM MODERN BLUE THEME --- */
         :root {
@@ -40,7 +40,7 @@
             padding: 4px 8px; border-radius: 6px; font-size: 14px; margin-right: 12px; font-weight: bold;
         }
 
-        /* --- BAGIAN PROFIL SIDEBAR BARU --- */
+        /* --- FIXED OWNER PROFILE SIDEBAR (SULVIANA FAHRA) --- */
         .sidebar-profile {
             text-align: center;
             padding: 25px 20px;
@@ -95,10 +95,12 @@
         }
         
         .top-header h1 { font-size: 22px; font-weight: bold; color: var(--text-main); }
+        .current-session-user { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+        .current-session-user strong { color: var(--primary-blue); }
         
         .logout-btn { 
             text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 600;
-            padding: 8px 16px; border-radius: 8px; transition: all 0.2s;
+            padding: 8px 16px; border-radius: 8px; transition: all 0.2s; display: inline-block; margin-left: 15px;
         }
         .logout-btn:hover { color: var(--danger-color); background: #fef2f2; }
 
@@ -139,15 +141,16 @@
 </head>
 <body>
 
+    <!-- SIDEBAR KIRI (TETAP ATAS NAMA SULVIANA FAHRA) -->
     <div class="sidebar">
         <div class="logo-container">
-            <span class="logo-icon">ID</span> Sulviana Fahra
+            <span class="logo-icon">ID</span> EduPancasila
         </div>
 
+        <!-- PROFIL PEMILIK WEB (SULVIANA FAHRA - TETAP) -->
         <div class="sidebar-profile">
-            <h1 id="sidebar-name">Sulviana Fahra</h1>
+            <h3>Sulviana Fahra</h3>
             <p>Terima kasih telah berkunjung ke web saya</p>
-            
             <img src="foto-saya.jpg" alt="Foto Profil" class="profile-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         </div>
 
@@ -161,12 +164,18 @@
         </div>
     </div>
 
+    <!-- AREA KONTEN KANAN -->
     <div class="main-content">
         <header class="top-header">
             <h1 id="page-title">Selamat Datang</h1>
-            <a href="index.html" class="logout-btn">Keluar 🚪</a>
+            <div style="display: flex; align-items: center;">
+                <!-- Penanda Akun Pengunjung yang Sedang Aktif Mengerjakan -->
+                <div class="current-session-user">Peserta Aktif: <strong id="session-name">Guest</strong></div>
+                <a href="index.html" class="logout-btn">Keluar 🚪</a>
+            </div>
         </header>
 
+        <!-- HALAMAN BERANDA -->
         <section id="beranda" class="content-section">
             <div class="welcome-banner">
                 <h2>Selamat Datang di Platform Edukasi</h2>
@@ -183,6 +192,7 @@
             </div>
         </section>
 
+        <!-- HALAMAN KUIS -->
         <section id="kuis" class="content-section" style="display: none;">
             <div id="quiz-container" class="card">
                 <div style="color: var(--text-muted); margin-bottom: 15px; font-weight: bold;" id="question-number">Soal 1 dari 5</div>
@@ -199,6 +209,7 @@
             </div>
         </section>
 
+        <!-- HALAMAN REKAP NILAI -->
         <section id="rekap" class="content-section" style="display: none;">
             <div class="card">
                 <h2 style="margin-bottom: 15px;">📋 Rekapitulasi Nilai Peserta</h2>
@@ -221,13 +232,13 @@
     </div>
 
     <script>
-        // Mengambil Nama dan NIM dari Halaman Login
+        // Mengambil Nama dan NIM dari Halaman Login secara dinamis untuk pengisian kuis
         const urlParams = new URLSearchParams(window.location.search);
-        const currentActiveUser = urlParams.get('username') || 'Sulviana Fahra';
+        const currentActiveUser = urlParams.get('username') || 'Guest';
         const currentNIM = urlParams.get('nim') || '-';
         
-        // Memasukkan nama ke dalam Profil Sidebar
-        document.getElementById('sidebar-name').innerText = currentActiveUser;
+        // Tampilkan nama pengerja aktif di pojok header atas
+        document.getElementById('session-name').innerText = `${currentActiveUser} (${currentNIM})`;
 
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
@@ -307,8 +318,8 @@
             if(history.length === 0) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada data</td></tr>`; return; }
             
             history.reverse().forEach((item, i) => {
-                let isMe = item.name === currentActiveUser ? "font-weight:bold; color:var(--primary-blue);" : "";
-                tbody.innerHTML += `<tr><td>${i + 1}</td><td style="${isMe}">${item.name}</td><td>${item.nim}</td><td>${item.date}</td><td><span class="badge-score">${item.score}</span></td></tr>`;
+                let isCurrent = item.name === currentActiveUser && item.nim === currentNIM ? "background-color: #f0fdf4; font-weight: bold;" : "";
+                tbody.innerHTML += `<tr style="${isCurrent}"><td>${i + 1}</td><td>${item.name}</td><td>${item.nim}</td><td>${item.date}</td><td><span class="badge-score">${item.score}</span></td></tr>`;
             });
         }
     </script>
