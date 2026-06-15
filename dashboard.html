@@ -7,166 +7,193 @@
     <style>
         /* --- TEMA WARNA BIRU --- */
         :root {
-            --primary-blue: #0A2540;
-            --secondary-blue: #1164A3;
-            --light-blue: #E0F2FE;
+            --sidebar-bg: #1e293b; /* Biru sangat gelap untuk sidebar */
+            --sidebar-hover: #334155;
+            --primary-blue: #2563eb; /* Biru terang untuk tombol dan banner */
+            --bg-light: #f8fafc; /* Latar belakang abu-abu sangat terang */
             --white: #ffffff;
-            --text-dark: #333;
+            --text-dark: #334155;
+            --text-gray: #64748b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-        body { display: flex; background-color: #f4f7f6; color: var(--text-dark); }
+        body { display: flex; background-color: var(--bg-light); color: var(--text-dark); }
 
-        /* --- SIDEBAR MENU --- */
+        /* --- SIDEBAR MENU (Persis seperti gambar) --- */
         .sidebar {
-            width: 250px; background-color: var(--primary-blue); color: white;
-            height: 100vh; padding: 20px 0; position: fixed;
+            width: 260px; background-color: var(--sidebar-bg); color: white;
+            height: 100vh; display: flex; flex-direction: column; position: fixed;
         }
-        .sidebar .logo { text-align: center; margin-bottom: 30px; font-size: 24px; }
-        .nav-menu { list-style: none; }
+        
+        .logo-container {
+            padding: 25px 20px; font-size: 20px; font-weight: bold;
+            display: flex; align-items: center; border-bottom: 1px solid #334155;
+        }
+        
+        .logo-icon {
+            background-color: var(--white); color: var(--sidebar-bg);
+            padding: 2px 6px; border-radius: 4px; font-size: 14px; margin-right: 10px;
+        }
+
+        .nav-menu { list-style: none; padding-top: 20px; flex-grow: 1; }
+        
         .nav-menu li a {
-            color: white; text-decoration: none; display: block;
-            padding: 15px 20px; border-left: 4px solid transparent; cursor: pointer;
+            color: #cbd5e1; text-decoration: none; display: flex; align-items: center;
+            padding: 15px 25px; cursor: pointer; font-size: 15px; border-left: 4px solid transparent;
         }
+        
         .nav-menu li a:hover, .nav-menu li a.active {
-            background-color: var(--secondary-blue); border-left: 4px solid var(--light-blue);
+            background-color: var(--sidebar-hover); color: white; border-left: 4px solid var(--primary-blue);
+        }
+        
+        .nav-icon { margin-right: 15px; font-size: 18px; }
+
+        .footer-text {
+            padding: 20px; font-size: 12px; color: #94a3b8; border-top: 1px solid #334155;
         }
 
         /* --- KONTEN UTAMA --- */
-        .main-content { margin-left: 250px; padding: 20px; width: 100%; min-height: 100vh; }
+        .main-content { margin-left: 260px; padding: 30px; width: 100%; min-height: 100vh; }
         
-        .top-header {
-            background-color: var(--white); padding: 15px 20px; border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px;
-            color: var(--primary-blue); border-bottom: 3px solid var(--secondary-blue);
+        .top-header { margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;}
+        
+        .top-header h1 { font-size: 24px; color: var(--primary-blue); }
+        .top-header .logout-btn { text-decoration: none; color: var(--text-gray); font-size: 14px; }
+        .top-header .logout-btn:hover { color: #ef4444; }
+
+        /* --- HALAMAN BERANDA (Banner & Info) --- */
+        .welcome-banner {
+            background-color: var(--primary-blue); color: white;
+            padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 25px;
         }
+        .welcome-banner h2 { font-size: 26px; margin-bottom: 15px; }
+        .welcome-banner p { font-size: 15px; line-height: 1.6; opacity: 0.9; }
 
-        /* --- KARTU (CARD) --- */
-        .card {
-            background: white; padding: 30px; border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;
+        .info-card {
+            background: white; padding: 35px 40px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-        .card h2 { color: var(--primary-blue); margin-bottom: 15px; }
+        .info-card h3 { font-size: 16px; margin-bottom: 15px; color: var(--text-dark); }
+        .info-card p { font-size: 14px; color: var(--text-gray); line-height: 1.6; }
 
-        .welcome-banner { background-color: var(--secondary-blue); color: white; padding: 30px; border-radius: 10px; }
-
-        /* --- GAYA UNTUK KUIS --- */
+        /* --- HALAMAN KUIS --- */
+        .quiz-card {
+            background: white; padding: 40px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .quiz-card h2 { color: var(--text-dark); margin-bottom: 25px; font-size: 20px; }
+        
         .options-grid button {
-            display: block; width: 100%; padding: 12px; margin: 10px 0;
-            background: var(--light-blue); border: 1px solid var(--secondary-blue);
-            border-radius: 5px; cursor: pointer; text-align: left; font-size: 16px;
-            transition: 0.2s;
+            display: block; width: 100%; padding: 15px 20px; margin: 12px 0;
+            background: var(--bg-light); border: 1px solid #cbd5e1;
+            border-radius: 8px; cursor: pointer; text-align: left; font-size: 15px;
+            transition: all 0.2s; color: var(--text-dark);
         }
-        .options-grid button:hover { background: var(--secondary-blue); color: white; }
-        .options-grid button:disabled { cursor: not-allowed; opacity: 0.7; }
-        .options-grid button.correct { background-color: #28a745; color: white; border-color: #28a745; }
-        .options-grid button.wrong { background-color: #dc3545; color: white; border-color: #dc3545; }
+        
+        .options-grid button:hover { border-color: var(--primary-blue); background-color: #eff6ff; }
+        .options-grid button:disabled { cursor: not-allowed; }
+        .options-grid button.correct { background-color: #22c55e; color: white; border-color: #22c55e; }
+        .options-grid button.wrong { background-color: #ef4444; color: white; border-color: #ef4444; }
 
         .btn-blue {
-            background-color: var(--secondary-blue); color: white; padding: 12px 20px;
-            border: none; border-radius: 5px; cursor: pointer; font-size: 16px;
-            margin-top: 20px; font-weight: bold;
+            background-color: var(--primary-blue); color: white; padding: 12px 25px;
+            border: none; border-radius: 6px; cursor: pointer; font-size: 15px;
+            margin-top: 25px; font-weight: 600;
         }
-        .btn-blue:hover { background-color: var(--primary-blue); }
-        
-        .score-display { font-size: 18px; line-height: 1.6; }
-        .score-display span { font-size: 24px; font-weight: bold; color: var(--secondary-blue); }
+        .btn-blue:hover { background-color: #1d4ed8; }
+
+        .score-display { font-size: 18px; line-height: 1.8; margin-top: 20px; }
+        .score-display span { font-size: 40px; font-weight: bold; color: var(--primary-blue); display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2 class="logo">EduPancasila</h2>
+        <div class="logo-container">
+            <span class="logo-icon">ID</span> EduPancasila
+        </div>
         <ul class="nav-menu">
-            <li><a onclick="showSection('beranda')" class="active" id="nav-beranda">Beranda</a></li>
-            <li><a onclick="showSection('kuis')" id="nav-kuis">Kuis Interaktif</a></li>
-            <li><a href="index.html">Keluar (Logout)</a></li>
+            <li><a onclick="showSection('beranda')" class="active" id="nav-beranda"><span class="nav-icon">🏠</span> Beranda</a></li>
+            <li><a onclick="showSection('kuis')" id="nav-kuis"><span class="nav-icon">📄</span> Kuis Interaktif</a></li>
+            <li><a href="#"><span class="nav-icon">📚</span> Materi Pembelajaran</a></li>
+            <li><a href="#"><span class="nav-icon">ℹ️</span> Tentang Aplikasi</a></li>
         </ul>
+        <div class="footer-text">
+            © 2026 Sulviana Fahra
+        </div>
     </div>
 
     <div class="main-content">
         <header class="top-header">
-            <h1>Sulviana Fahra</h1>
+            <h1 id="page-title">Sulviana Fahra</h1>
+            <a href="index.html" class="logout-btn">🚪 Keluar</a>
         </header>
 
         <section id="beranda" class="content-section">
             <div class="welcome-banner">
                 <h2>Selamat Datang di Platform Edukasi</h2>
-                <p>Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Silakan pilih menu Kuis Interaktif untuk memulai evaluasi.</p>
+                <p>Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Akses modul pembelajaran esensial dan uji pemahaman Anda secara langsung melalui kuis interaktif yang tersedia.</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>Gunakan Navigasi Menu:</h3>
+                <p>Pilih menu <strong>Kuis Interaktif</strong> untuk memulai evaluasi, atau masuk ke halaman <strong>Materi Pembelajaran</strong> untuk membaca ulasan detail mengenai butir sila dasar negara.</p>
             </div>
         </section>
 
         <section id="kuis" class="content-section" style="display: none;">
-            <div id="quiz-container" class="card">
-                <h3 style="color: gray; font-size: 14px; margin-bottom: 10px;" id="question-number">Soal 1 dari 5</h3>
+            
+            <div id="quiz-container" class="quiz-card">
+                <div style="color: var(--text-gray); font-size: 14px; margin-bottom: 15px; font-weight: bold;" id="question-number">Soal 1 dari 5</div>
                 <h2 id="question">Pertanyaan akan muncul di sini</h2>
                 <div id="options" class="options-grid">
                     </div>
-                <button id="next-btn" class="btn-blue" style="display: none;">Selanjutnya</button>
+                <button id="next-btn" class="btn-blue" style="display: none; float: right;">Selanjutnya ➡️</button>
+                <div style="clear: both;"></div>
             </div>
 
-            <div id="result-container" class="card" style="display: none; text-align: center;">
+            <div id="result-container" class="quiz-card" style="display: none; text-align: center;">
                 <h2>Rekapan Nilai Kuis</h2>
                 <div class="score-display" id="score-text"></div>
-                <button onclick="startQuiz()" class="btn-blue">Coba Lagi</button>
+                <button onclick="startQuiz()" class="btn-blue">Ulangi Kuis</button>
             </div>
+            
         </section>
     </div>
 
     <script>
-        // --- 1. MENGATUR PINDAH HALAMAN (Beranda <-> Kuis) ---
         function showSection(sectionId) {
             document.getElementById('beranda').style.display = 'none';
             document.getElementById('kuis').style.display = 'none';
             document.getElementById(sectionId).style.display = 'block';
 
-            // Mengatur warna menu aktif di sidebar
             document.getElementById('nav-beranda').classList.remove('active');
             document.getElementById('nav-kuis').classList.remove('active');
             document.getElementById('nav-' + sectionId).classList.add('active');
 
-            // Mulai kuis otomatis jika masuk ke halaman kuis
-            if(sectionId === 'kuis') {
+            // Ubah judul di atas sesuai halaman yang dibuka
+            if(sectionId === 'beranda') {
+                document.getElementById('page-title').innerText = "Sulviana Fahra";
+            } else if (sectionId === 'kuis') {
+                document.getElementById('page-title').innerText = "Evaluasi Kuis";
                 startQuiz();
             }
         }
 
-        // --- 2. DATA SOAL KUIS ---
-        // Anda bisa menambah soal di bawah ini sampai 25 soal. Pastikan formatnya sama!
+        // --- DATA SOAL KUIS (Tambahkan hingga 25 soal di sini) ---
         const questions = [
-            {
-                question: "Sila pertama Pancasila dilambangkan dengan...",
-                answers: ["Pohon Beringin", "Bintang", "Rantai", "Padi dan Kapas"],
-                correct: 1 // (Ingat: dihitung dari 0. Jadi 1 berarti "Bintang")
-            },
-            {
-                question: "Bunyi dari sila ketiga adalah...",
-                answers: ["Persatuan Indonesia", "Keadilan Sosial bagi Seluruh Rakyat Indonesia", "Ketuhanan Yang Maha Esa", "Kemanusiaan yang Adil dan Beradab"],
-                correct: 0
-            },
-            {
-                question: "Siapa tokoh yang pertama kali mengemukakan istilah Pancasila pada 1 Juni 1945?",
-                answers: ["Moh. Hatta", "Soepomo", "Ir. Soekarno", "Ahmad Subardjo"],
-                correct: 2
-            },
-            {
-                question: "Sikap saling menghormati antar umat beragama merupakan pengamalan Pancasila sila ke...",
-                answers: ["Satu", "Dua", "Tiga", "Empat"],
-                correct: 0
-            },
-            {
-                question: "Lembaga negara yang bertugas menjaga konstitusi dan ideologi Pancasila adalah...",
-                answers: ["KPK", "BPIP", "BMKG", "KPU"],
-                correct: 1
-            }
+            { question: "Sila pertama Pancasila dilambangkan dengan...", answers: ["Pohon Beringin", "Bintang", "Rantai", "Padi dan Kapas"], correct: 1 },
+            { question: "Bunyi dari sila ketiga adalah...", answers: ["Persatuan Indonesia", "Keadilan Sosial bagi Seluruh Rakyat Indonesia", "Ketuhanan Yang Maha Esa", "Kemanusiaan yang Adil dan Beradab"], correct: 0 },
+            { question: "Siapa tokoh yang pertama kali mengemukakan istilah Pancasila pada 1 Juni 1945?", answers: ["Moh. Hatta", "Soepomo", "Ir. Soekarno", "Ahmad Subardjo"], correct: 2 },
+            { question: "Sikap saling menghormati antar umat beragama merupakan pengamalan Pancasila sila ke...", answers: ["Satu", "Dua", "Tiga", "Empat"], correct: 0 },
+            { question: "Lembaga negara yang bertugas menjaga konstitusi dan ideologi Pancasila adalah...", answers: ["KPK", "BPIP", "BMKG", "KPU"], correct: 1 }
         ];
 
-        // Variabel penyimpan skor dan nomor soal
         let currentQuestionIndex = 0;
         let score = 0;
 
-        // --- 3. FUNGSI MENJALANKAN KUIS ---
         const questionEl = document.getElementById("question");
         const optionsEl = document.getElementById("options");
         const nextBtn = document.getElementById("next-btn");
@@ -175,23 +202,19 @@
         const numberEl = document.getElementById("question-number");
 
         function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            quizContainer.style.display = 'block';
-            resultContainer.style.display = 'none';
+            currentQuestionIndex = 0; score = 0;
+            quizContainer.style.display = 'block'; resultContainer.style.display = 'none';
             showQuestion();
         }
 
         function showQuestion() {
-            resetState();
-            let currentQuestion = questions[currentQuestionIndex];
+            nextBtn.style.display = "none";
+            while (optionsEl.firstChild) { optionsEl.removeChild(optionsEl.firstChild); }
             
-            // Tampilkan Info Nomor Soal
+            let currentQuestion = questions[currentQuestionIndex];
             numberEl.innerText = `Soal ${currentQuestionIndex + 1} dari ${questions.length}`;
-            // Tampilkan Pertanyaan
             questionEl.innerText = currentQuestion.question;
 
-            // Buat tombol untuk setiap pilihan jawaban
             currentQuestion.answers.forEach((answer, index) => {
                 const button = document.createElement("button");
                 button.innerText = answer;
@@ -200,55 +223,29 @@
             });
         }
 
-        function resetState() {
-            nextBtn.style.display = "none";
-            while (optionsEl.firstChild) {
-                optionsEl.removeChild(optionsEl.firstChild);
-            }
-        }
-
         function selectAnswer(selectedButton, selectedIndex, correctIndex) {
-            // Cek benar atau salah
             if (selectedIndex === correctIndex) {
-                score++;
-                selectedButton.classList.add("correct");
+                score++; selectedButton.classList.add("correct");
             } else {
                 selectedButton.classList.add("wrong");
-                // Tunjukkan jawaban yang benar jika menjawab salah
                 optionsEl.children[correctIndex].classList.add("correct");
             }
-            
-            // Kunci semua tombol agar tidak bisa diklik 2 kali
-            Array.from(optionsEl.children).forEach(button => {
-                button.disabled = true;
-            });
-
-            // Tampilkan tombol "Selanjutnya"
+            Array.from(optionsEl.children).forEach(button => { button.disabled = true; });
             nextBtn.style.display = "block";
         }
 
-        // Jika tombol "Selanjutnya" diklik
         nextBtn.addEventListener("click", () => {
             currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion(); // Tampil soal berikutnya
-            } else {
-                showResult(); // Tampil rekapan nilai jika soal habis
-            }
+            if (currentQuestionIndex < questions.length) { showQuestion(); } 
+            else { showResult(); }
         });
 
-        // --- 4. FUNGSI MENAMPILKAN HASIL AKHIR ---
         function showResult() {
-            quizContainer.style.display = 'none';
-            resultContainer.style.display = 'block';
-            
-            // Rumus Nilai = (Jawaban Benar / Total Soal) * 100
+            quizContainer.style.display = 'none'; resultContainer.style.display = 'block';
             let finalScore = Math.round((score / questions.length) * 100);
-            
             document.getElementById("score-text").innerHTML = 
-                `Anda menjawab benar <strong>${score}</strong> dari <strong>${questions.length}</strong> soal.<br><br>
-                 Nilai Akhir Anda:<br>
-                 <span>${finalScore}</span>`;
+                `Anda menjawab benar <strong>${score}</strong> dari <strong>${questions.length}</strong> soal.<br>
+                 Nilai Akhir Anda: <span>${finalScore}</span>`;
         }
     </script>
 </body>
