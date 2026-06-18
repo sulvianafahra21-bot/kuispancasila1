@@ -42,7 +42,7 @@
             <div class="row justify-content-center mb-5">
                 <div class="col-12 col-md-8 text-center card border-0 p-4 shadow-sm rounded-4" style="border-top: 6px solid var(--primary-red) !important;">
                     <h5 class="fw-bold mb-1">Rapor Evaluasi <span id="nama-rapor" class="text-danger">Peserta</span></h5>
-                    <p class="text-secondary small mb-3">Nilai hasil pengerjaan mandiri terintegrasi.</p>
+                    <p class="text-secondary small mb-3">Lihat nilai Anda dan bandingkan dengan peringkat kelas di bawah.</p>
                     
                     <div class="score-circle" id="mhs-score-circle">-</div>
                     
@@ -58,7 +58,7 @@
 
             <div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat Ujian Kelas</h5>
+                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat Kelas</h5>
                 </div>
 
                 <div class="card border-0 p-3 p-md-4 shadow-sm rounded-4">
@@ -99,31 +99,31 @@
     document.getElementById('link-rekap').href = "rekap.html" + query;
     document.getElementById('btn-re-kuis').href = "kuis.html" + query;
 
-    // Render Data Pribadi
-    const nilaiPersonal = localStorage.getItem('nilaiAkhirPancasila');
-    const benarPersonal = localStorage.getItem('totalBenar');
-    const totalPersonal = localStorage.getItem('totalSoal');
-    const curangPersonal = localStorage.getItem('curangPersonal') || 0;
+    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
 
-    if (nilaiPersonal !== null) {
-        document.getElementById('mhs-score-circle').innerText = nilaiPersonal;
-        if(nilaiPersonal >= 75) {
+    // --- REVISI UTAMA: RENDER DATA RAPOR PERSONAL BERDASARKAN NIM AKTIF ---
+    let dataKuisSaya = semuaPeserta.find(p => p.nim === nim);
+
+    if (dataKuisSaya) {
+        document.getElementById('mhs-score-circle').innerText = dataKuisSaya.nilai;
+        if(dataKuisSaya.nilai >= 75) {
             document.getElementById('mhs-status-text').innerText = "LULUS 🎉";
             document.getElementById('mhs-status-text').className = "fw-bold text-success";
         } else {
             document.getElementById('mhs-status-text').innerText = "Remedial (Di bawah 75)";
             document.getElementById('mhs-status-text').className = "fw-bold text-warning";
         }
-        document.getElementById('mhs-detail-text').innerText = `Jawaban Benar: ${benarPersonal} dari ${totalPersonal} soal.`;
-        document.getElementById('mhs-curang-text').innerText = curangPersonal > 0 ? `⚠️ Anda terdeteksi keluar dari halaman ujian sebanyak ${curangPersonal} kali!` : '✅ Bersih: Tidak terdeteksi pelanggaran pindah tab.';
+        document.getElementById('mhs-detail-text').innerText = `Jawaban Benar: ${dataKuisSaya.benar} dari ${dataKuisSaya.total} soal.`;
+        document.getElementById('mhs-curang-text').innerText = dataKuisSaya.curang > 0 ? `⚠️ Anda terdeteksi keluar dari halaman ujian sebanyak ${dataKuisSaya.curang} kali!` : '✅ Bersih: Tidak terdeteksi pelanggaran pindah tab.';
     } else {
         document.getElementById('mhs-score-circle').innerText = "-";
         document.getElementById('mhs-status-text').innerText = "Belum Mengikuti Ujian";
         document.getElementById('mhs-status-text').className = "fw-bold text-muted";
+        document.getElementById('mhs-detail-text').innerText = "";
+        document.getElementById('mhs-curang-text').innerText = "";
     }
 
     // Render Tabel Global
-    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
     const tbody = document.getElementById('tabel-admin-body');
     tbody.innerHTML = "";
     
@@ -133,7 +133,6 @@
         semuaPeserta.sort((a, b) => b.nilai - a.nilai);
 
         semuaPeserta.forEach((p, index) => {
-            // Evaluasi status kelulusan gabung kecurangan
             let totalCurang = p.curang || 0;
             let statusText = p.nilai >= 75 ? '<span class="badge bg-success-subtle text-success px-2 py-1">Lulus</span>' : '<span class="badge bg-danger-subtle text-danger px-2 py-1">Remedial</span>';
             
@@ -143,7 +142,7 @@
                 statusText += ` <span class="badge bg-light text-secondary px-2 py-1 d-block mt-1"><i class="fa-solid fa-shield-halved"></i> Jujur</span>`;
             }
             
-            let isCurrentUser = (p.nama === username && p.nim === nim) ? 'table-warning' : '';
+            let isCurrentUser = (p.nim === nim) ? 'table-warning' : '';
 
             let peringkat = index + 1;
             if(peringkat === 1) peringkat = `<i class="fa-solid fa-trophy text-warning fs-5"></i> 1`;
