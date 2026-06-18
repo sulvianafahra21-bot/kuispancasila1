@@ -4,323 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduPancasila Dashboard</title>
+    <!-- Memanggil Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Memanggil Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- PREMIUM MODERN BLUE THEME --- */
         :root {
-            --sidebar-bg: #0f172a;
-            --sidebar-hover: #1e293b;
-            --primary-blue: #2563eb;
-            --primary-gradient: linear-gradient(135deg, #1e40af, #3b82f6);
-            --bg-light: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --success-color: #10b981;
-            --danger-color: #ef4444;
+            --primary-red: #C8102E; /* Merah Bendera */
+            --gold-accent: #FFD700; /* Emas Garuda */
+            --dark-bg: #1A1A2E;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
-        body { display: flex; background-color: var(--bg-light); color: var(--text-main); min-height: 100vh; }
-
-        /* --- SIDEBAR MENU --- */
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Sidebar Styling */
         .sidebar {
-            width: 280px; background-color: var(--sidebar-bg); color: white;
-            height: 100vh; display: flex; flex-direction: column; position: fixed;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.05); z-index: 10;
+            background-color: var(--dark-bg);
+            min-height: 100vh;
+            color: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
-        
-        .logo-container {
-            padding: 25px 24px; font-size: 22px; font-weight: 700;
-            display: flex; align-items: center; border-bottom: 1px solid #1e293b;
+        .profile-section {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        
-        .logo-icon {
-            background: var(--primary-gradient); color: white;
-            padding: 4px 8px; border-radius: 6px; font-size: 14px; margin-right: 12px; font-weight: bold;
-        }
-
-        /* --- FIXED OWNER PROFILE SIDEBAR (SULVIANA FAHRA) --- */
-        .sidebar-profile {
-            text-align: center;
-            padding: 25px 20px;
-            border-bottom: 1px solid #1e293b;
-            background-color: #0b1120;
-        }
-
-        .sidebar-profile h3 {
-            font-size: 18px;
-            color: #ffffff;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .sidebar-profile p {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .profile-photo {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--primary-red);
             object-fit: cover;
-            border: 3px solid var(--primary-blue);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            background-color: #ffffff;
         }
-
-        .nav-menu { list-style: none; padding: 20px 16px; flex-grow: 1; }
-        .nav-menu li { margin-bottom: 8px; }
-        .nav-menu li a {
-            color: #94a3b8; text-decoration: none; display: flex; align-items: center;
-            padding: 14px 16px; cursor: pointer; font-size: 15px; font-weight: 500;
-            border-radius: 8px; transition: all 0.3s ease;
+        .nav-link {
+            color: #adb5bd;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
-        .nav-menu li a:hover, .nav-menu li a.active { background-color: var(--sidebar-hover); color: white; }
-        .nav-menu li a.active { background: var(--primary-gradient); color: white; }
-        .nav-icon { margin-right: 14px; font-size: 18px; }
-
-        .footer-text { padding: 24px; font-size: 12px; color: #64748b; border-top: 1px solid #1e293b; text-align: center; }
-
-        /* --- KONTEN UTAMA --- */
-        .main-content { margin-left: 280px; padding: 40px; width: calc(100% - 280px); min-height: 100vh; }
-        
-        .top-header { 
-            margin-bottom: 35px; display: flex; justify-content: space-between; 
-            align-items: center; background: var(--card-bg); padding: 20px 30px;
-            border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-red);
+            color: white;
         }
-        
-        .top-header h1 { font-size: 22px; font-weight: bold; color: var(--text-main); }
-        .current-session-user { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-        .current-session-user strong { color: var(--primary-blue); }
-        
-        .logout-btn { 
-            text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 600;
-            padding: 8px 16px; border-radius: 8px; transition: all 0.2s; display: inline-block; margin-left: 15px;
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
         }
-        .logout-btn:hover { color: var(--danger-color); background: #fef2f2; }
-
-        .card {
-            background: var(--card-bg); padding: 35px; border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); margin-bottom: 30px;
+        /* Card & Content Styling */
+        .welcome-card {
+            background: linear-gradient(135deg, var(--primary-red), #8B0000);
+            color: white;
+            border: none;
+            border-left: 5px solid var(--gold-accent);
         }
-
-        .welcome-banner {
-            background: var(--primary-gradient); color: white;
-            padding: 40px; border-radius: 20px; margin-bottom: 30px;
+        .stat-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
         }
-        .welcome-banner h2 { font-size: 26px; margin-bottom: 12px; }
-        .welcome-banner p { font-size: 15px; line-height: 1.6; opacity: 0.9; }
-
-        /* --- TABEL REKAP --- */
-        table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 15px; }
-        th { background-color: #f1f5f9; padding: 14px 20px; font-size: 14px; color: var(--text-muted); }
-        td { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; font-size: 15px; }
-        .badge-score { background-color: #eff6ff; color: var(--primary-blue); padding: 6px 12px; border-radius: 20px; font-weight: bold; }
-
-        /* --- KUIS --- */
-        .options-grid button {
-            display: block; width: 100%; padding: 16px; margin: 12px 0;
-            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; 
-            cursor: pointer; text-align: left; font-size: 16px; transition: 0.2s;
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
-        .options-grid button:hover { border-color: var(--primary-blue); background-color: #eff6ff; }
-        .options-grid button:disabled { cursor: not-allowed; }
-        .options-grid button.correct { background-color: #d1fae5; border-color: var(--success-color); color: #065f46; font-weight: bold; }
-        .options-grid button.wrong { background-color: #fee2e2; border-color: var(--danger-color); color: #991b1b; }
-
-        .btn-blue {
-            background: var(--primary-gradient); color: white; padding: 14px 30px;
-            border: none; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold;
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR KIRI (TETAP ATAS NAMA SULVIANA FAHRA) -->
-    <div class="sidebar">
-        <div class="logo-container">
-            <span class="logo-icon">ID</span> 
-        </div>
-
-        <!-- PROFIL PEMILIK WEB (SULVIANA FAHRA - TETAP) -->
-        <div class="sidebar-profile">
-            <h3>Sulviana Fahra</h3>
-            <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="profile-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
-        </div>
-
-        <ul class="nav-menu">
-            <li><a onclick="showSection('beranda')" class="active" id="nav-beranda"><span class="nav-icon">🏠</span> Beranda</a></li>
-            <li><a onclick="showSection('kuis')" id="nav-kuis"><span class="nav-icon">📄</span> Kuis Interaktif</a></li>
-            <li><a onclick="showSection('rekap')" id="nav-rekap"><span class="nav-icon">📊</span> Rekap Nilai</a></li>
-        </ul>
-        <div class="footer-text">
-            © 2026 Sulviana Fahra
-        </div>
-    </div>
-
-    <!-- AREA KONTEN KANAN -->
-    <div class="main-content">
-        <header class="top-header">
-            <h1 id="page-title">Selamat Datang</h1>
-            <div style="display: flex; align-items: center;">
-                <!-- Penanda Akun Pengunjung yang Sedang Aktif Mengerjakan -->
-                <div class="current-session-user">Peserta Aktif: <strong id="session-name">Guest</strong></div>
-                <a href="index.html" class="logout-btn">Keluar 🚪</a>
-            </div>
-        </header>
-
-        <!-- HALAMAN BERANDA -->
-        <section id="beranda" class="content-section">
-            <div class="welcome-banner">
-                <h2>Selamat Datang di Platform Edukasi</h2>
-                <p>Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Akses evaluasi secara langsung melalui kuis interaktif yang tersedia dan pantau perkembangan nilai Anda.</p>
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar py-4">
+            <div class="text-center profile-section pb-4 mb-4">
+                <img src="https://ui-avatars.com/api/?name=Sulviana+Fahra&background=C8102E&color=fff" alt="Profile" class="rounded-circle profile-img mb-3">
+                <h6 class="mb-0">Sulviana Fahra</h6>
+                <small class="text-muted">NIM: 45223113</small>
             </div>
             
-            <div class="card">
-                <h3 style="margin-bottom: 15px;">Panduan Penggunaan Platform:</h3>
-                <p style="color: var(--text-muted); line-height: 1.6;">
-                    1. Masuk ke halaman <strong>Kuis Interaktif</strong> melalui menu samping.<br>
-                    2. Selesaikan seluruh soal kuis hingga akhir.<br>
-                    3. Periksa nilai Anda pada menu <strong>Rekap Nilai</strong>.
-                </p>
-            </div>
-        </section>
+            <ul class="nav flex-column px-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><i class="fas fa-home"></i> Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-book-open"></i> Materi Pancasila</a>
+                </li>
+                <li class="nav-item">
+                    <!-- Menambahkan indikator jumlah soal -->
+                    <a class="nav-link" href="#"><i class="fas fa-tasks"></i> Bank Soal (200)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Rekap Nilai</a>
+                </li>
+            </ul>
+        </nav>
 
-        <!-- HALAMAN KUIS -->
-        <section id="kuis" class="content-section" style="display: none;">
-            <div id="quiz-container" class="card">
-                <div style="color: var(--text-muted); margin-bottom: 15px; font-weight: bold;" id="question-number">Soal 1 dari 5</div>
-                <h2 id="question" style="margin-bottom: 20px;">Pertanyaan</h2>
-                <div id="options" class="options-grid"></div>
-                <button id="next-btn" class="btn-blue" style="display: none; float: right; margin-top: 20px;">Selanjutnya ➡️</button>
-                <div style="clear: both;"></div>
-            </div>
-
-            <div id="result-container" class="card" style="display: none; text-align: center;">
-                <h2>Kuis Selesai!</h2>
-                <div style="font-size: 18px; margin: 25px 0;" id="score-text"></div>
-                <button onclick="startQuiz()" class="btn-blue">Ulangi Kuis</button>
-            </div>
-        </section>
-
-        <!-- HALAMAN REKAP NILAI -->
-        <section id="rekap" class="content-section" style="display: none;">
-            <div class="card">
-                <h2 style="margin-bottom: 15px;">📋 Rekapitulasi Nilai Peserta</h2>
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Peserta</th>
-                                <th>NIM</th>
-                                <th>Tanggal</th>
-                                <th>Skor</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rekap-table-body"></tbody>
-                    </table>
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <!-- Header -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+                <h1 class="h3 fw-bold text-dark">Beranda Edukasi</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
+                    </button>
                 </div>
             </div>
-        </section>
+
+            <!-- Welcome Banner -->
+            <div class="card welcome-card mb-4 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title fw-bold mb-2">Selamat Datang di Platform Edukasi Pancasila</h4>
+                    <p class="card-text">Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Pelajari materi komprehensif dan uji wawasan Anda melalui 200 soal evaluasi interaktif yang telah disiapkan.</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card h-100 p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">Total Modul Materi</h6>
+                                <h3 class="fw-bold mb-0">5 Bab</h3>
+                            </div>
+                            <i class="fas fa-file-alt stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card h-100 p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">Bank Soal Tersedia</h6>
+                                <h3 class="fw-bold mb-0">200 Soal</h3>
+                            </div>
+                            <i class="fas fa-check-circle stat-icon text-success"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card h-100 p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">Pencapaian Anda</h6>
+                                <h3 class="fw-bold mb-0">0 / 200</h3>
+                            </div>
+                            <i class="fas fa-trophy stat-icon text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panduan Penggunaan -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="fas fa-info-circle text-primary me-2"></i>Panduan Penggunaan Platform</h5>
+                    <ol class="text-muted lh-lg mb-0">
+                        <li>Pelajari terlebih dahulu modul pada menu <strong>Materi Pancasila</strong>.</li>
+                        <li>Masuk ke halaman <strong>Bank Soal</strong> melalui menu di samping untuk mulai mengerjakan 200 soal evaluasi. Soal dapat dikerjakan secara bertahap.</li>
+                        <li>Sistem akan menyimpan progress Anda. Periksa skor akhir pada menu <strong>Rekap Nilai</strong>.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </main>
     </div>
+</div>
 
-    <script>
-        // Mengambil Nama dan NIM dari Halaman Login secara dinamis untuk pengisian kuis
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentActiveUser = urlParams.get('username') || 'Guest';
-        const currentNIM = urlParams.get('nim') || '-';
-        
-        // Tampilkan nama pengerja aktif di pojok header atas
-        document.getElementById('session-name').innerText = `${currentActiveUser} (${currentNIM})`;
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
-            document.getElementById(sectionId).style.display = 'block';
-
-            document.querySelectorAll('.nav-menu a').forEach(nav => nav.classList.remove('active'));
-            document.getElementById('nav-' + sectionId).classList.add('active');
-
-            if(sectionId === 'beranda') document.getElementById('page-title').innerText = "Selamat Datang";
-            else if (sectionId === 'kuis') { document.getElementById('page-title').innerText = "Evaluasi Kuis"; startQuiz(); }
-            else if (sectionId === 'rekap') { document.getElementById('page-title').innerText = "Rekap Nilai"; renderRekapTable(); }
-        }
-
-        const questions = [
-            { question: "Sila pertama Pancasila dilambangkan dengan...", answers: ["Pohon Beringin", "Bintang", "Rantai", "Padi dan Kapas"], correct: 1 },
-            { question: "Bunyi dari sila ketiga adalah...", answers: ["Persatuan Indonesia", "Keadilan Sosial bagi Seluruh Rakyat Indonesia", "Ketuhanan Yang Maha Esa", "Kemanusiaan yang Adil dan Beradab"], correct: 0 },
-            { question: "Siapa tokoh yang pertama kali mengemukakan istilah Pancasila pada 1 Juni 1945?", answers: ["Moh. Hatta", "Soepomo", "Ir. Soekarno", "Ahmad Subardjo"], correct: 2 },
-            { question: "Sikap saling menghormati antar umat beragama merupakan pengamalan Pancasila sila ke...", answers: ["Satu", "Dua", "Tiga", "Empat"], correct: 0 },
-            { question: "Lembaga negara yang bertugas menjaga konstitusi dan ideologi Pancasila adalah...", answers: ["KPK", "BPIP", "BMKG", "KPU"], correct: 1 }
-        ];
-
-        let currentQuestionIndex = 0, score = 0;
-        const questionEl = document.getElementById("question"), optionsEl = document.getElementById("options"), nextBtn = document.getElementById("next-btn");
-
-        function startQuiz() {
-            currentQuestionIndex = 0; score = 0;
-            document.getElementById("quiz-container").style.display = 'block'; 
-            document.getElementById("result-container").style.display = 'none';
-            showQuestion();
-        }
-
-        function showQuestion() {
-            nextBtn.style.display = "none";
-            optionsEl.innerHTML = '';
-            let q = questions[currentQuestionIndex];
-            document.getElementById("question-number").innerText = `Soal ${currentQuestionIndex + 1} dari ${questions.length}`;
-            questionEl.innerText = q.question;
-
-            q.answers.forEach((ans, idx) => {
-                const btn = document.createElement("button");
-                btn.innerText = ans;
-                btn.onclick = () => selectAnswer(btn, idx, q.correct);
-                optionsEl.appendChild(btn);
-            });
-        }
-
-        function selectAnswer(btn, idx, correctIdx) {
-            if (idx === correctIdx) { score++; btn.classList.add("correct"); } 
-            else { btn.classList.add("wrong"); optionsEl.children[correctIdx].classList.add("correct"); }
-            Array.from(optionsEl.children).forEach(b => b.disabled = true);
-            nextBtn.style.display = "block";
-        }
-
-        nextBtn.onclick = () => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) showQuestion(); else showResult();
-        };
-
-        function showResult() {
-            document.getElementById("quiz-container").style.display = 'none'; 
-            document.getElementById("result-container").style.display = 'block';
-            let finalScore = Math.round((score / questions.length) * 100);
-            document.getElementById("score-text").innerHTML = `Kerja bagus, <strong>${currentActiveUser}</strong>!<br>Nilai Akhir Anda: <span style="font-size: 40px; font-weight: bold; color: var(--primary-blue); display: block; margin-top: 10px;">${finalScore}</span>`;
-            saveScore(currentActiveUser, currentNIM, finalScore);
-        }
-
-        function saveScore(name, nim, scoreVal) {
-            let history = JSON.parse(localStorage.getItem('kuis_scores')) || [];
-            history.push({ name, nim, date: new Date().toLocaleDateString('id-ID'), score: scoreVal });
-            localStorage.setItem('kuis_scores', JSON.stringify(history));
-        }
-
-        function renderRekapTable() {
-            const tbody = document.getElementById("rekap-table-body");
-            tbody.innerHTML = "";
-            let history = JSON.parse(localStorage.getItem('kuis_scores')) || [];
-            if(history.length === 0) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada data</td></tr>`; return; }
-            
-            history.reverse().forEach((item, i) => {
-                let isCurrent = item.name === currentActiveUser && item.nim === currentNIM ? "background-color: #f0fdf4; font-weight: bold;" : "";
-                tbody.innerHTML += `<tr style="${isCurrent}"><td>${i + 1}</td><td>${item.name}</td><td>${item.nim}</td><td>${item.date}</td><td><span class="badge-score">${item.score}</span></td></tr>`;
-            });
-        }
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
