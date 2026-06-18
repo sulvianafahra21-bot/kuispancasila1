@@ -3,185 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Rekapitulasi Nilai</title>
+    <title>EduPancasila - Hasil Rekap Nilai</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-red: #C8102E;     
-            --dark-navy: #111827;       
-            --light-bg: #F3F4F6;        
-        }
+        :root { --primary-red: #C8102E; --dark-navy: #111827; --light-bg: #F3F4F6; }
         body { background-color: var(--light-bg); font-family: 'Inter', sans-serif; }
-        
-        /* Sidebar Navigation */
-        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); }
+        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; }
         .profile-section { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         .profile-img { width: 85px; height: 85px; border: 3px solid var(--primary-red); object-fit: cover; }
-        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 500; transition: all 0.2s; }
-        .nav-pills .nav-link:hover { color: #FFFFFF; background-color: rgba(200, 16, 46, 0.1); }
-        .nav-pills .nav-link.active { background-color: var(--primary-red); color: #FFFFFF; box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3); }
-        .nav-pills .nav-link i { width: 24px; font-size: 1.1rem; }
+        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 8px; padding: 12px 20px; border-radius: 10px; }
+        .nav-pills .nav-link.active { background-color: var(--primary-red); color: #FFFFFF; }
         
-        .top-navbar { background-color: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
-        .admin-card { border: none; border-radius: 14px; background-color: #FFFFFF; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        
-        /* Table Styling */
-        .table-responsive { background: white; border-radius: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); p: 1.5rem; }
-        .thead-dark { background-color: #F9FAFB; border-bottom: 2px solid #E5E7EB; }
-        th { font-weight: 600; color: #374151; }
-        td { vertical-align: middle; color: #4B5563; }
+        /* Modifikasi Lingkaran Nilai agar lebih ringkas */
+        .score-circle { 
+            width: 100px; 
+            height: 100px; 
+            border-radius: 50%; 
+            border: 6px solid var(--primary-red); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 0 auto 1rem auto; 
+            font-size: 2rem; 
+            font-weight: 800; 
+            color: var(--dark-navy); 
+            background-color: rgba(200, 16, 46, 0.05); 
+        }
     </style>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+        <!-- SIDEBAR -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
-                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle profile-img mb-3">
-                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">Admin Mode</h6>
-                    <span class="badge bg-danger px-2 py-1 fs-7">PANEL ADMIN</span>
+                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle mb-3 profile-img">
+                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">User</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7" id="sidebar-role">Role</span>
                 </div>
-                
                 <ul class="nav nav-pills flex-column mb-auto px-2">
                     <li class="nav-item"><a href="#" class="nav-link" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Pancasila</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-layer-group me-2"></i>Bank Soal (100)</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
+                    <li class="nav-item" id="menu-kuis-container"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Mulai Kuis (40)</a></li>
                     <li class="nav-item"><a href="#" class="nav-link active" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap Nilai</a></li>
                 </ul>
             </div>
         </nav>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
-            <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
-                <div class="fw-bold text-dark fs-5">
-                    <i class="fa-solid fa-folder-open text-danger me-2"></i>Rekapitulasi Hasil Nilai Keseluruhan
+        <!-- AREA UTAMA -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-4">
+            
+            <!-- BAGIAN 1: NILAI PRIBADI (HANYA MUNCUL UNTUK MAHASISWA) -->
+            <div id="v-mahasiswa-personal" class="d-none mb-4">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center card border-0 p-4 shadow-sm rounded-4" style="border-top: 6px solid var(--primary-red) !important;">
+                        <h5 class="fw-bold mb-1">Rapor Evaluasi Mandiri Anda</h5>
+                        <p class="text-secondary small mb-3">Nilai Anda telah tersimpan secara otomatis di dalam sistem.</p>
+                        
+                        <div class="score-circle" id="mhs-score-circle">-</div>
+                        
+                        <h6 class="fw-bold" id="mhs-status-text">Memuat...</h6>
+                        <p class="text-muted small mb-3" id="mhs-detail-text"></p>
+                        
+                        <div>
+                            <a href="#" id="btn-re-kuis" class="btn btn-outline-danger rounded-pill px-4 btn-sm">Ulangi Kuis</a>
+                        </div>
+                    </div>
                 </div>
-                <button onclick="resetDataRekap()" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                    <i class="fa-solid fa-trash-can me-1"></i>Reset Data Tabel
-                </button>
             </div>
 
-            <div class="p-4">
-                
-                <div class="row g-4 mb-4">
-                    <div class="col-12 col-sm-4">
-                        <div class="card admin-card p-3 border-start border-4 border-primary">
-                            <span class="text-muted small fw-medium d-block mb-1">TOTAL PESERTA</span>
-                            <h2 class="fw-bold mb-0 text-dark" id="stat-total">0 Orang</h2>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="card admin-card p-3 border-start border-4 border-warning">
-                            <span class="text-muted small fw-medium d-block mb-1">RATA-RATA NILAI</span>
-                            <h2 class="fw-bold mb-0 text-warning" id="stat-rata">0.0</h2>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="card admin-card p-3 border-start border-4 border-success">
-                            <span class="text-muted small fw-medium d-block mb-1">NILAI TERTINGGI</span>
-                            <h2 class="fw-bold mb-0 text-success" id="stat-tertinggi">0</h2>
-                        </div>
-                    </div>
+            <!-- BAGIAN 2: TABEL KESELURUHAN (MUNCUL UNTUK DOSEN & MAHASISWA) -->
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat & Rekap Nilai Kelas</h5>
+                    
+                    <!-- Tombol Reset Ini Hanya Muncul Jika Login Sebagai Dosen -->
+                    <button onclick="resetTabel()" id="btn-reset-dosen" class="btn btn-sm btn-outline-secondary d-none">
+                        <i class="fa-solid fa-trash me-1"></i>Reset Hasil Nilai (Admin)
+                    </button>
                 </div>
 
-                <div class="card border-0 p-4 shadow-sm rounded-4">
-                    <h5 class="fw-bold text-dark mb-3">Daftar Hasil Ujian Mahasiswa</h5>
+                <div class="card border-0 p-3 p-md-4 shadow-sm rounded-4">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
-                            <thead class="thead-dark">
+                            <thead class="table-light">
                                 <tr>
-                                    <th scope="col" class="py-3">No</th>
-                                    <th scope="col" class="py-3">Nama Lengkap</th>
-                                    <th scope="col" class="py-3">NIM</th>
-                                    <th scope="col" class="py-3">Skor Benar</th>
-                                    <th scope="col" class="py-3">Nilai Akhir</th>
-                                    <th scope="col" class="py-3">Waktu Selesai</th>
-                                    <th scope="col" class="py-3">Status</th>
+                                    <th>Peringkat</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>NIM</th>
+                                    <th>Skor Benar</th>
+                                    <th>Nilai Akhir</th>
+                                    <th>Waktu Selesai</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabel-rekap-body">
-                                </tbody>
+                            <tbody id="tabel-admin-body">
+                                <!-- Data Tabel Akan Dimasukkan Lewat Javascript -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
+
         </main>
     </div>
 </div>
 
 <script>
-    // 1. Sinkronisasi Link Parameter URL agar login tidak terputus
+    // 1. Ambil Parameter Pengguna dari URL
     const urlParams = new URLSearchParams(window.location.search);
-    const namaUser = urlParams.get('username') || "Admin";
-    const nimUser = urlParams.get('nim') || "ADMIN-MODE";
-    const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
+    const role = urlParams.get('role') || 'mahasiswa';
+    const username = urlParams.get('username') || 'User';
+    const nim = urlParams.get('nim') || '';
 
-    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
-    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
-    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
-    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+    // 2. Terapkan Identitas ke Sidebar
+    document.getElementById('sidebar-name').innerText = username;
+    document.getElementById('sidebar-role').innerText = role.toUpperCase();
 
-    // 2. DATA SIMULASI OTOMATIS (Bagus untuk keperluan demonstrasi/sidang tugas)
-    const dataAwalSimulasi = [
-        { nama: "Ahmad Riyadh", nim: "45223001", nilai: 90, benar: 27, total: 30, waktu: "17/06/2026 09:15" },
-        { nama: "Siti Aminah", nim: "45223014", nilai: 83, benar: 25, total: 30, waktu: "17/06/2026 10:42" },
-        { nama: "Reza Pahlevi", nim: "45223055", nilai: 60, benar: 18, total: 30, waktu: "17/06/2026 11:05" }
-    ];
+    // 3. Modifikasi Tautan Menu
+    const query = `?role=${role}&username=${encodeURIComponent(username)}&nim=${encodeURIComponent(nim)}`;
+    document.getElementById('link-beranda').href = "dashboard.html" + query;
+    document.getElementById('link-materi').href = "materi.html" + query;
+    document.getElementById('link-kuis').href = "kuis.html" + query;
+    document.getElementById('link-rekap').href = "rekap.html" + query;
+    document.getElementById('btn-re-kuis').href = "kuis.html" + query;
 
-    // Ambil data dari localStorage, jika kosong pakai data simulasi di atas
-    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila'));
-    if (semuaPeserta === null || semuaPeserta.length === 0) {
-        semuaPeserta = dataAwalSimulasi;
-        localStorage.setItem('semuaNilaiPancasila', JSON.stringify(semuaPeserta));
+    // 4. Ambil Data Nilai Keseluruhan dari Local Storage
+    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
+
+    // --- LOGIKA TAMPILAN BERDASARKAN ROLE ---
+
+    if (role === 'dosen') {
+        // Jika Dosen: Munculkan tombol reset tabel dan sembunyikan menu mulai kuis
+        document.getElementById('btn-reset-dosen').classList.remove('d-none');
+        document.getElementById('menu-kuis-container').classList.add('d-none');
+    } else {
+        // Jika Mahasiswa: Munculkan rapor nilai personalnya di atas tabel
+        document.getElementById('v-mahasiswa-personal').classList.remove('d-none');
+        
+        // Ambil data nilai personal mahasiswa yang sedang login
+        const nilaiPersonal = localStorage.getItem('nilaiAkhirPancasila');
+        const benarPersonal = localStorage.getItem('totalBenar');
+        const totalPersonal = localStorage.getItem('totalSoal');
+
+        if (nilaiPersonal !== null) {
+            document.getElementById('mhs-score-circle').innerText = nilaiPersonal;
+            if(nilaiPersonal >= 75) {
+                document.getElementById('mhs-status-text').innerText = "LULUS 🎉";
+                document.getElementById('mhs-status-text').className = "fw-bold text-success";
+            } else {
+                document.getElementById('mhs-status-text').innerText = "Remedial (Di bawah 75)";
+                document.getElementById('mhs-status-text').className = "fw-bold text-warning";
+            }
+            document.getElementById('mhs-detail-text').innerText = `Jawaban Benar: ${benarPersonal} dari ${totalPersonal} soal.`;
+        } else {
+            document.getElementById('mhs-score-circle').innerText = "-";
+            document.getElementById('mhs-status-text').innerText = "Belum Mengikuti Ujian";
+            document.getElementById('mhs-status-text').className = "fw-bold text-muted";
+        }
     }
 
-    // 3. ME RENDERING DATA KE TABEL HTML & MENGHITUNG STATISTIK
-    const tbody = document.getElementById('tabel-rekap-body');
-    let totalNilai = 0;
-    let nilaiTertinggi = 0;
+    // 5. RENDER TABEL KESELURUHAN (UNTUK SEMUA ROLE)
+    const tbody = document.getElementById('tabel-admin-body');
+    tbody.innerHTML = "";
+    
+    if(semuaPeserta.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">Belum ada data nilai kuis yang terekam.</td></tr>`;
+    } else {
+        // Mengurutkan peringkat dari nilai tertinggi ke terendah secara otomatis
+        semuaPeserta.sort((a, b) => b.nilai - a.nilai);
 
-    semuaPeserta.forEach((peserta, index) => {
-        totalNilai += peserta.nilai;
-        if (peserta.nilai > nilaiTertinggi) nilaiTertinggi = peserta.nilai;
+        semuaPeserta.forEach((p, index) => {
+            // Label Lulus / Remedial
+            let badge = p.nilai >= 75 
+                ? '<span class="badge bg-success-subtle text-success px-2 py-1">Lulus</span>' 
+                : '<span class="badge bg-danger-subtle text-danger px-2 py-1">Remedial</span>';
+            
+            // Highlight jika baris tabel ini adalah mahasiswa yang sedang login
+            let isCurrentUser = (p.nama === username && p.nim === nim) ? 'table-warning' : '';
 
-        // Tentukan Badge Kelulusan (Kriteria Kelulusan Minimal 75)
-        let badgeStatus = peserta.nilai >= 75 
-            ? `<span class="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-bold">Lulus</span>`
-            : `<span class="badge bg-danger-subtle text-danger px-3 py-1 rounded-pill fw-bold">Remedial</span>`;
+            // Icon Piala untuk juara 1, 2, dan 3
+            let peringkat = index + 1;
+            if(peringkat === 1) peringkat = `<i class="fa-solid fa-trophy text-warning fs-5"></i> 1`;
+            if(peringkat === 2) peringkat = `<i class="fa-solid fa-medal text-secondary fs-5"></i> 2`;
+            if(peringkat === 3) peringkat = `<i class="fa-solid fa-medal" style="color: #cd7f32;"></i> 3`;
 
-        // Buat baris baru di tabel
-        const row = `
-            <tr>
-                <td class="fw-bold">${index + 1}</td>
-                <td class="fw-semibold text-dark">${peserta.nama}</td>
-                <td><code>${peserta.nim}</code></td>
-                <td>${peserta.benar} / ${peserta.total}</td>
-                <td class="fw-bold text-dark">${peserta.nilai}</td>
-                <td class="small text-muted">${peserta.waktu}</td>
-                <td>${badgeStatus}</td>
-            </tr>
-        `;
-        tbody.innerHTML += row;
-    });
+            tbody.innerHTML += `
+                <tr class="${isCurrentUser}">
+                    <td class="fw-bold">${peringkat}</td>
+                    <td class="fw-bold text-dark">${p.nama}</td>
+                    <td><code>${p.nim}</code></td>
+                    <td>${p.benar} / ${p.total}</td>
+                    <td class="fw-bold text-danger">${p.nilai}</td>
+                    <td class="small text-muted">${p.waktu}</td>
+                    <td>${badge}</td>
+                </tr>`;
+        });
+    }
 
-    // Tampilkan hasil perhitungan statistik ke kartu ringkasan admin
-    document.getElementById('stat-total').innerText = semuaPeserta.length + " Orang";
-    document.getElementById('stat-rata').innerText = (totalNilai / semuaPeserta.length).toFixed(1);
-    document.getElementById('stat-tertinggi').innerText = nilaiTertinggi;
-
-    // 4. Fitur Reset Tabel Data jika Admin ingin membersihkan log nilai
-    function resetDataRekap() {
-        if (confirm("Apakah Anda yakin ingin menghapus seluruh log data rekap ujian mahasiswa?")) {
+    // Fungsi Tombol Reset (Hanya bisa ditekan oleh Dosen)
+    function resetTabel() {
+        if(confirm("Apakah Anda yakin sebagai dosen ingin membersihkan seluruh log nilai kuis mahasiswa?")) {
             localStorage.setItem('semuaNilaiPancasila', JSON.stringify([]));
             location.reload();
         }
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
