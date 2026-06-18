@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Wawasan Nusantara</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary-red: #C8102E; --dark-navy: #111827; --light-bg: #F3F4F6; --teal-green: #0D9488; }
+        body { background-color: var(--light-bg); font-family: 'Inter', sans-serif; }
+        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); }
+        .profile-section { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 6px; padding: 12px 20px; border-radius: 10px; font-weight: 500; transition: all 0.2s; }
+        .nav-pills .nav-link:hover { color: #FFFFFF; background-color: rgba(255, 255, 255, 0.05); }
+        .nav-pills .nav-link.active { background-color: var(--teal-green); color: #FFFFFF; }
+        .top-navbar { background-color: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
+        .opsi-jawaban { display: block; width: 100%; text-align: left; margin-bottom: 14px; padding: 16px 20px; border: 2px solid #E5E7EB; border-radius: 12px; background: white; font-weight: 500; color: #374151; transition: all 0.2s; cursor: pointer; }
+        .opsi-jawaban:hover { border-color: var(--teal-green); background-color: #F0FDFA; transform: translateX(4px); }
+        .opsi-terpilih { background: linear-gradient(135deg, #0D9488 0%, #115E59 100%) !important; color: white !important; border-color: var(--teal-green) !important; }
+        .quiz-card { border: none; border-radius: 16px; background-color: #FFFFFF; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
+        .progress { height: 8px; border-radius: 10px; background-color: #E5E7EB; }
+        .progress-bar { background-color: var(--teal-green); transition: width 0.4s ease; }
+        .timer-progress { height: 6px; border-radius: 10px; background-color: #E5E7EB; }
+        .timer-bar { background-color: #16A34A; transition: width 1s linear; }
+        .peserta-box { background-color: #F0FDFA; border-left: 5px solid var(--teal-green); }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+            <div class="d-flex flex-column p-3 h-100">
+                <div class="text-center profile-section py-4 mb-4">
+                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle mb-3" style="width: 85px; height: 85px; border: 3px solid var(--teal-green); object-fit: cover;">
+                    <h6 class="fw-bold mb-1 text-white">Sulviana Fahra</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7">NIM: 45223113</span>
+                </div>
+                <ul class="nav nav-pills flex-column mb-auto px-2">
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Kuis Pancasila</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap Pancasila</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis-kwg"><i class="fa-solid fa-scale-balanced me-2"></i>Kuis Kewarganegaraan</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap-kwg"><i class="fa-solid fa-table-list me-2"></i>Rekap Kewarganegaraan</a></li>
+                    <li class="nav-item mt-2 mb-1 text-muted small fw-bold px-2">Evaluasi Geopolitik:</li>
+                    <li class="nav-item"><a href="#" class="nav-link active" id="link-kuis-wn"><i class="fa-solid fa-earth-southeast me-2"></i>Kuis Wawasan Nusantara</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap-wn"><i class="fa-solid fa-map-location-dot me-2"></i>Rekap Wawasan Nusantara</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
+            <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
+                <div class="text-muted fw-medium"><i class="fa-solid fa-earth-asia text-success me-2"></i>Kuis Wawasan Nusantara</div>
+                <button onclick="keluarKuis()" class="btn btn-sm btn-outline-secondary px-3 rounded-pill fw-medium"><i class="fa-solid fa-house-crack me-1"></i>Batal Ujian</button>
+            </div>
+
+            <div class="p-4 d-flex justify-content-center">
+                <div class="col-12 col-xl-9">
+                    
+                    <div class="card peserta-box border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-3 d-flex align-items-center">
+                            <div class="bg-white p-2 rounded-circle shadow-sm me-3 d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;"><i class="fa-solid fa-user-pen fs-5" style="color: #0D9488;"></i></div>
+                            <div>
+                                <span class="d-block small fw-bold" style="color: #475569;">PESERTA UJIAN:</span>
+                                <h5 class="mb-0 fw-bold text-dark" id="nama-peserta-ujian">Memuat Data Peserta...</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card quiz-card p-4 p-md-5 text-center shadow-sm" id="box-konfirmasi-siap">
+                        <div class="card-body p-0">
+                            <div class="text-center mb-4">
+                                <div class="bg-tealsubtle d-inline-flex p-3 rounded-circle text-success mb-3" style="background-color:#CCFBF1;"><i class="fa-solid fa-compass display-5" style="color:#0D9488;"></i></div>
+                                <h3 class="fw-bold text-dark">Kuis Wawasan Nusantara</h3>
+                                <p class="text-muted">Aspek Geopolitik, Deklarasi Djuanda, Batas Kelautan, Trigatra & Pancagatra.</p>
+                            </div>
+                            <div class="text-start bg-light p-4 rounded-4 mb-4">
+                                <ul class="ps-3 mb-0 text-secondary">
+                                    <li>Kuis terdiri dari <strong>20 Soal Pilihan Ganda</strong> aspek kewilayahan Indonesia.</li>
+                                    <li>Waktu pengerjaan dibatasi ketat selama <strong>40 detik per soal</strong>.</li>
+                                    <li>Sistem Anti-Cheat mencatat rekam jejak aktivitas keluar tab browser.</li>
+                                </ul>
+                            </div>
+                            <div class="form-check d-inline-block text-start mb-4 p-3 rounded-3 px-5 border border-success border-opacity-25" style="background-color:#F0FDFA;">
+                                <input class="form-check-input" type="checkbox" id="check-kesiapan" onchange="toggleTombolMulai()">
+                                <label class="form-check-label fw-bold text-dark" style="cursor: pointer;" for="check-kesiapan">Saya menyatakan SIAP, memahami seluruh aturan, dan bersedia memulai ujian.</label>
+                            </div>
+                            <div>
+                                <button id="btn-mulai-ujian" class="btn text-white btn-lg w-100 py-3 fw-bold rounded-3" style="background-color:#0D9488; border:none;" disabled onclick="memulaiKuisSekarang()"><i class="fa-solid fa-play me-2"></i>Mulai Ujian Nusantara</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="box-kuis-utama" class="d-none">
+                        <div class="card border-0 p-3 shadow-sm rounded-4 mb-4 bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-secondary small"><i class="fa-solid fa-clock-rotate-left me-1 text-success"></i>SISA WAKTU SOAL INI</span>
+                                <span class="badge bg-dark fs-6 font-monospace px-3 py-1 text-warning" id="teks-timer">40 detik</span>
+                            </div>
+                            <div class="timer-progress"><div class="timer-bar" id="bar-timer" style="width: 100%;"></div></div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-secondary fw-medium small">PROGRES SOAL</span>
+                            <span class="badge bg-success px-3 py-2 rounded-pill fw-bold fs-7" id="indikatorSoal" style="background-color:#0D9488 !important;">Soal 1 / 20</span>
+                        </div>
+                        <div class="progress mb-4"><div class="progress-bar" id="bar-progres" role="progressbar" style="width: 5%;"></div></div>
+
+                        <div class="card quiz-card p-4 p-md-5">
+                            <div class="card-body p-0">
+                                <h4 id="teksPertanyaan" class="lh-base fw-semibold text-dark mb-4" style="font-size: 1.25rem;">Sedang memuat...</h4>
+                                <div id="areaOpsi" class="mt-2"></div>
+                                <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                                    <button class="btn text-white px-4 py-2 fw-bold rounded-3 shadow-sm" style="background-color:#0D9488; border:none;" onclick="soalSelanjutnya()">Selanjutnya <i class="fa-solid fa-arrow-right ms-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPeringatan" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg" style="border-radius: 16px;"><div class="modal-body text-center p-4"><i class="fa-solid fa-circle-exclamation text-warning mb-3" style="font-size: 4rem;"></i><h4 class="fw-bold text-dark mb-2">Peringatan Kosong!</h4><p class="text-secondary mb-4">Anda belum memilih opsi jawaban. Silakan klik salah satu pilihan huruf.</p><button type="button" class="btn btn-teal fw-bold px-5 rounded-pill text-white" style="background-color:#0D9488;" data-bs-dismiss="modal">Pilih Jawaban</button></div></div></div>
+</div>
+
+<div class="modal fade" id="modalSelesai" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg" style="border-radius: 16px; border-top: 8px solid #0D9488;"><div class="modal-body text-center p-5"><i class="fa-solid fa-circle-check text-success mb-3" style="font-size: 5rem;"></i><h3 class="fw-bold text-dark mb-1">Evaluasi Selesai!</h3><p class="text-secondary mb-4">Nilai Anda berhasil dikirim secara online ke server cloud database.</p>
+        <div class="p-3 mb-4 rounded-4" style="background-color: #F0FDFA; border: 2px dashed #99F6E4;"><span class="d-block text-muted small fw-bold mb-1">SKOR AKHIR KUIS</span><h1 class="fw-bold display-2 mb-0" id="teks-skor-akhir" style="color: #0D9488;">0</h1></div>
+        <button type="button" class="btn text-white w-100 fw-bold py-3 rounded-pill" style="background-color:#0D9488;" onclick="keHalamanRekap()">Buka Rekap Wawasan Nusantara <i class="fa-solid fa-arrow-right ms-2"></i></button>
+      </div></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // --- GANTI STRING DI BAWAH INI DENGAN LINK URL FIREBASE REALTIME DATABASE ANDA ---
+    const FIREBASE_URL = "PASANG_URL_FIREBASE_ANDA_DI_SINI";
+
+    const modalPeringatan = new bootstrap.Modal(document.getElementById('modalPeringatan'));
+    const modalSelesai = new bootstrap.Modal(document.getElementById('modalSelesai'));
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const namaUser = urlParams.get('username') || "Peserta Kuis";
+    const nimUser = urlParams.get('nim') || "NIM Peserta";
+    const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
+
+    document.getElementById('nama-peserta-ujian').innerText = `${namaUser} (${nimUser})`;
+    
+    // Sinkronisasi seluruh link sidebar
+    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
+    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
+    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
+    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+    document.getElementById('link-kuis-kwg').href = "kuis-kewarganegaraan.html" + parameterQuery;
+    document.getElementById('link-rekap-kwg').href = "rekap-kewarganegaraan.html" + parameterQuery;
+    document.getElementById('link-kuis-wn').href = "kuis-wawasan-nusantara.html" + parameterQuery;
+    document.getElementById('link-rekap-wn').href = "rekap-wawasan-nusantara.html" + parameterQuery;
+
+    let kuisSedangBerjalan = false;
+    window.addEventListener('beforeunload', function (e) { if (kuisSedangBerjalan) { e.preventDefault(); e.returnValue = ''; } });
+
+    let jumlahCurang = 0;
+    document.addEventListener('visibilitychange', () => { if (document.hidden && kuisSedangBerjalan) { jumlahCurang++; } });
+
+    function toggleTombolMulai() { document.getElementById('btn-mulai-ujian').disabled = !document.getElementById('check-kesiapan').checked; }
+
+    function memulaiKuisSekarang() { kuisSedangBerjalan = true; document.getElementById('box-konfirmasi-siap').classList.add('d-none'); document.getElementById('box-kuis-utama').classList.remove('d-none'); tampilkanSoal(); }
+
+    const bankSoalWn = [
+        { pertanyaan: "Cara pandang bangsa Indonesia mengenai diri dan lingkungannya sebagai satu kesatuan ideologi, politik, ekonomi, sosial budaya, dan pertahanan keamanan disebut...", opsi: ["Ketahanan Nasional", "Wawasan Nusantara", "Geopolitik Dunia", "Wawasan Kebangsaan"], jawabanBenar: 1 },
+        { pertanyaan: "Wawasan Nusantara sebagai geopolitik Indonesia dibentuk dan dilandasi secara visional oleh konstitusi tertinggi negara yaitu...", opsi: ["Pancasila", "Ketetapan MPR", "UUD 1945", "Bhinneka Tunggal Ika"], jawabanBenar: 2 },
+        { pertanyaan: "Peristiwa bersejarah yang menjadi tonggak lahirnya konsep kesatuan wilayah laut Indonesia yang utuh terintegrasi tanpa sekat laut internasional adalah...", opsi: ["Deklarasi Djuanda 13 Desember 1957", "Proklamasi 17 Agustus 1945", "Konferensi Meja Bundar", "Sumpah Pemuda 1928"], jawabanBenar: 0 },
+        { pertanyaan: "Berdasarkan Deklarasi Djuanda, lebar laut teritorial Indonesia ditetapkan sejauh...", opsi: ["3 mil", "12 mil", "24 mil", "200 mil"], jawabanBenar: 1 },
+        { pertanyaan: "Batas wilayah laut di mana Indonesia memiliki hak berdaulat penuh untuk melakukan eksplorasi kekayaan alam hayati dan non-hayati sejauh 200 mil disebut...", opsi: ["Laut Teritorial", "Zona Bersebelahan", "Zona Ekonomi Eksklusif (ZEE)", "Landas Kontinen"], jawabanBenar: 2 },
+        { pertanyaan: "Dalam konsepsi Wawasan Nusantara, aspek Trigatra merupakan kelompok aspek yang bersifat...", opsi: ["Alamiah dan statis", "Sosial dan dinamis", "Politik praktis", "Pertahanan militer"], jawabanBenar: 0 },
+        { pertanyaan: "Berikut ini yang merupakan unsur-unsur dari aspek Trigatra dalam Wawasan Nusantara adalah...", opsi: ["Ideologi, Politik, Ekonomi", "Geografis, Kekayaan Alam, Penduduk", "Sosial, Budaya, Hankam", "Hukum, Keadilan, Aparatur"], jawabanBenar: 1 },
+        { pertanyaan: "Sedangkan aspek sosial kemasyarakatan yang dinamis dalam Wawasan Nusantara dikelompokkan ke dalam konsepsi...", opsi: ["Trigatra", "Pancagatra", "Sastragatra", "Astagatra"], jawabanBenar: 1 },
+        { pertanyaan: "Unsur pokok Wawasan Nusantara yang menggambarkan wadah, batas wilayah, dan wujud penataan ruang geografi Indonesia disebut...", opsi: ["Isi (Content)", "Tata Laku (Conduct)", "Wadah (Contour)", "Asas (Principle)"], jawabanBenar: 2 },
+        { compression:"10", pertanyaan: "Implementasi Wawasan Nusantara di bidang ekonomi diarahkan untuk menciptakan harmoni berupa...", opsi: ["Pemberian subsidi eksklusif konglomerat", "Pemerataan pembangunan berorientasi kemakmuran rakyat", "Pemusatan modal di pulau Jawa", "Privatisasi total seluruh aset negara"], jawabanBenar: 1 },
+        { pertanyaan: "Asas Wawasan Nusantara yang menyatakan bahwa adanya kesesuaian pembagian hasil yang adil dengan jerih payah dan kegiatan bersama dinamakan asas...", opsi: ["Kejujuran", "Keadilan", "Solidaritas", "Kerja sama"], jawabanBenar: 1 },
+        { pertanyaan: "Tokoh nasional pencetus konsep perluasan integrasi wilayah maritim nusantara yang menjabat sebagai Perdana Menteri Indonesia tahun 1957 adalah...", opsi: ["Ir. Djuanda Kartawidjaja", "Drs. Moh. Hatta", "Prof. Soepomo", "Mr. Ali Sastroamidjojo"], jawabanBenar: 0 },
+        { pertanyaan: "Cara pandang geopolitik menganggap bahwa negara merupakan sebuah organisme hidup yang membutuhkan...", opsi: ["Ruang hidup (Lebensraum) dan kelestarian wilayah", "Pinjaman luar negeri", "Sistem otoriter", "Perluasan koloni militer"], jawabanBenar: 0 },
+        { pertanyaan: "Batas ruang udara vertikal kedaulatan Indonesia menurut kesepakatan internasional adalah setinggi...", opsi: ["10 km di atas permukaan laut", "Tegak lurus hingga batas ruang angkasa luar (±110 km)", "Tanpa batas", "Setinggi jelajah pesawat tempur"], jawabanBenar: 1 },
+        { pertanyaan: "Komponen Pancagatra yang berfungsi sebagai jembatan pembentuk integrasi bangsa melalui sistem nilai bersama, adat istiadat, dan warisan sejarah adalah...", opsi: ["Ideologi", "Ekonomi", "Sosial Budaya", "Pertahanan Keamanan"], jawabanBenar: 2 },
+        { pertanyaan: "Kondisi dinamis bangsa Indonesia yang berisi keuletan dan ketangguhan dalam menghadapi segala tantangan dan ancaman disebut...", opsi: ["Geopolitik Indonesia", "Ketahanan Nasional", "Wawasan Kebangsaan", "Integrasi Sektoral"], jawabanBenar: 1 },
+        { pertanyaan: "Penyebaran berita hoaks, disinformasi siber, dan adu domba berbasis sara merupakan contoh ancaman dalam dimensi...", opsi: ["Militer", "Ekonomi", "Ideologi dan Sosial Budaya", "Kewilayahan fisik"], jawabanBenar: 2 },
+        { pertanyaan: "Konsep satu kesatuan ekonomi dalam Wawasan Nusantara mengandung makna filosofis bahwa...", opsi: ["Kekayaan wilayah nusantara adalah modal dan milik bersama bangsa", "Daerah penghasil minyak menguasai pendapatannya sendiri", "Pasar tradisional harus diganti mall modern", "Sistem ekonomi mengikuti pasar bebas dunia"], jawabanBenar: 0 },
+        { pertanyaan: "Asas Wawasan Nusantara yang menekankan pada pentingnya pemenuhan komitmen kesetiaan terhadap kesepakatan bersama demi keutuhan NKRI adalah asas...", opsi: ["Keadilan", "Solidaritas", "Kesetiaan", "Kejujuran"], jawabanBenar: 2 },
+        { pertanyaan: "Indonesia diapit oleh dua benua (Asia dan Australia) dan dua samudra (Hindia dan Pasifik). Posisi ini dalam Wawasan Nusantara dipandang sebagai...", opsi: ["Ancaman invasi permanen", "Posisi silang strategis penentu geopolitik", "Beban ekonomi logistik", "Kerugian pertahanan"], jawabanBenar: 1 }
+    ];
+
+    let indeksSoalSaatIni = 0; let skor = 0; let jawabanDipilih = null; let sisaWaktu = 40; let intervalTimer;
+
+    function mulaiTimerSoal() {
+        sisaWaktu = 40; document.getElementById('teks-timer').innerText = `${sisaWaktu} detik`;
+        document.getElementById('bar-timer').style.width = "100%"; document.getElementById('bar-timer').style.backgroundColor = "#16A34A";
+        clearInterval(intervalTimer);
+        intervalTimer = setInterval(() => {
+            sisaWaktu--; document.getElementById('teks-timer').innerText = `${sisaWaktu} detik`;
+            document.getElementById('bar-timer').style.width = `${(sisaWaktu / 40) * 100}%`;
+            if(sisaWaktu <= 15) { document.getElementById('bar-timer').style.backgroundColor = "#D97706"; }
+            if(sisaWaktu <= 7) { document.getElementById('bar-timer').style.backgroundColor = "#DC2626"; }
+            if(sisaWaktu <= 0) { clearInterval(intervalTimer); waktuHabisOtomatis(); }
+        }, 1000);
+    }
+
+    function tampilkanSoal() {
+        jawabanDipilih = null; const soal = bankSoalWn[indeksSoalSaatIni];
+        document.getElementById('teksPertanyaan').innerText = `${indeksSoalSaatIni + 1}. ${soal.pertanyaan}`;
+        document.getElementById('indikatorSoal').innerText = `Soal ${indeksSoalSaatIni + 1} / ${bankSoalWn.length}`;
+        document.getElementById('bar-progres').style.width = `${((indeksSoalSaatIni + 1) / bankSoalWn.length) * 100}%`;
+        const areaOpsi = document.getElementById('areaOpsi'); areaOpsi.innerHTML = '';
+        soal.opsi.forEach((pilihan, index) => {
+            const button = document.createElement('button'); button.className = 'opsi-jawaban shadow-sm';
+            button.innerHTML = `<span class="me-2 fw-bold text-success">${String.fromCharCode(65 + index)}.</span> ${pilihan}`;
+            button.onclick = () => pilihJawaban(button, index); areaOpsi.appendChild(button);
+        });
+        mulaiTimerSoal();
+    }
+
+    function pilihJawaban(elemenTombol, index) {
+        document.querySelectorAll('.opsi-jawaban').forEach(btn => btn.classList.remove('opsi-terpilih'));
+        elemenTombol.classList.add('opsi-terpilih'); jawabanDipilih = index;
+    }
+
+    function waktuHabisOtomatis() { if (indeksSoalSaatIni < bankSoalWn.length - 1) { indeksSoalSaatIni++; tampilkanSoal(); } else { prosesSelesaiKuis(); } }
+
+    // Logika tombol navigasi selanjutnya
+    function soalSelanjutnya() {
+        if (jawabanDipilih === null) { modalPeringatan.show(); return; }
+        if (jawabanDipilih === bankSoalWn[indeksSoalSaatIni].jawabanBenar) { skor += 1; }
+        if (indeksSoalSaatIni < bankSoalWn.length - 1) { indeksSoalSaatIni++; tampilkanSoal(); } else { prosesSelesaiKuis(); }
+    }
+
+    function prosesSelesaiKuis() {
+        clearInterval(intervalTimer); kuisSedangBerjalan = false;
+        let nilaiAkhir = Math.round((skor / bankSoalWn.length) * 100);
+        
+        let payloadData = {
+            nama: namaUser, nim: nimUser, nilai: nilaiAkhir, benar: skor, total: bankSoalWn.length, curang: jumlahCurang,
+            waktu: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})
+        };
+
+        let cleanUrl = FIREBASE_URL.endsWith('/') ? FIREBASE_URL : FIREBASE_URL + '/';
+        fetch(cleanUrl + "wawasan_nusantara.json", {
+            method: "POST",
+            body: JSON.stringify(payloadData)
+        })
+        .then(response => {
+            localStorage.setItem('nilaiWawasan', nilaiAkhir);
+            localStorage.setItem('benarWawasan', skor);
+            localStorage.setItem('totalWawasan', bankSoalWn.length);
+            localStorage.setItem('curangWawasan', jumlahCurang);
+
+            document.getElementById('teks-skor-akhir').innerText = nilaiAkhir;
+            modalSelesai.show();
+        })
+        .catch(error => {
+            console.error("Firebase post error: ", error);
+            document.getElementById('teks-skor-akhir').innerText = nilaiAkhir;
+            modalSelesai.show();
+        });
+    }
+
+    function keHalamanRekap() { window.location.href = "rekap-wawasan-nusantara.html" + parameterQuery; }
+    function keluarKuis() { if (confirm("Batal kuis? Progres hilang.")) { kuisSedangBerjalan = false; clearInterval(intervalTimer); window.location.href = "dashboard.html" + parameterQuery; } }
+</script>
+</body>
+</html>
