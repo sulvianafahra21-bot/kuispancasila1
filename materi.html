@@ -4,93 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduPancasila - Modul Pembelajaran</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-red: #C8102E;     /* Merah Bendera */
-            --dark-navy: #111827;       /* Navy Gelap Profesional */
-            --light-bg: #F3F4F6;        /* Background Ringan */
-        }
-
-        body {
-            background-color: var(--light-bg);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            background-color: var(--dark-navy);
-            min-height: 100vh;
-            color: #E5E7EB;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-section {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .profile-img {
-            width: 85px;
-            height: 85px;
-            border: 3px solid var(--primary-red);
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .nav-pills .nav-link {
-            color: #9CA3AF;
-            margin-bottom: 8px;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .nav-pills .nav-link:hover {
-            color: #FFFFFF;
-            background-color: rgba(200, 16, 46, 0.1);
-        }
-
-        .nav-pills .nav-link.active {
-            background-color: var(--primary-red);
-            color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
-        }
-
-        .nav-pills .nav-link i {
-            width: 24px;
-            font-size: 1.1rem;
-        }
-
-        .top-navbar {
-            background-color: #FFFFFF;
-            border-bottom: 1px solid #E5E7EB;
-        }
-
-        /* Accordion Custom Styling */
-        .accordion-button:not(.collapsed) {
-            background-color: rgba(200, 16, 46, 0.08);
-            color: var(--primary-red);
-            font-weight: 700;
-        }
-        .accordion-button:focus {
-            box-shadow: 0 0 0 0.25rem rgba(200, 16, 46, 0.25);
-            border-color: var(--primary-red);
-        }
-        .chapter-badge {
-            background-color: var(--primary-red);
-            color: white;
-            margin-right: 10px;
-        }
-        .highlight-box {
-            background-color: #FFFBEB;
-            border-left: 4px solid #D97706;
-            padding: 12px;
-            border-radius: 4px;
-            margin-top: 10px;
-            font-size: 0.95rem;
-        }
+        :root { --primary-red: #C8102E; --dark-navy: #111827; --light-bg: #F3F4F6; }
+        body { background-color: var(--light-bg); font-family: 'Inter', sans-serif; }
+        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; }
+        .profile-section { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .profile-img { width: 85px; height: 85px; border: 3px solid var(--primary-red); object-fit: cover; }
+        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 500; }
+        .nav-pills .nav-link.active { background-color: var(--primary-red); color: #FFFFFF; }
+        .top-navbar { background-color: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
+        .accordion-button:not(.collapsed) { background-color: rgba(200, 16, 46, 0.08); color: var(--primary-red); font-weight: 700; }
+        .chapter-badge { background-color: var(--primary-red); color: white; margin-right: 10px; }
     </style>
 </head>
 <body>
@@ -98,57 +26,39 @@
 <div class="container-fluid">
     <div class="row">
         
+        <!-- SIDEBAR (IDENTITAS KREATOR DIKUNCI) -->
         <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
                     <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle profile-img mb-3">
-                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">Memuat...</h6>
-                    <span class="badge bg-secondary px-2 py-1 fs-7" id="sidebar-nim">NIM: -</span>
+                    <h6 class="fw-bold mb-1 text-white">Sulviana Fahra</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7">NIM: 45223113</span>
                 </div>
                 
                 <ul class="nav nav-pills flex-column mb-auto px-2">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" id="link-beranda">
-                            <i class="fa-solid fa-house me-2"></i>Beranda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active" id="link-materi">
-                            <i class="fa-solid fa-book-open me-2"></i>Materi Pancasila
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" id="link-kuis">
-                            <i class="fa-solid fa-layer-group me-2"></i>Bank Soal (Kuis)
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" id="link-rekap">
-                            <i class="fa-solid fa-chart-simple me-2"></i>Rekap Nilai
-                        </a>
-                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link active" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-layer-group me-2"></i>Mulai Kuis (40)</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap & Peringkat</a></li>
                 </ul>
             </div>
         </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
-            
             <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
-                <div class="text-muted fw-medium">
-                    <i class="fa-solid fa-graduation-cap text-danger me-2"></i>Modul Pembelajaran Utama
-                </div>
-                <div class="text-dark small fw-medium">Sesi: <span id="header-user">Memuat...</span></div>
+                <div class="text-muted fw-medium"><i class="fa-solid fa-graduation-cap text-danger me-2"></i>Modul Pembelajaran Utama</div>
+                <div class="text-dark small fw-medium">Sesi Login: <span id="header-user" class="fw-bold">Memuat...</span></div>
             </div>
 
             <div class="p-4">
                 <div class="mb-4">
                     <h3 class="fw-bold text-dark mb-1">Materi Pengayaan Wawasan Pancasila</h3>
-                    <p class="text-secondary">Pelajari materi di bawah ini secara seksama sebelum menempuh evaluasi 40 soal kuis.</p>
+                    <p class="text-secondary">Pelajari materi di bawah ini secara seksama sebelum menempuh evaluasi kuis.</p>
                 </div>
 
-                <div class="accordion id="modulPancasila" shadow-sm rounded-4 overflow-hidden">
-                    
-                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden shadow-sm">
+                <div class="accordion" id="modulPancasila">
+                    <!-- BAB 1 -->
+                    <div class="accordion-item border-0 mb-2 rounded-3 shadow-sm">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed py-3 text-dark fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#bab1">
                                 <span class="badge chapter-badge">BAB 1</span> Sejarah Perumusan & Istilah Pancasila
@@ -156,123 +66,48 @@
                         </h2>
                         <div id="bab1" class="accordion-collapse collapse" data-bs-parent="#modulPancasila">
                             <div class="accordion-body text-secondary lh-lg p-4 bg-white">
-                                <h6><strong>A. Etimologi</strong></h6>
-                                <p>Secara etimologis, istilah Pancasila berasal dari <strong>Bahasa Sanskerta</strong>. Terdiri dari kata <em>Panca</em> (lima) dan <em>Sila</em> (dasar/alas/sendi perilaku).</p>
-                                
-                                <h6><strong>B. Kronologi Sejarah Penting</strong></h6>
+                                <p>Secara etimologis, istilah Pancasila berasal dari <strong>Bahasa Sanskerta</strong>. Terdiri dari kata <em>Panca</em> (lima) dan <em>Sila</em> (dasar/alas).</p>
                                 <ul>
-                                    <li><strong>1 Juni 1945 (Hari Lahir Pancasila):</strong> Ir. Soekarno pertama kali mengemukakan lima asas dasar negara secara resmi dalam sidang <strong>BPUPKI</strong> (Badan Penyelidik Usaha-usaha Persiapan Kemerdekaan Indonesia).</li>
-                                    <li><strong>22 Juni 1945:</strong> Panitia Sembilan yang diketuai oleh Ir. Soekarno berhasil merumuskan naskah kompromi dasar negara yang dikenal sebagai <strong>Piagam Jakarta (Jakarta Charter)</strong>.</li>
-                                    <li><strong>18 Agustus 1945 (Pengesahan Resmi):</strong> Pancasila secara yuridis konstitusional disahkan sebagai dasar negara oleh PPKI, bersamaan dengan disahkannya UUD 1945. Pada momen ini kalimat sila pertama diubah demi menjaga persatuan atas usulan Drs. Moh. Hatta.</li>
-                                    <li><strong>1 Oktober (Hari Kesaktian Pancasila):</strong> Diperingati untuk mengenang kegagalan pemberontakan G30S/PKI yang mencoba meruntuhkan ideologi Pancasila.</li>
+                                    <li><strong>1 Juni 1945:</strong> Ir. Soekarno pertama kali mengemukakan asas negara dalam sidang <strong>BPUPKI</strong>.</li>
+                                    <li><strong>22 Juni 1945:</strong> Panitia Sembilan merumuskan <strong>Piagam Jakarta (Jakarta Charter)</strong>.</li>
+                                    <li><strong>18 Agustus 1945:</strong> Pancasila secara yuridis disahkan sebagai dasar negara oleh PPKI.</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden shadow-sm">
+                    <!-- BAB 2 -->
+                    <div class="accordion-item border-0 mb-2 rounded-3 shadow-sm">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed py-3 text-dark fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#bab2">
-                                <span class="badge chapter-badge">BAB 2</span> Lambang Negara & Semboyan Kebangsaan
+                                <span class="badge chapter-badge">BAB 2</span> Lambang Negara & Semboyan
                             </button>
                         </h2>
                         <div id="bab2" class="accordion-collapse collapse" data-bs-parent="#modulPancasila">
                             <div class="accordion-body text-secondary lh-lg p-4 bg-white">
-                                <h6><strong>A. Perancangan Lambang Negara</strong></h6>
-                                <p>Lambang negara Garuda Pancasila dirancang oleh tokoh nasional yaitu <strong>Sultan Hamid II</strong> dari Pontianak dan kemudian disempurnakan oleh Ir. Soekarno.</p>
-                                
-                                <h6><strong>B. Filosofi Jumlah Bulu Garuda (Simbol Proklamasi 17-8-1945)</strong></h6>
-                                <ul>
-                                    <li><strong>17 helai bulu</strong> pada masing-masing sayap (Melambangkan Tanggal Proklamasi).</li>
-                                    <li><strong>8 helai bulu</strong> pada ekor (Melambangkan Bulan Agustus).</li>
-                                    <li><strong>19 helai bulu</strong> pada pangkal ekor (di bawah perisai).</li>
-                                    <li><strong>45 helai bulu</strong> pada leher Garuda (Melambangkan Tahun 1945).</li>
-                                </ul>
-
-                                <h6><strong>C. Semboyan Bhinneka Tunggal Ika</strong></h6>
-                                <p>Semboyan ini dipetik dari <strong>Kitab Sutasoma</strong> hasil gubahan sastrawan abad ke-14 pada masa kerajaan Majapahit, yaitu <strong>Mpu Tantular</strong>. Bermakna berbeda-beda tetapi tetap satu jua.</p>
+                                <p>Lambang negara Garuda Pancasila dirancang oleh <strong>Sultan Hamid II</strong>. Jumlah bulu melambangkan tanggal proklamasi: 17 sayap, 8 ekor, 19 pangkal ekor, dan 45 leher.</p>
+                                <p>Semboyan <em>Bhinneka Tunggal Ika</em> diambil dari <strong>Kitab Sutasoma</strong> karangan <strong>Mpu Tantular</strong> pada masa Majapahit.</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden shadow-sm">
+                    <!-- BAB 3 -->
+                    <div class="accordion-item border-0 mb-2 rounded-3 shadow-sm">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed py-3 text-dark fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#bab3">
-                                <span class="badge chapter-badge">BAB 3</span> Kedudukan, Fungsi, & Ideologi Terbuka
+                                <span class="badge chapter-badge">BAB 3</span> Pengamalan Nilai Sila Pancasila
                             </button>
                         </h2>
                         <div id="bab3" class="accordion-collapse collapse" data-bs-parent="#modulPancasila">
                             <div class="accordion-body text-secondary lh-lg p-4 bg-white">
-                                <h6><strong>A. Kedudukan Yuridis</strong></h6>
-                                <p>Pancasila berkedudukan sebagai <strong>Sumber dari Segala Sumber Hukum</strong> di Indonesia. Artinya, seluruh regulasi hukum di bawahnya (UUD 1945, UU, Perda) mutlak tidak boleh bertentangan dengan nilai dasar Pancasila.</p>
-                                
-                                <h6><strong>B. Dimensi Pancasila sebagai Ideologi Terbuka</strong></h6>
-                                <p>Mampu menyesuaikan diri dengan perkembangan zaman tanpa kehilangan nilai murninya melalui 3 dimensi:</p>
-                                <ol>
-                                    <li><strong>Dimensi Realitas:</strong> Mencerminkan kemampuan nilai hidup di masyarakat.</li>
-                                    <li><strong>Dimensi Idealisme:</strong> Mengandung cita-cita rasional masa depan.</li>
-                                    <li><strong>Dimensi Fleksibilitas:</strong> Memiliki keluwesan pengembangan pemikiran baru.</li>
-                                </ol>
-
-                                <h6><strong>C. Paradigma Pembangunan & Pertahanan</strong></h6>
-                                <p>Pancasila berperan sebagai landasan idiil pertahanan nasional serta tolok ukur, landasan orientasi, dan arah pembangunan nasional Republik Indonesia.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden shadow-sm">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed py-3 text-dark fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#bab4">
-                                <span class="badge chapter-badge">BAB 4</span> Implementasi Pengamalan Sila 1, 2, dan 3
-                            </button>
-                        </h2>
-                        <div id="bab4" class="accordion-collapse collapse" data-bs-parent="#modulPancasila">
-                            <div class="accordion-body text-secondary lh-lg p-4 bg-white">
-                                <p>Berikut wujud pengamalan riil (Nilai Praksis) Pancasila yang diujikan dalam kuis:</p>
-                                
-                                <h6 class="text-dark fw-bold">Sila 1: Ketuhanan Yang Maha Esa (Simbol: Bintang)</h6>
                                 <ul>
-                                    <li>Mengembangkan toleransi dan sikap saling menghormati antar pemeluk agama yang berbeda demi kerukunan (Pasal 29 UUD 1945).</li>
-                                </ul>
-
-                                <h6 class="text-dark fw-bold">Sila 2: Kemanusiaan yang Adil dan Beradab (Simbol: Rantai Emas)</h6>
-                                <ul>
-                                    <li>Menjunjung tinggi Hak Asasi Manusia (HAM), menolak segala diskriminasi suku/ras/gender, serta mengakui kesetaraan derajat harkat martabat manusia.</li>
-                                </ul>
-
-                                <h6 class="text-dark fw-bold">Sila 3: Persatuan Indonesia (Simbol: Pohon Beringin)</h6>
-                                <ul>
-                                    <li>Melakukan kegiatan gotong royong, mencintai tanah air dengan mengutamakan membeli produk-produk UMKM lokal dalam negeri, serta menempatkan keselamatan bangsa di atas golongan pribadi.</li>
+                                    <li><strong>Sila 1 (Bintang):</strong> Toleransi antar pemeluk agama yang berbeda.</li>
+                                    <li><strong>Sila 2 (Rantai Emas):</strong> Menjunjung HAM dan anti diskriminasi.</li>
+                                    <li><strong>Sila 3 (Pohon Beringin):</strong> Cinta tanah air, gotong royong, membeli produk dalam negeri.</li>
+                                    <li><strong>Sila 4 (Kepala Banteng):</strong> Mengutamakan musyawarah untuk mufakat.</li>
+                                    <li><strong>Sila 5 (Padi dan Kapas):</strong> Menghindari gaya hidup mewah/boros, adil menjaga hak dan kewajiban.</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden shadow-sm">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed py-3 text-dark fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#bab5">
-                                <span class="badge chapter-badge">BAB 5</span> Implementasi Pengamalan Sila 4 dan 5
-                            </button>
-                        </h2>
-                        <div id="bab5" class="accordion-collapse collapse" data-bs-parent="#modulPancasila">
-                            <div class="accordion-body text-secondary lh-lg p-4 bg-white">
-                                <h6 class="text-dark fw-bold">Sila 4: Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan (Simbol: Kepala Banteng)</h6>
-                                <ul>
-                                    <li>Mengutamakan jalur musyawarah untuk mufakat dalam organisasi politik/kemasyarakatan, serta tidak memaksakan kehendak atau pendapat pribadi kepada orang lain saat rapat.</li>
-                                </ul>
-
-                                <h6 class="text-dark fw-bold">Sila 5: Keadilan Sosial bagi Seluruh Rakyat Indonesia (Simbol: Padi dan Kapas)</h6>
-                                <ul>
-                                    <li>Mengembangkan perilaku luhur dengan menjauhkan diri dari gaya hidup mewah, boros, menimbun harta, menjauhi aksi korupsi/nepotisme, menjaga harmoni hak dan kewajiban, serta menghargai hasil karya orang lain melalui pujian objektif.</li>
-                                </ul>
-                                
-                                <div class="highlight-box">
-                                    <i class="fa-solid fa-lightbulb text-warning me-2"></i><strong>Tips Kuis:</strong> Perhatikan makna simbol Rantai Emas (gelang kotak melambangkan laki-laki, gelang lingkaran melambangkan perempuan yang saling terikat harmonis membantu).
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </main>
@@ -280,20 +115,16 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-    // 1. Ambil nama & nim dari URL parameter agar sinkron
     const urlParams = new URLSearchParams(window.location.search);
-    const namaUser = urlParams.get('username') || "Sulviana Fahra";
-    const nimUser = urlParams.get('nim') || "45223113";
+    const namaUser = urlParams.get('username') || "Peserta";
+    const nimUser = urlParams.get('nim') || "";
     const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
 
-    // 2. Tempel teks ke elemen HTML
-    document.getElementById('sidebar-name').innerText = namaUser;
-    document.getElementById('sidebar-nim').innerText = "NIM: " + nimUser;
+    // Tampilkan identitas peserta yang login di Header
     document.getElementById('header-user').innerText = `${namaUser} (${nimUser})`;
 
-    // 3. Modifikasi tautan navigasi menu samping
+    // Tautan navigasi
     document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
     document.getElementById('link-materi').href = "materi.html" + parameterQuery;
     document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
