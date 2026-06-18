@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login EduPancasila</title>
+    <title>Portal Akses - EduPancasila</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { 
-            background-color: #111827; /* Navy Gelap, Senada dengan Sidebar Dashboard */
+            background-color: #111827; /* Navy Gelap, Senada dengan Dashboard */
             height: 100vh; 
             display: flex; 
             align-items: center; 
@@ -23,6 +23,7 @@
             width: 100%; 
             max-width: 420px; 
             border-top: 6px solid #C8102E; /* Garis Aksen Merah Bendera */
+            transition: all 0.3s ease;
         }
         .form-control:focus { 
             border-color: #C8102E; 
@@ -40,13 +41,33 @@
 </head>
 <body>
 
-<div class="login-card">
+<div class="login-card" id="box-token">
     <div class="text-center mb-4">
-        <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-flag text-danger me-2"></i>EduPancasila</h3>
-        <p class="text-secondary small">Silakan lengkapi data untuk mengakses platform</p>
+        <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-lock text-danger me-2"></i>EduPancasila</h3>
+        <p class="text-secondary small">Masukkan Token Akses untuk membuka gerbang ujian</p>
     </div>
 
-    <div id="alert-container"></div>
+    <div id="alert-token-container"></div>
+
+    <form onsubmit="verifikasiToken(event)">
+        <div class="mb-4">
+            <label class="form-label fw-semibold text-dark">Token Akses Platform</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-key"></i></span>
+                <input type="password" id="token-input" class="form-control" required placeholder="Ketik token kuis di sini">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-danger w-100 py-2 fw-bold rounded-3 shadow-sm">
+            <i class="fa-solid fa-shield-halved me-2"></i>Verifikasi Akses
+        </button>
+    </form>
+</div>
+
+<div class="login-card d-none" id="box-login">
+    <div class="text-center mb-4">
+        <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-flag text-danger me-2"></i>EduPancasila</h3>
+        <p class="text-secondary small">Token Berhasil Terverifikasi! Silakan isi identitas Anda</p>
+    </div>
 
     <form onsubmit="prosesLogin(event)">
         <div class="mb-3">
@@ -65,8 +86,8 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-danger w-100 py-2 fw-bold rounded-3 shadow-sm">
-            <i class="fa-solid fa-right-to-bracket me-2"></i>Masuk Platform
+        <button type="submit" class="btn btn-success w-100 py-2 fw-bold rounded-3 shadow-sm" style="background-color: #16A34A; border: none;">
+            <i class="fa-solid fa-right-to-bracket me-2"></i>Masuk Halaman Utama
         </button>
     </form>
 </div>
@@ -74,25 +95,48 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    function prosesLogin(event) {
-        event.preventDefault(); // Menahan form agar tidak refresh otomatis
+    // Fungsi Langkah 1: Memvalidasi Token Gerbang Utama
+    function verifikasiToken(event) {
+        event.preventDefault();
         
-        const nama = document.getElementById('username').value.trim();
-        const nim = document.getElementById('nim').value.trim();
-        const alertContainer = document.getElementById('alert-container');
+        const tokenKonten = document.getElementById('token-input').value.trim();
+        const alertContainer = document.getElementById('alert-token-container');
 
-        // Tampilan notifikasi hijau langsung sukses tanpa cek token
+        // Pengecekan token rahasia
+        if (tokenKonten !== "kuispancasila") {
+            alertContainer.innerHTML = `
+                <div class="alert alert-danger d-flex align-items-center rounded-3 mb-3 py-2 fs-7" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                    <div>Token Akses Salah! Anda tidak diizinkan masuk portal.</div>
+                </div>
+            `;
+            return;
+        }
+
+        // Jika benar, berikan efek transisi membuka form login identitas
         alertContainer.innerHTML = `
-            <div class="alert alert-success d-flex align-items-center rounded-3 mb-3 py-2" role="alert">
+            <div class="alert alert-success d-flex align-items-center rounded-3 mb-3 py-2 fs-7" role="alert">
                 <i class="fa-solid fa-circle-check me-2"></i>
-                <div>Selamat datang di platform! Membuka halaman utama...</div>
+                <div>Token Benar! Membuka form data diri...</div>
             </div>
         `;
 
-        // Memberikan jeda animasi selama 1.2 detik sebelum beralih ke dashboard
         setTimeout(() => {
-            window.location.href = `dashboard.html?username=${encodeURIComponent(nama)}&nim=${encodeURIComponent(nim)}`;
-        }, 1200);
+            // Sembunyikan box token, lalu munculkan box nama & nim
+            document.getElementById('box-token').classList.add('d-none');
+            document.getElementById('box-login').classList.remove('d-none');
+        }, 1000);
+    }
+
+    // Fungsi Langkah 2: Mengirimkan Identitas ke Dashboard
+    function prosesLogin(event) {
+        event.preventDefault();
+        
+        const nama = document.getElementById('username').value.trim();
+        const nim = document.getElementById('nim').value.trim();
+
+        // Langsung arahkan ke dashboard dengan parameter URL
+        window.location.href = `dashboard.html?username=${encodeURIComponent(nama)}&nim=${encodeURIComponent(nim)}`;
     }
 </script>
 </body>
