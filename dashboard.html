@@ -3,98 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPancasila - Dashboard</title>
+    <title>EduPancasila - Dashboard Utama</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary-red: #C8102E; --dark-navy: #111827; --light-bg: #F3F4F6; }
-        body { background-color: var(--light-bg); font-family: 'Inter', sans-serif; }
-        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; }
-        .profile-section { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        .profile-img { width: 85px; height: 85px; border: 3px solid var(--primary-red); object-fit: cover; }
-        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 500; }
-        .nav-pills .nav-link.active { background-color: var(--primary-red); color: #FFFFFF; }
-        .top-navbar { background-color: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
-        .hero-banner { background: linear-gradient(135deg, #C8102E 0%, #7A0A1C 100%); color: white; border-radius: 16px; }
-        .stat-card { border: none; border-radius: 14px; background-color: #FFFFFF; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        :root {
+            --primary-red: #C8102E;     
+            --dark-navy: #111827;       
+            --light-bg: #F3F4F6;        
+            --info-blue: #0284C7;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background-color: var(--dark-navy);
+            min-height: 100vh;
+            color: #E5E7EB;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-img {
+            width: 85px;
+            height: 85px;
+            border: 3px solid var(--primary-red);
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-pills .nav-link {
+            color: #9CA3AF;
+            margin-bottom: 6px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-pills .nav-link:hover {
+            color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-red);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
+        }
+        
+        /* Navigasi khusus Kewarganegaraan */
+        .nav-pills .nav-link.active-blue {
+            background-color: var(--info-blue) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+
+        .nav-pills .nav-link i {
+            width: 24px;
+            font-size: 1.1rem;
+        }
+
+        .top-navbar {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        /* Cards Styling */
+        .hero-banner {
+            background: linear-gradient(135deg, #C8102E 0%, #7A0A1C 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(200, 16, 46, 0.15);
+        }
+
+        .stat-card {
+            border: none;
+            border-radius: 14px;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
     </style>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
+        
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
-                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle mb-3 profile-img">
+                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle profile-img mb-3">
                     <h6 class="fw-bold mb-1 text-white">Sulviana Fahra</h6>
                     <span class="badge bg-secondary px-2 py-1 fs-7">NIM: 45223113</span>
                 </div>
                 
                 <ul class="nav nav-pills flex-column mb-auto px-2">
-                    <li class="nav-item"><a href="#" class="nav-link active" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Mulai Kuis (40)</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap & Peringkat</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" id="link-beranda">
+                            <i class="fa-solid fa-house"></i> Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-materi">
+                            <i class="fa-solid fa-book-open"></i> Materi Belajar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-kuis">
+                            <i class="fa-solid fa-pen-to-square"></i> Kuis Pancasila
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-rekap">
+                            <i class="fa-solid fa-chart-simple"></i> Rekap Kuis Pancasila
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item mt-3 mb-1 text-muted small fw-bold px-2">Ujian Kebangsaan:</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-kuis-kwg">
+                            <i class="fa-solid fa-scale-balanced"></i> Kuis Kewarganegaraan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-rekap-kwg">
+                            <i class="fa-solid fa-table-list"></i> Rekap Kewarganegaraan
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
+            
             <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
-                <div class="text-muted fw-medium">Akun Aktif: <span class="text-danger fw-bold" id="header-status">User</span></div>
-                <a href="index.html" class="btn btn-sm btn-outline-danger px-3 rounded-pill">Keluar</a>
+                <div class="text-muted fw-medium">
+                    Akun Aktif: <span class="text-danger fw-bold" id="header-status">Memuat...</span>
+                </div>
+                <a href="index.html" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-medium">
+                    <i class="fa-solid fa-arrow-right-from-bracket me-1"></i>Keluar
+                </a>
             </div>
 
             <div class="p-4">
+                
                 <div class="card hero-banner p-4 mb-4 border-0 shadow-sm">
-                    <h3 class="fw-bold mb-2">Halo, <span id="welcome-name">User</span>!</h3>
-                    <p class="mb-0 opacity-75">Selamat datang di Platform Edukasi Pancasila. Silakan pelajari materi yang tersedia, kerjakan evaluasi kuis, dan bersainglah di papan peringkat kelas.</p>
+                    <div class="card-body p-2" style="max-width: 750px;">
+                        <h2 class="fw-bold mb-2">Selamat Datang, <span id="welcome-name" class="text-warning">User</span>!</h2>
+                        <p class="mb-0 opacity-75 lh-base">Selamat datang di Platform Edukasi Kebangsaan. Anda dapat mengakses materi belajar secara mandiri, mengikuti simulasi evaluasi kuis interaktif, serta melihat perbandingan kompetensi nilai pada papan peringkat kelas.</p>
+                    </div>
                 </div>
 
-                <div class="row g-4 mb-4" id="stats-row-container">
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-md-4">
+                        <div class="card stat-card p-4 border-start border-4 border-danger h-100">
+                            <span class="text-muted small fw-bold d-block mb-1">MODUL BELAJAR</span>
+                            <h3 class="fw-bold text-dark mb-0">5 Bab Utama</h3>
+                            <small class="text-muted d-block mt-2">Materi Pancasila & Tata Negara</small>
+                        </div>
                     </div>
+                    
+                    <div class="col-12 col-md-4">
+                        <div class="card stat-card p-4 border-start border-4 border-warning h-100">
+                            <span class="text-muted small fw-bold d-block mb-1">NILAI KUIS PANCASILA</span>
+                            <h3 class="fw-bold mb-0 text-dark" id="nilai-pancasila-box">Belum Ujian</h3>
+                            <small class="text-muted d-block mt-2" id="status-pancasila-box">-</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="card stat-card p-4 border-start border-4 border-info h-100">
+                            <span class="text-muted small fw-bold d-block mb-1">NILAI KEWARGANEGARAAN</span>
+                            <h3 class="fw-bold mb-0 text-dark" id="nilai-kwg-box">Belum Ujian</h3>
+                            <small class="text-muted d-block mt-2" id="status-kwg-box">-</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom">
+                            <i class="fa-solid fa-circle-info text-danger me-2"></i>Panduan Pelaksanaan Evaluasi:
+                        </h5>
+                        <ol class="text-secondary lh-lg ps-3 mb-0">
+                            <li>Bacalah ringkasan rangkuman kisi-kisi pada halaman <strong class="text-dark">Materi Belajar</strong>.</li>
+                            <li>Kerjakan secara bertahap <strong class="text-dark">Kuis Pancasila (40 Soal)</strong> dan <strong class="text-dark">Kuis Kewarganegaraan (20 Soal)</strong> secara jujur tanpa berpindah tab.</li>
+                            <li>Pantau pembaruan posisi kompetensi peringkat kelompok kelas Anda pada menu rekapitulasi masing-masing kuis.</li>
+                        </ol>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
+    // 1. Ambil Parameter Data Pengguna Yang Sedang Aktif Login dari URL
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('username') || 'Peserta';
     const nim = urlParams.get('nim') || '';
 
-    // Tempel identitas ke Header atas
+    // 2. Tampilkan Nama Akun Aktif di Layar Utama
     document.getElementById('header-status').innerText = `${username} (NIM: ${nim || '-'})`;
     document.getElementById('welcome-name').innerText = username;
 
-    // Ikat Link Navigasi agar query string parameter akun ikut terbawa halaman lain
-    const query = `?username=${encodeURIComponent(username)}&nim=${encodeURIComponent(nim)}`;
-    document.getElementById('link-beranda').href = "dashboard.html" + query;
-    document.getElementById('link-materi').href = "materi.html" + query;
-    document.getElementById('link-kuis').href = "kuis.html" + query;
-    document.getElementById('link-rekap').href = "rekap.html" + query;
+    // 3. Pasang Query Parameter di Semua Link Navigasi (Mencegah Kehilangan Akun Saat Berpindah Halaman)
+    const parameterQuery = `?username=${encodeURIComponent(username)}&nim=${encodeURIComponent(nim)}`;
+    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
+    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
+    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
+    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+    document.getElementById('link-kuis-kwg').href = "kuis-kewarganegaraan.html" + parameterQuery;
+    document.getElementById('link-rekap-kwg').href = "rekap-kewarganegaraan.html" + parameterQuery;
 
-    // --- REVISI UTAMA: MENCARI NILAI SPESIFIK BERDASARKAN NIM MAHASISWA AKTIF ---
-    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
+    // 4. PEMBACAAN NILAI DINAMIS BERDASARKAN NIM (ANTI SANGKUT AKUN LAIN)
     
-    // Cari data di database global yang cocok dengan NIM login saat ini
-    let dataKuisSaya = semuaPeserta.find(p => p.nim === nim);
-
-    let nilaiDisplay = "Belum Ujian";
-    let statusKelulusan = "Belum Ada Nilai";
-
-    if (dataKuisSaya) {
-        nilaiDisplay = dataKuisSaya.nilai;
-        statusKelulusan = nilaiDisplay >= 75 ? "LULUS 🎉" : "REMEDIAL 📚";
+    // A. Cari Nilai Kuis Pancasila
+    let databasePancasila = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
+    let skorPancasilaSaya = databasePancasila.find(p => p.nim === nim);
+    
+    if (skorPancasilaSaya) {
+        document.getElementById('nilai-pancasila-box').innerText = `${skorPancasilaSaya.nilai} / 100`;
+        document.getElementById('status-pancasila-box').innerText = skorPancasilaSaya.nilai >= 75 ? "Status: LULUS 🎉" : "Status: REMEDIAL 📚";
+        document.getElementById('status-pancasila-box').className = skorPancasilaSaya.nilai >= 75 ? "text-success fw-bold small mt-2 d-block" : "text-warning fw-bold small mt-2 d-block";
     }
 
-    // Gambar ulang card statistik secara real-time khusus data milik akun aktif
-    document.getElementById('stats-row-container').innerHTML = `
-        <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-danger"><span class="text-muted small d-block">TOTAL MATERI</span><h3 class="fw-bold">5 Bab</h3></div></div>
-        <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-warning"><span class="text-muted small d-block">NILAI KUIS ANDA</span><h3 class="fw-bold text-dark">${nilaiDisplay}</h3></div></div>
-        <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-success"><span class="text-muted small d-block">STATUS EVALUASI</span><h3 class="fw-bold text-success">${statusKelulusan}</h3></div></div>
-    `;
+    // B. Cari Nilai Kuis Kewarganegaraan
+    let databaseKewarganegaraan = JSON.parse(localStorage.getItem('semuaNilaiKewarganegaraan')) || [];
+    let skorKwgSaya = databaseKewarganegaraan.find(p => p.nim === nim);
+    
+    if (skorKwgSaya) {
+        document.getElementById('nilai-kwg-box').innerText = `${skorKwgSaya.nilai} / 100`;
+        document.getElementById('status-kwg-box').innerText = skorKwgSaya.nilai >= 75 ? "Status: LULUS 🎉" : "Status: REMEDIAL 📚";
+        document.getElementById('status-kwg-box').className = skorKwgSaya.nilai >= 75 ? "text-success fw-bold small mt-2 d-block" : "text-warning fw-bold small mt-2 d-block";
+    }
 </script>
 </body>
 </html>
