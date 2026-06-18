@@ -3,154 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis Pancasila - 100 Soal</title>
+    <title>EduPancasila - Evaluasi Interaktif</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary-red: #C8102E; --dark-navy: #111827; }
-        body { background-color: #F3F4F6; font-family: 'Inter', sans-serif; }
-        .opsi-jawaban {
-            display: block; width: 100%; text-align: left; margin-bottom: 12px;
-            padding: 15px 20px; border: 2px solid #E5E7EB; border-radius: 10px;
-            background: white; font-weight: 500; transition: all 0.2s; cursor: pointer;
+        :root {
+            --primary-red: #C8102E;     /* Merah Bendera */
+            --dark-navy: #111827;       /* Navy Gelap Profesional */
+            --light-bg: #F3F4F6;        /* Background Ringan */
         }
-        .opsi-jawaban:hover { border-color: var(--primary-red); background-color: rgba(200, 16, 46, 0.05); }
-        .opsi-terpilih { background: var(--primary-red) !important; color: white !important; border-color: var(--primary-red); }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        /* Sidebar Styling (Konsisten dengan Dashboard & Rekap) */
+        .sidebar {
+            background-color: var(--dark-navy);
+            min-height: 100vh;
+            color: #E5E7EB;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-img {
+            width: 85px;
+            height: 85px;
+            border: 3px solid var(--primary-red);
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-pills .nav-link {
+            color: #9CA3AF;
+            margin-bottom: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-pills .nav-link:hover {
+            color: #FFFFFF;
+            background-color: rgba(200, 16, 46, 0.1);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-red);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
+        }
+
+        .nav-pills .nav-link i {
+            width: 24px;
+            font-size: 1.1rem;
+        }
+
+        .top-navbar {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        /* Opsi Pilihan Ganda Styling */
+        .opsi-jawaban {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 14px;
+            padding: 16px 20px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            background: white;
+            font-weight: 500;
+            color: #374151;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .opsi-jawaban:hover {
+            border-color: var(--primary-red);
+            background-color: rgba(200, 16, 46, 0.03);
+            transform: translateX(4px);
+        }
+
+        .opsi-terpilih {
+            background: linear-gradient(135deg, #C8102E 0%, #A60D24 100%) !important;
+            color: white !important;
+            border-color: var(--primary-red) !important;
+            box-shadow: 0 4px 12px rgba(200, 16, 46, 0.2);
+        }
+
+        .quiz-card {
+            border: none;
+            border-radius: 16px;
+            background-color: #FFFFFF;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+            background-color: #E5E7EB;
+        }
+        .progress-bar {
+            background-color: var(--primary-red);
+        }
     </style>
 </head>
-<body class="p-4">
+<body>
 
-<div class="container max-w-3xl mx-auto" style="max-width: 800px;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="fw-bold text-dark mb-0">Evaluasi Pancasila</h3>
-            <small class="text-muted" id="info-peserta">Peserta: Memuat...</small>
-        </div>
-        <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill shadow-sm" id="indikatorSoal">Soal 1 / 100</span>
-    </div>
-
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-body p-5">
-            <h5 id="teksPertanyaan" class="mb-4 lh-base fw-semibold fs-5 text-dark">Memuat pertanyaan...</h5>
-            <div id="areaOpsi"></div>
-            
-            <div class="d-flex justify-content-between mt-5 pt-3 border-top">
-                <button class="btn btn-outline-secondary px-4 fw-medium" onclick="kembaliKeDashboard()">Batal</button>
-                <button class="btn btn-danger px-4 fw-medium" onclick="soalSelanjutnya()">Selanjutnya <i class="fas fa-arrow-right ms-2"></i></button>
+<div class="container-fluid">
+    <div class="row">
+        
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+            <div class="d-flex flex-column p-3 h-100">
+                <div class="text-center profile-section py-4 mb-4">
+                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle profile-img mb-3">
+                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">Memuat...</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7" id="sidebar-nim">NIM: -</span>
+                </div>
+                
+                <ul class="nav nav-pills flex-column mb-auto px-2">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-beranda">
+                            <i class="fa-solid fa-house me-2"></i>Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-materi">
+                            <i class="fa-solid fa-book-open me-2"></i>Materi Pancasila
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" id="link-kuis">
+                            <i class="fa-solid fa-layer-group me-2"></i>Bank Soal (Kuis)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="link-rekap">
+                            <i class="fa-solid fa-chart-simple me-2"></i>Rekap Nilai
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
+            
+            <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
+                <div class="text-muted fw-medium">
+                    <i class="fa-solid fa-pen-to-square text-danger me-2"></i>Mode Ujian Sesi: <strong class="text-dark" id="header-user-info">Memuat...</strong>
+                </div>
+                <button onclick="keluarKuis()" class="btn btn-sm btn-outline-secondary px-3 rounded-pill fw-medium">
+                    <i class="fa-solid fa-house-crack me-1"></i>Batal Ujian
+                </button>
+            </div>
+
+            <div class="p-4 d-flex justify-content-center">
+                <div class="col-12 col-xl-9">
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-secondary fw-medium small">PROGRES PENGERJAAN</span>
+                        <span class="badge bg-danger px-3 py-2 rounded-pill fw-bold fs-7" id="indikatorSoal">Soal 1 / 40</span>
+                    </div>
+                    <div class="progress mb-4">
+                        <div class="progress-bar" id="bar-progres" role="progressbar" style="width: 2.5%;"></div>
+                    </div>
+
+                    <div class="card quiz-card p-4 p-md-5">
+                        <div class="card-body p-0">
+                            <h4 id="teksPertanyaan" class="lh-base fw-semibold text-dark mb-4" style="font-size: 1.25rem;">
+                                Sedang memuat pertanyaan kuis...
+                            </h4>
+                            
+                            <div id="areaOpsi" class="mt-2"></div>
+                            
+                            <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                                <button class="btn btn-danger px-4 py-2 fw-bold rounded-3 shadow-sm" onclick="soalSelanjutnya()">
+                                    Selanjutnya <i class="fa-solid fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
     </div>
 </div>
 
-<script>
-    // URL Parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const namaUser = urlParams.get('username') || "Peserta";
-    const nimUser = urlParams.get('nim') || "";
-    const paramQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
-    
-    document.getElementById('info-peserta').innerText = `Peserta: ${namaUser} (${nimUser})`;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    // BANK SOAL (Contoh 30 Soal. Tambahkan terus sampai 100 dengan format yang sama)
+<script>
+    // 1. Sinkronisasi Data Parameter Akun dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const namaUser = urlParams.get('username') || "Sulviana Fahra";
+    const nimUser = urlParams.get('nim') || "45223113";
+    const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
+
+    document.getElementById('sidebar-name').innerText = namaUser;
+    document.getElementById('sidebar-nim').innerText = "NIM: " + nimUser;
+    document.getElementById('header-user-info').innerText = `${namaUser} (${nimUser})`;
+
+    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
+    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
+    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
+    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+
+    // 2. KUMPULAN BANK SOAL PANCASILA & KEWARGANEGARAAN (40 SOAL)
     const bankSoal = [
         { pertanyaan: "Pancasila secara etimologis berasal dari bahasa...", opsi: ["Sanskerta", "Kawi", "Jawa Kuno", "Melayu"], jawabanBenar: 0 },
-        { pertanyaan: "Siapakah yang pertama kali mengemukakan istilah Pancasila dalam sidang BPUPKI?", opsi: ["Moh. Yamin", "Soepomo", "Soekarno", "Moh. Hatta"], jawabanBenar: 2 },
-        { pertanyaan: "Tanggal berapakah yang diperingati sebagai Hari Lahir Pancasila?", opsi: ["18 Agustus", "1 Juni", "17 Agustus", "20 Mei"], jawabanBenar: 1 },
-        { pertanyaan: "Sila Keadilan Sosial bagi Seluruh Rakyat Indonesia dilambangkan dengan...", opsi: ["Padi dan Kapas", "Rantai Emas", "Pohon Beringin", "Bintang"], jawabanBenar: 0 },
-        { pertanyaan: "Badan yang bertugas merumuskan dasar negara sebelum PPKI dibentuk adalah...", opsi: ["KNIP", "Panitia Sembilan", "BPUPKI", "Budi Utomo"], jawabanBenar: 2 },
-        { pertanyaan: "Sikap saling menghormati antar pemeluk agama mencerminkan pengamalan sila ke...", opsi: ["Satu", "Dua", "Tiga", "Lima"], jawabanBenar: 0 },
-        { pertanyaan: "Gotong royong merupakan bentuk pengamalan Pancasila, khususnya sila ke...", opsi: ["Satu", "Dua", "Tiga", "Lima"], jawabanBenar: 2 },
-        { pertanyaan: "Piagam Jakarta (Jakarta Charter) dirumuskan pada tanggal...", opsi: ["1 Juni 1945", "22 Juni 1945", "18 Agustus 1945", "29 Mei 1945"], jawabanBenar: 1 },
-        { pertanyaan: "Ketua Panitia Sembilan yang merumuskan Piagam Jakarta adalah...", opsi: ["A.A. Maramis", "Agus Salim", "Soekarno", "Wahid Hasyim"], jawabanBenar: 2 },
-        { pertanyaan: "Sila kedua Pancasila menekankan pada nilai...", opsi: ["Kemanusiaan", "Ketuhanan", "Persatuan", "Keadilan"], jawabanBenar: 0 },
-        { pertanyaan: "Musyawarah untuk mufakat adalah ciri khas demokrasi Pancasila yang terdapat pada sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 2 },
-        { pertanyaan: "Pancasila berkedudukan sebagai falsafah bangsa, yang artinya...", opsi: ["Sumber hukum tertulis", "Pedoman hidup berbangsa dan bernegara", "Aturan pidana", "Dasar ekonomi"], jawabanBenar: 1 },
-        { pertanyaan: "Toleransi dalam kehidupan beragama merupakan wujud dari...", opsi: ["Pasal 27 UUD 1945", "Pasal 29 UUD 1945", "Pasal 30 UUD 1945", "Pasal 33 UUD 1945"], jawabanBenar: 1 },
-        { pertanyaan: "Sila ketiga 'Persatuan Indonesia' dilambangkan oleh...", opsi: ["Bintang", "Rantai", "Pohon Beringin", "Kepala Banteng"], jawabanBenar: 2 },
-        { pertanyaan: "Makna dari lambang Rantai pada sila kedua adalah...", opsi: ["Kemakmuran", "Kekuatan negara", "Hubungan manusia yang saling membantu", "Keadilan hukum"], jawabanBenar: 2 },
-        { pertanyaan: "Siapakah tokoh yang mengubah kalimat 'Ketuhanan dengan kewajiban menjalankan syariat Islam...' menjadi 'Ketuhanan Yang Maha Esa'?", opsi: ["Moh. Hatta", "Soekarno", "Ki Hajar Dewantara", "Ahmad Soebardjo"], jawabanBenar: 0 },
-        { pertanyaan: "Nilai praksis dari Pancasila adalah...", opsi: ["Nilai dasar yang mutlak", "Penerapan nilai Pancasila dalam kehidupan sehari-hari", "Aturan dalam UUD", "Kebijakan pemerintah daerah"], jawabanBenar: 1 },
-        { pertanyaan: "Sikap tidak bergaya hidup mewah dan boros adalah pengamalan sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 3 },
-        { pertanyaan: "Menjaga keseimbangan antara hak dan kewajiban merupakan nilai dari sila...", opsi: ["Satu", "Dua", "Empat", "Lima"], jawabanBenar: 3 },
-        { pertanyaan: "Pancasila disahkan secara resmi sebagai dasar negara pada tanggal...", opsi: ["1 Juni 1945", "17 Agustus 1945", "18 Agustus 1945", "19 Agustus 1945"], jawabanBenar: 2 },
-        { pertanyaan: "Dimensi Pancasila yang menunjukkan bahwa Pancasila dapat menyesuaikan diri dengan perkembangan zaman disebut dimensi...", opsi: ["Realitas", "Idealisme", "Fleksibilitas (Keterbukaan)", "Kaku"], jawabanBenar: 2 },
-        { pertanyaan: "Pemberontakan G30S/PKI merupakan ancaman paling nyata terhadap ideologi Pancasila karena...", opsi: ["Ingin mengganti presiden", "Ingin mengubah bentuk negara", "Ingin mengganti Pancasila dengan komunisme", "Meminta otonomi daerah"], jawabanBenar: 2 },
-        { pertanyaan: "Lambang negara Garuda Pancasila dirancang oleh...", opsi: ["Sultan Hamid II", "Soedirman", "Soekarno", "W.R. Supratman"], jawabanBenar: 0 },
-        { pertanyaan: "Jumlah bulu pada leher burung Garuda adalah...", opsi: ["17", "8", "19", "45"], jawabanBenar: 3 },
-        { pertanyaan: "Semboyan 'Bhinneka Tunggal Ika' diambil dari kitab...", opsi: ["Negarakertagama", "Sutasoma", "Pararaton", "Arjuna Wiwaha"], jawabanBenar: 1 },
-        { pertanyaan: "Penulis kitab Sutasoma adalah...", opsi: ["Mpu Prapanca", "Mpu Tantular", "Mpu Sedah", "Mpu Panuluh"], jawabanBenar: 1 },
-        { pertanyaan: "Pancasila sebagai paradigma pembangunan artinya...", opsi: ["Pancasila menjadi tolok ukur, landasan, dan arah pembangunan", "Pancasila membatasi kebebasan ekonomi", "Pembangunan hanya untuk kelompok tertentu", "Pembangunan meniru negara barat"], jawabanBenar: 0 },
-        { pertanyaan: "Tidak memaksakan kehendak kepada orang lain adalah cerminan sila...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 2 },
-        { pertanyaan: "Menjunjung tinggi hak asasi manusia (HAM) sangat erat kaitannya dengan sila...", opsi: ["Satu", "Dua", "Tiga", "Empat"], jawabanBenar: 1 },
-        { pertanyaan: "Cinta tanah air dan bangsa dapat diwujudkan dengan cara...", opsi: ["Membeli barang impor terus menerus", "Bangga menggunakan produk dalam negeri", "Mengikuti gaya hidup kebarat-baratan", "Merendahkan budaya bangsa lain"], jawabanBenar: 1 }
-        // FORMAT UNTUK MENAMBAH SOAL:
-        // { pertanyaan: "Tulis pertanyaan di sini", opsi: ["Pilihan A", "Pilihan B", "Pilihan C", "Pilihan D"], jawabanBenar: 0 },
-        // (Ingat: jawabanBenar 0 = A, 1 = B, 2 = C, 3 = D)
+        { pertanyaan: "Siapakah yang pertama kali mengemukakan istilah Pancasila secara resmi pada tanggal 1 Juni 1945?", opsi: ["Moh. Yamin", "Mr. Soepomo", "Ir. Soekarno", "Drs. Moh. Hatta"], jawabanBenar: 2 },
+        { pertanyaan: "Tanggal berapakah yang diperingati sebagai Hari Lahir Pancasila?", opsi: ["18 Agustus 1945", "1 Juni 1945", "17 Agustus 1945", "1 Oktober 1945"], jawabanBenar: 1 },
+        { pertanyaan: "Sila 'Keadilan Sosial bagi Seluruh Rakyat Indonesia' dilambangkan oleh simbol...", opsi: ["Padi dan Kapas", "Rantai Emas", "Pohon Beringin", "Bintang"], jawabanBenar: 0 },
+        { pertanyaan: "Badan yang bertugas menyelidiki dan merumuskan dasar negara Indonesia pertama kali adalah...", opsi: ["PPKI", "Panitia Sembilan", "BPUPKI", "KNIP"], jawabanBenar: 2 },
+        { pertanyaan: "Sikap saling menghormati antar pemeluk agama yang berbeda merupakan wujud pengamalan sila ke...", opsi: ["Satu", "Dua", "Tiga", "Lima"], jawabanBenar: 0 },
+        { pertanyaan: "Kegiatan gotong royong dan kerja bakti di lingkungan masyarakat mencerminkan nilai luhur Pancasila sila ke...", opsi: ["Satu", "Dua", "Tiga", "Lima"], jawabanBenar: 2 },
+        { pertanyaan: "Piagam Jakarta (Jakarta Charter) yang memuat rumusan awal Pancasila ditandatangani pada tanggal...", opsi: ["1 Juni 1945", "22 Juni 1945", "18 Agustus 1945", "29 Mei 1945"], jawabanBenar: 1 },
+        { pertanyaan: "Siapakah ketua dari Panitia Sembilan yang berhasil merumuskan Piagam Jakarta?", opsi: ["Mr. A.A. Maramis", "H. Agus Salim", "Ir. Soekarno", "K.H. Wahid Hasyim"], jawabanBenar: 2 },
+        { pertanyaan: "Sila kedua Pancasila, 'Kemanusiaan yang Adil dan Beradab', mengandung nilai utama tentang...", opsi: ["Harkat, martabat, dan hak asasi manusia", "Ketakwaan kepada Tuhan", "Kedaulatan ekonomi rakyat", "Persatuan wilayah nasional"], jawabanBenar: 0 },
+        { pertanyaan: "Musyawarah untuk mencapai mufakat adalah ciri demokrasi Pancasila yang dipimpin oleh hikmat kebijaksanaan pada sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 2 },
+        { pertanyaan: "Kedudukan Pancasila sebagai pandangan hidup bangsa mengandung arti bahwa Pancasila berfungsi sebagai...", opsi: ["Sumber dari segala sumber hukum", "Pedoman dan petunjuk perilaku kehidupan sehari-hari", "Alat kekuasaan negara", "Dasar pertahanan wilayah"], jawabanBenar: 1 },
+        { pertanyaan: "Jaminan kemerdekaan tiap-tiap penduduk untuk memeluk agamanya masing-masing ditegaskan dalam UUD 1945 pasal...", opsi: ["Pasal 27", "Pasal 29", "Pasal 30", "Pasal 33"], jawabanBenar: 1 },
+        { pertanyaan: "Simbol Pohon Beringin pada perisai Garuda Pancasila melambangkan sila...", opsi: ["Ketuhanan Yang Maha Esa", "Kemanusiaan yang Adil dan Beradab", "Persatuan Indonesia", "Keadilan Sosial bagi Seluruh Rakyat Indonesia"], jawabanBenar: 2 },
+        { pertanyaan: "Lambang Rantai Emas pada sila kedua tersusun atas gelang lingkaran dan persegi yang melambangkan...", opsi: ["Kemakmuran materiil", "Kombinasi pertahanan", "Hubungan timbal balik antarmanusia laki-laki dan perempuan", "Keadilan hukum tertulis"], jawabanBenar: 2 },
+        { pertanyaan: "Tokoh bangsa yang mengusulkan perubahan kalimat kompromi sila pertama pada Piagam Jakarta demi persatuan adalah...", opsi: ["Drs. Moh. Hatta", "Ir. Soekarno", "Ki Hajar Dewantara", "Mr. Ahmad Soebardjo"], jawabanBenar: 0 },
+        { pertanyaan: "Penerapan riil atau aktualisasi nilai-nilai Pancasila dalam kehidupan bernegara sehari-hari disebut dengan nilai...", opsi: ["Nilai Dasar", "Nilai Praksis", "Nilai Instrumental", "Nilai Mutlak"], jawabanBenar: 1 },
+        { pertanyaan: "Menghindari gaya hidup boros, mewah, dan tidak menimbun harta merupakan wujud integritas pengamalan sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 3 },
+        { pertanyaan: "Menjaga keseimbangan yang adil antara penuntutan hak pribadi dengan pemenuhan kewajiban sosial adalah nilai sila...", opsi: ["Satu", "Dua", "Empat", "Lima"], jawabanBenar: 3 },
+        { pertanyaan: "Pancasila secara yuridis konstitusional disahkan sebagai dasar negara Indonesia pada tanggal...", opsi: ["1 Juni 1945", "17 Agustus 1945", "18 Agustus 1945", "27 Desember 1949"], jawabanBenar: 2 },
+        { pertanyaan: "Pancasila sebagai ideologi terbuka mampu menyesuaikan diri tanpa kehilangan nilai dasarnya. Dimensi ini dinamakan...", opsi: ["Dimensi Realitas", "Dimensi Idealisme", "Dimensi Fleksibilitas", "Dimensi Normatif"], jawabanBenar: 2 },
+        { pertanyaan: "Gerakan pemberontakan G30S/PKI tahun 1965 merupakan ancaman radikal yang bertujuan mengganti Pancasila dengan ideologi...", opsi: ["Liberalisme", "Kapitalisme", "Komunisme", "Fasisme"], jawabanBenar: 2 },
+        { pertanyaan: "Siapakah tokoh nasional yang merancang lambang negara Garuda Pancasila?", opsi: ["Sultan Hamid II", "Pangeran Diponegoro", "Raden Saleh", "W.R. Supratman"], jawabanBenar: 0 },
+        { pertanyaan: "Jumlah helai bulu yang terdapat pada masing-masing sayap burung Garuda Pancasila melambangkan angka...", opsi: ["17", "8", "19", "45"], jawabanBenar: 0 },
+        { pertanyaan: "Semboyan nasional bangsa 'Bhinneka Tunggal Ika' secara literatur tertulis dalam kitab kuno...", opsi: ["Negarakertagama", "Sutasoma", "Pararaton", "Arjuna Wiwaha"], jawabanBenar: 1 },
+        { pertanyaan: "Kitab Sutasoma yang memuat istilah Bhinneka Tunggal Ika digubah pada abad ke-14 oleh...", opsi: ["Mpu Prapanca", "Mpu Tantular", "Mpu Panuluh", "Mpu Sedah"], jawabanBenar: 1 },
+        { pertanyaan: "Pancasila sebagai paradigma pembangunan nasional bermakna bahwa...", opsi: ["Segala aspek pembangunan harus berlandaskan nilai dasar Pancasila", "Pembangunan dibatasi hanya di bidang sosial", "Sistem ekonomi mengadopsi pasar bebas barat", "Pembangunan terpusat pada satu golongan saja"], jawabanBenar: 0 },
+        { pertanyaan: "Sikap tidak memaksakan pendapat atau kehendak pribadi kepada orang lain saat rapat organisasi mematuhi sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 2 },
+        { pertanyaan: "Menolak segala bentuk diskriminasi suku, ras, dan gender demi kesetaraan kemanusiaan selaras dengan sila ke...", opsi: ["Satu", "Dua", "Tiga", "Empat"], jawabanBenar: 1 },
+        { pertanyaan: "Mengutamakan pembelian produk-produk UMKM lokal dalam negeri dibanding brand luar negeri adalah cinta tanah air sila ke...", opsi: ["Satu", "Dua", "Tiga", "Empat"], jawabanBenar: 2 },
+        { pertanyaan: "Kekuasaan tertinggi negara berada di tangan rakyat dan dilakukan menurut UUD, hal ini sesuai Pancasila sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 2 },
+        { pertanyaan: "Fungsi Pancasila sebagai sumber dari segala sumber hukum di Indonesia diatur dalam ketetapan konstitusi, artinya...", opsi: ["Semua peraturan hukum tidak boleh bertentangan dengan Pancasila", "UUD 1945 kedudukannya di bawah peraturan daerah", "Pancasila dapat diubah oleh Mahkamah Konstitusi", "Hukum adat lebih tinggi dari Pancasila"], jawabanBenar: 0 },
+        { pertanyaan: "Landasan idiil pertahanan nasional dan wawasan nusantara Negara Kesatuan Republik Indonesia adalah...", opsi: ["Ketetapan MPR", "UUD 1945", "Pancasila", "Undang-Undang Pertahanan"], jawabanBenar: 2 },
+        { pertanyaan: "Hari Kesaktian Pancasila diperingati secara nasional pada tanggal...", opsi: ["1 Juni", "22 Juni", "17 Agustus", "1 Oktober"], jawabanBenar: 3 },
+        { pertanyaan: "Menghargai hasil karya orang lain dengan memberikan pujian objektif merupakan butir implementasi sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 3 },
+        { pertanyaan: "Lambang Kepala Banteng pada sila keempat Pancasila merepresentasikan filosofi hewan sosial yang gemar...", opsi: ["Bekerja keras", "Berkumpul dan bermusyawarah", "Menjaga pertahanan", "Mencari kemakmuran bersama"], jawabanBenar: 1 },
+        { pertanyaan: "Sila 'Persatuan Indonesia' menempatkan kepentingan keselamatan bangsa di atas kepentingan...", opsi: ["Negara tetangga", "Pemerintahan pusat", "Pribadi, kelompok, atau golongan", "Hukum internasional"], jawabanBenar: 2 },
+        { pertanyaan: "Sikap patriotisme dan rela berkorban demi keutuhan wilayah kedaulatan NKRI mengamalkan sila ke...", opsi: ["Dua", "Tiga", "Empat", "Lima"], jawabanBenar: 1 },
+        { pertanyaan: "Perilaku menjauhi aksi nepotisme dan korupsi yang merugikan hak keuangan negara bertentangan dengan prinsip Pancasila sila ke...", opsi: ["Satu", "Dua", "Empat", "Lima"], jawabanBenar: 3 },
+        { pertanyaan: "Nilai yang terkandung dalam Pancasila bersifat tetap dan tidak berubah, sedangkan penjabarannya disesuaikan secara dinamis. Nilai tetap ini disebut...", opsi: ["Nilai Dasar", "Nilai Instrumental", "Nilai Praktis", "Nilai Kontekstual"], jawabanBenar: 0 }
     ];
 
     let indeksSoalSaatIni = 0;
     let skor = 0;
     let jawabanDipilih = null;
 
+    // 3. RENDER / TAMPILKAN SOAL KE LAYAR
     function tampilkanSoal() {
         jawabanDipilih = null;
         const soal = bankSoal[indeksSoalSaatIni];
+        
+        // Tampilkan teks pertanyaan & Nomor indikator
         document.getElementById('teksPertanyaan').innerText = `${indeksSoalSaatIni + 1}. ${soal.pertanyaan}`;
         document.getElementById('indikatorSoal').innerText = `Soal ${indeksSoalSaatIni + 1} / ${bankSoal.length}`;
         
+        // Update Progress Bar Animasi
+        const persentaseProgres = ((indeksSoalSaatIni + 1) / bankSoal.length) * 100;
+        document.getElementById('bar-progres').style.width = persentaseProgres + "%";
+
+        // Bersihkan dan gambar ulang pilihan jawaban
         const areaOpsi = document.getElementById('areaOpsi');
         areaOpsi.innerHTML = '';
 
         soal.opsi.forEach((pilihan, index) => {
             const button = document.createElement('button');
             button.className = 'opsi-jawaban';
-            button.innerText = pilihan;
+            button.innerHTML = `<span class="me-2 fw-bold text-danger">${String.fromCharCode(65 + index)}.</span> ${pilihan}`;
             button.onclick = () => pilihJawaban(button, index);
             areaOpsi.appendChild(button);
         });
     }
 
+    // 4. MEMILIH OPSI JAWABAN (STYLING EVENT)
     function pilihJawaban(elemenTombol, index) {
         const semuaTombol = document.querySelectorAll('.opsi-jawaban');
         semuaTombol.forEach(btn => btn.classList.remove('opsi-terpilih'));
+        
         elemenTombol.classList.add('opsi-terpilih');
         jawabanDipilih = index;
     }
 
+    // 5. NAVIGASI KE SOAL BERIKUTNYA & LOGIKA DATABASE REKAP ADMIN
     function soalSelanjutnya() {
         if (jawabanDipilih === null) {
-            alert("Silakan pilih jawaban terlebih dahulu!");
+            alert("Peringatan: Silakan pilih salah satu opsi jawaban terlebih dahulu sebelum melanjutkan!");
             return;
         }
 
-        // Cek jawaban
+        // Cek kebenaran jawaban user
         if (jawabanDipilih === bankSoal[indeksSoalSaatIni].jawabanBenar) {
-            skor += 1; // Tambah 1 poin jika benar
+            skor += 1; // Poin bertambah jika benar
         }
 
+        // Periksa apakah masih ada soal berikutnya
         if (indeksSoalSaatIni < bankSoal.length - 1) {
             indeksSoalSaatIni++;
             tampilkanSoal();
         } else {
-            // KALKULASI NILAI AKHIR (Konversi ke skala 100)
+            // JIKA SUDAH SELESAI SOAL TERAKHIR
             let nilaiAkhir = Math.round((skor / bankSoal.length) * 100);
             
-            // SIMPAN NILAI KE LOCAL STORAGE
+            // --- LOGIKA CENTRAL DATABASE REKAP ADMIN ---
+            let rekapAdmin = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
+            
+            rekapAdmin.push({
+                nama: namaUser,
+                nim: nimUser,
+                nilai: nilaiAkhir,
+                benar: skor,
+                total: bankSoal.length,
+                waktu: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})
+            });
+            
+            localStorage.setItem('semuaNilaiPancasila', JSON.stringify(rekapAdmin));
+            
+            // Simpan juga untuk kebutuhan riwayat personal di dashboard
             localStorage.setItem('nilaiAkhirPancasila', nilaiAkhir);
             localStorage.setItem('totalBenar', skor);
             localStorage.setItem('totalSoal', bankSoal.length);
 
-            alert(`Kuis Selesai! Nilai Anda: ${nilaiAkhir}`);
-            window.location.href = "dashboard.html" + paramQuery;
+            alert(`Evaluasi Selesai! Nilai Anda (${nilaiAkhir}) telah berhasil direkam ke Panel Database Admin.`);
+            window.location.href = "rekap.html" + parameterQuery;
         }
     }
 
-    function kembaliKeDashboard() {
-        if(confirm("Yakin ingin keluar? Progres kuis tidak akan disimpan.")) {
-            window.location.href = "dashboard.html" + paramQuery;
+    // 6. FUNGSI BATAL / KELUAR UJIAN
+    function keluarKuis() {
+        if (confirm("Peringatan: Apakah Anda yakin ingin membatalkan kuis? Seluruh progres jawaban saat ini tidak akan disimpan.")) {
+            window.location.href = "dashboard.html" + parameterQuery;
         }
     }
 
+    // Eksekusi muat soal pertama kali saat halaman di-load browser
     tampilkanSoal();
 </script>
 
