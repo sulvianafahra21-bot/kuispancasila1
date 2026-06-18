@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi - EduPancasila</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS yang sama dengan dashboard.html */
+        :root { --primary-red: #C8102E; --dark-bg: #1A1A2E; }
+        body { background-color: #f4f6f9; font-family: sans-serif; }
+        .sidebar { background-color: var(--dark-bg); min-height: 100vh; color: white; }
+        .profile-img { width: 80px; height: 80px; border: 3px solid var(--primary-red); object-fit: cover; }
+        .nav-link { color: #adb5bd; margin-bottom: 5px; border-radius: 8px; }
+        .nav-link:hover, .nav-link.active { background-color: var(--primary-red); color: white; }
+        .nav-link i { margin-right: 10px; width: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar py-4">
+            <div class="text-center pb-4 mb-4 border-bottom">
+                <img src="foto-saya.jpg.jpg" alt="Profile" class="rounded-circle profile-img mb-3">
+                <h6 class="mb-0">Sulviana Fahra</h6>
+                <small class="text-muted">NIM: 45223113</small>
+            </div>
+            <ul class="nav flex-column px-3">
+                <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Beranda</a></li>
+                <li class="nav-item"><a class="nav-link active" href="materi.html"><i class="fas fa-book-open"></i> Materi Pancasila</a></li>
+                <li class="nav-item"><a class="nav-link" href="kuis.html"><i class="fas fa-tasks"></i> Bank Soal (200)</a></li>
+                <li class="nav-item"><a class="nav-link" href="rekap.html"><i class="fas fa-chart-line"></i> Rekap Nilai</a></li>
+            </ul>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <h2 class="fw-bold mb-4">Modul Pembelajaran Pancasila</h2>
+            
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="fw-bold text-danger">Bab 1: Sejarah Perumusan Pancasila</h5>
+                    <p>Pancasila dirumuskan dalam sidang BPUPKI pertama yang berlangsung dari tanggal 29 Mei hingga 1 Juni 1945. Soekarno menyampaikan gagasannya mengenai dasar negara pada tanggal 1 Juni, yang kemudian diperingati sebagai Hari Lahir Pancasila.</p>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="fw-bold text-danger">Bab 2: Nilai-nilai Sila Pertama</h5>
+                    <p>Ketuhanan Yang Maha Esa mengandung arti pengakuan atas keberadaan Tuhan sebagai pencipta alam semesta beserta isinya. Hal ini menjamin kemerdekaan setiap penduduk untuk memeluk agama dan beribadat.</p>
+                </div>
+            </div>
+            </main>
+    </div>
+</div>
+
+</body>
+</html>
