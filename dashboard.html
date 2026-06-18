@@ -3,72 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPancasila Dashboard</title>
-    <!-- Memanggil Bootstrap 5 -->
+    <title>EduPancasila - Dashboard Utama</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Memanggil Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-red: #C8102E; /* Merah Bendera */
-            --gold-accent: #FFD700; /* Emas Garuda */
-            --dark-bg: #1A1A2E;
+            --primary-red: #C8102E;     /* Merah Bendera */
+            --dark-navy: #111827;       /* Navy Gelap Profesional */
+            --accent-gold: #FFD700;     /* Emas Garuda */
+            --light-bg: #F3F4F6;        /* Background Ringan */
         }
+
         body {
-            background-color: #f4f6f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
+
         /* Sidebar Styling */
         .sidebar {
-            background-color: var(--dark-bg);
+            background-color: var(--dark-navy);
             min-height: 100vh;
-            color: white;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            color: #E5E7EB;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
         }
+
         .profile-section {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .profile-img {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
             border: 3px solid var(--primary-red);
             object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .nav-link {
-            color: #adb5bd;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+
+        .nav-pills .nav-link {
+            color: #9CA3AF;
+            margin-bottom: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
         }
-        .nav-link:hover, .nav-link.active {
+
+        .nav-pills .nav-link:hover {
+            color: #FFFFFF;
+            background-color: rgba(200, 16, 46, 0.1);
+        }
+
+        .nav-pills .nav-link.active {
             background-color: var(--primary-red);
-            color: white;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
         }
-        .nav-link i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
+
+        .nav-pills .nav-link i {
+            width: 24px;
+            font-size: 1.1rem;
         }
-        /* Card & Content Styling */
-        .welcome-card {
-            background: linear-gradient(135deg, var(--primary-red), #8B0000);
+
+        /* Top Navbar Styling */
+        .top-navbar {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        /* Main Cards Styling */
+        .hero-banner {
+            background: linear-gradient(135deg, #C8102E 0%, #7A0A1C 100%);
             color: white;
             border: none;
-            border-left: 5px solid var(--gold-accent);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(200, 16, 46, 0.15);
         }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+        }
+
         .stat-card {
             border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            border-radius: 14px;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
         }
-        .stat-icon {
-            font-size: 2.5rem;
-            color: var(--primary-red);
-            opacity: 0.8;
+
+        .icon-box {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .bg-light-red { background-color: rgba(200, 16, 46, 0.1); color: var(--primary-red); }
+        .bg-light-gold { background-color: rgba(255, 215, 0, 0.15); color: #B79400; }
+        .bg-light-success { background-color: rgba(25, 135, 84, 0.1); color: #198754; }
+
+        /* Footer */
+        .footer-text {
+            color: #9CA3AF;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -76,105 +132,152 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- SIDEBAR -->
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar py-4">
-            <div class="text-center profile-section pb-4 mb-4">
-                <img src="https://ui-avatars.com/api/?name=Sulviana+Fahra&background=C8102E&color=fff" alt="Profile" class="rounded-circle profile-img mb-3">
-                <h6 class="mb-0">Sulviana Fahra</h6>
-                <small class="text-muted">NIM: 45223113</small>
+        
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+            <div class="d-flex flex-column p-3 h-100">
+                <div class="text-center profile-section py-4 mb-4">
+                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle profile-img mb-3">
+                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">Memuat...</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7" id="sidebar-nim">NIM: -</span>
+                </div>
+                
+                <ul class="nav nav-pills flex-column mb-auto px-2">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link active" id="link-beranda">
+                            <i class="fa-solid fa-house me-2"></i>Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="materi.html" class="nav-link" id="link-materi">
+                            <i class="fa-solid fa-book-open me-2"></i>Materi Pancasila
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="kuis.html" class="nav-link" id="link-kuis">
+                            <i class="fa-solid fa-layer-group me-2"></i>Bank Soal (200)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="rekap.html" class="nav-link" id="link-rekap">
+                            <i class="fa-solid fa-chart-simple me-2"></i>Rekap Nilai
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="text-center pt-3 border-top border-secondary">
+                    <p class="footer-text mb-0">&copy; 2026 EduPancasila</p>
+                </div>
             </div>
-            
-            <ul class="nav flex-column px-3">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="fas fa-home"></i> Beranda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-book-open"></i> Materi Pancasila</a>
-                </li>
-                <li class="nav-item">
-                    <!-- Menambahkan indikator jumlah soal -->
-                    <a class="nav-link" href="#"><i class="fas fa-tasks"></i> Bank Soal (200)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Rekap Nilai</a>
-                </li>
-            </ul>
         </nav>
 
-        <!-- MAIN CONTENT -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
             
-            <!-- Header -->
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-                <h1 class="h3 fw-bold text-dark">Beranda Edukasi</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <button type="button" class="btn btn-outline-danger btn-sm">
-                        <i class="fas fa-sign-out-alt"></i> Keluar
-                    </button>
+            <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
+                <div class="text-muted fw-medium">
+                    Selamat Datang, <span class="text-dark fw-bold" id="header-welcome">User</span>!
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <small class="text-muted d-none d-sm-block">
+                        <i class="fa-solid fa-circle-user text-success me-1"></i>
+                        Peserta Aktif: <strong class="text-dark" id="header-status">Memuat...</strong>
+                    </small>
+                    <a href="index.html" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-medium">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-1"></i>Keluar
+                    </a>
                 </div>
             </div>
 
-            <!-- Welcome Banner -->
-            <div class="card welcome-card mb-4 shadow-sm">
-                <div class="card-body p-4">
-                    <h4 class="card-title fw-bold mb-2">Selamat Datang di Platform Edukasi Pancasila</h4>
-                    <p class="card-text">Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Pelajari materi komprehensif dan uji wawasan Anda melalui 200 soal evaluasi interaktif yang telah disiapkan.</p>
+            <div class="p-4">
+                
+                <div class="card hero-banner p-4 mb-4">
+                    <div class="card-body p-2" style="max-width: 700px;">
+                        <span class="badge bg-warning text-dark fw-bold mb-2 px-3 py-1 rounded-pill" style="font-size: 0.75rem;">PLATFORM RESMI</span>
+                        <h2 class="fw-bold mb-2">Selamat Datang di Platform Edukasi Pancasila</h2>
+                        <p class="mb-0 opacity-75 lh-base">Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Akses evaluasi secara langsung melalui kuis interaktif yang tersedia dan pantau perkembangan nilai Anda.</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Dashboard Stats -->
-            <div class="row mb-4">
-                <div class="col-md-4 mb-3">
-                    <div class="card stat-card h-100 p-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="text-muted mb-2">Total Modul Materi</h6>
-                                <h3 class="fw-bold mb-0">5 Bab</h3>
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-sm-6 col-xl-4">
+                        <div class="card stat-card p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <span class="text-muted fs-7 fw-medium d-block mb-1">TOTAL MATERI</span>
+                                    <h3 class="fw-bold text-dark mb-0">5 Modul</h3>
+                                </div>
+                                <div class="icon-box bg-light-red">
+                                    <i class="fa-solid fa-book"></i>
+                                </div>
                             </div>
-                            <i class="fas fa-file-alt stat-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-4">
+                        <div class="card stat-card p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <span class="text-muted fs-7 fw-medium d-block mb-1">EVALUASI AKTIF</span>
+                                    <h3 class="fw-bold text-dark mb-0">200 Soal</h3>
+                                </div>
+                                <div class="icon-box bg-light-gold">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-4">
+                        <div class="card stat-card p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <span class="text-muted fs-7 fw-medium d-block mb-1">PROGRES ANDA</span>
+                                    <h3 class="fw-bold text-dark mb-0">0 / 200</h3>
+                                </div>
+                                <div class="icon-box bg-light-success">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card stat-card h-100 p-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="text-muted mb-2">Bank Soal Tersedia</h6>
-                                <h3 class="fw-bold mb-0">200 Soal</h3>
-                            </div>
-                            <i class="fas fa-check-circle stat-icon text-success"></i>
-                        </div>
+
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom">
+                            <i class="fa-solid fa-circle-info text-danger me-2"></i>Panduan Penggunaan Platform:
+                        </h5>
+                        <ol class="text-secondary lh-lg ps-3 mb-0">
+                            <li>Masuk ke halaman <strong class="text-dark">Materi Pancasila</strong> melalui menu samping untuk mempelajari materi dasar.</li>
+                            <li>Selesaikan seluruh soal kuis hingga akhir di menu <strong class="text-dark">Bank Soal (200)</strong>.</li>
+                            <li>Periksa perkembangan dan kalkulasi nilai Anda pada menu <strong class="text-dark">Rekap Nilai</strong>.</li>
+                        </ol>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card stat-card h-100 p-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="text-muted mb-2">Pencapaian Anda</h6>
-                                <h3 class="fw-bold mb-0">0 / 200</h3>
-                            </div>
-                            <i class="fas fa-trophy stat-icon text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Panduan Penggunaan -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="fas fa-info-circle text-primary me-2"></i>Panduan Penggunaan Platform</h5>
-                    <ol class="text-muted lh-lg mb-0">
-                        <li>Pelajari terlebih dahulu modul pada menu <strong>Materi Pancasila</strong>.</li>
-                        <li>Masuk ke halaman <strong>Bank Soal</strong> melalui menu di samping untuk mulai mengerjakan 200 soal evaluasi. Soal dapat dikerjakan secara bertahap.</li>
-                        <li>Sistem akan menyimpan progress Anda. Periksa skor akhir pada menu <strong>Rekap Nilai</strong>.</li>
-                    </ol>
-                </div>
             </div>
-
         </main>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script strain="javascript">
+    // 1. Ambil data nama dan nim dari URL parameter (?username=...&nim=...)
+    const urlParams = new URLSearchParams(window.location.search);
+    const namaUser = urlParams.get('username') || "Sulviana Fahra";
+    const nimUser = urlParams.get('nim') || "45223113";
+
+    // 2. Tampilkan secara otomatis ke elemen halaman HTML
+    document.getElementById('sidebar-name').innerText = namaUser;
+    document.getElementById('sidebar-nim').innerText = "NIM: " + nimUser;
+    document.getElementById('header-welcome').innerText = namaUser;
+    document.getElementById('header-status').innerText = `${namaUser} (${nimUser})`;
+
+    // 3. Otomatis selipkan nama & nim ke link navigasi agar data tidak hilang saat diklik
+    const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
+    
+    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
+    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
+    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
+    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+</script>
 </body>
 </html>
