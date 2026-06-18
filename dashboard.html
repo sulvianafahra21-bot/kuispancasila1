@@ -23,7 +23,6 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- SIDEBAR (IDENTITAS KREATOR DIKUNCI) -->
         <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
@@ -41,10 +40,9 @@
             </div>
         </nav>
 
-        <!-- MAIN KONTEN -->
         <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
             <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
-                <div class="text-muted fw-medium">Status login: <span class="text-dark fw-bold" id="header-status">User</span></div>
+                <div class="text-muted fw-medium">Akun Aktif: <span class="text-danger fw-bold" id="header-status">User</span></div>
                 <a href="index.html" class="btn btn-sm btn-outline-danger px-3 rounded-pill">Keluar</a>
             </div>
 
@@ -55,8 +53,7 @@
                 </div>
 
                 <div class="row g-4 mb-4" id="stats-row-container">
-                    <!-- Stats akan diisi JS -->
-                </div>
+                    </div>
             </div>
         </main>
     </div>
@@ -67,27 +64,35 @@
     const username = urlParams.get('username') || 'Peserta';
     const nim = urlParams.get('nim') || '';
 
-    // Menampilkan nama peserta yang login di bagian atas layar
-    document.getElementById('header-status').innerText = username;
+    // Tempel identitas ke Header atas
+    document.getElementById('header-status').innerText = `${username} (NIM: ${nim || '-'})`;
     document.getElementById('welcome-name').innerText = username;
 
-    // Ikat Link Navigasi agar data login tidak hilang
+    // Ikat Link Navigasi agar query string parameter akun ikut terbawa halaman lain
     const query = `?username=${encodeURIComponent(username)}&nim=${encodeURIComponent(nim)}`;
     document.getElementById('link-beranda').href = "dashboard.html" + query;
     document.getElementById('link-materi').href = "materi.html" + query;
     document.getElementById('link-kuis').href = "kuis.html" + query;
     document.getElementById('link-rekap').href = "rekap.html" + query;
 
-    // Tampilkan nilai personal jika sudah kuis
-    const nilaiPersonal = localStorage.getItem('nilaiAkhirPancasila') || "Belum Ujian";
+    // --- REVISI UTAMA: MENCARI NILAI SPESIFIK BERDASARKAN NIM MAHASISWA AKTIF ---
+    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
+    
+    // Cari data di database global yang cocok dengan NIM login saat ini
+    let dataKuisSaya = semuaPeserta.find(p => p.nim === nim);
+
+    let nilaiDisplay = "Belum Ujian";
     let statusKelulusan = "Belum Ada Nilai";
-    if(nilaiPersonal !== "Belum Ujian") {
-        statusKelulusan = nilaiPersonal >= 75 ? "LULUS 🎉" : "REMEDIAL 📚";
+
+    if (dataKuisSaya) {
+        nilaiDisplay = dataKuisSaya.nilai;
+        statusKelulusan = nilaiDisplay >= 75 ? "LULUS 🎉" : "REMEDIAL 📚";
     }
 
+    // Gambar ulang card statistik secara real-time khusus data milik akun aktif
     document.getElementById('stats-row-container').innerHTML = `
         <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-danger"><span class="text-muted small d-block">TOTAL MATERI</span><h3 class="fw-bold">5 Bab</h3></div></div>
-        <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-warning"><span class="text-muted small d-block">NILAI KUIS ANDA</span><h3 class="fw-bold text-dark">${nilaiPersonal}</h3></div></div>
+        <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-warning"><span class="text-muted small d-block">NILAI KUIS ANDA</span><h3 class="fw-bold text-dark">${nilaiDisplay}</h3></div></div>
         <div class="col-12 col-sm-4"><div class="card stat-card p-3 border-start border-4 border-success"><span class="text-muted small d-block">STATUS EVALUASI</span><h3 class="fw-bold text-success">${statusKelulusan}</h3></div></div>
     `;
 </script>
