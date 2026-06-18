@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Kewarganegaraan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary-red: #C8102E; --dark-navy: #111827; --light-bg: #F3F4F6; }
+        body { background-color: var(--light-bg); font-family: 'Inter', sans-serif; }
+        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; }
+        .profile-section { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .profile-img { width: 85px; height: 85px; border: 3px solid var(--primary-red); object-fit: cover; }
+        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 500; transition: all 0.2s; }
+        .nav-pills .nav-link:hover { color: #FFFFFF; background-color: rgba(200, 16, 46, 0.1); }
+        .nav-pills .nav-link.active { background-color: #0284C7; /* Warna Biru untuk Kewarganegaraan */ color: #FFFFFF; }
+        .top-navbar { background-color: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
+        .opsi-jawaban { display: block; width: 100%; text-align: left; margin-bottom: 14px; padding: 16px 20px; border: 2px solid #E5E7EB; border-radius: 12px; background: white; font-weight: 500; color: #374151; transition: all 0.2s; cursor: pointer; }
+        .opsi-jawaban:hover { border-color: #0284C7; background-color: #F0F9FF; transform: translateX(4px); }
+        .opsi-terpilih { background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important; color: white !important; border-color: #0284C7 !important; }
+        .quiz-card { border: none; border-radius: 16px; background-color: #FFFFFF; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
+        .progress { height: 8px; border-radius: 10px; background-color: #E5E7EB; }
+        .progress-bar { background-color: #0284C7; transition: width 0.4s ease; }
+        .timer-progress { height: 6px; border-radius: 10px; background-color: #E5E7EB; }
+        .timer-bar { background-color: #16A34A; transition: width 1s linear; }
+        .peserta-box { background-color: #E0F2FE; border-left: 5px solid #0284C7; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+            <div class="d-flex flex-column p-3 h-100">
+                <div class="text-center profile-section py-4 mb-4">
+                    <h6 class="fw-bold mb-1 text-white">Sulviana Fahra</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7">NIM: 45223113</span>
+                </div>
+                <ul class="nav nav-pills flex-column mb-auto px-2">
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
+                    <!-- Menu Kuis Diperbarui -->
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Kuis Pancasila</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap Pancasila</a></li>
+                    <li class="nav-item mt-3 mb-1 text-muted small fw-bold px-2">Ujian Ekstra:</li>
+                    <li class="nav-item"><a href="#" class="nav-link active" id="link-kuis-kwg"><i class="fa-solid fa-scale-balanced me-2"></i>Kuis Kewarganegaraan</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-rekap-kwg"><i class="fa-solid fa-table-list me-2"></i>Rekap Kewarganegaraan</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
+            <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
+                <div class="text-muted fw-medium"><i class="fa-solid fa-scale-balanced text-info me-2"></i>Kuis Kewarganegaraan & Ketatanegaraan</div>
+                <button onclick="keluarKuis()" class="btn btn-sm btn-outline-secondary px-3 rounded-pill fw-medium"><i class="fa-solid fa-house-crack me-1"></i>Batal Ujian</button>
+            </div>
+
+            <div class="p-4 d-flex justify-content-center">
+                <div class="col-12 col-xl-9">
+                    
+                    <div class="card peserta-box border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-3 d-flex align-items-center">
+                            <div class="bg-white p-2 rounded-circle shadow-sm me-3 d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;"><i class="fa-solid fa-user-pen fs-5" style="color: #0284C7;"></i></div>
+                            <div>
+                                <span class="d-block small fw-bold" style="color: #475569;">PESERTA UJIAN:</span>
+                                <h5 class="mb-0 fw-bold text-dark" id="nama-peserta-ujian">Memuat Data Peserta...</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- START SCREEN KONFIRMASI -->
+                    <div class="card quiz-card p-4 p-md-5 text-center shadow-sm" id="box-konfirmasi-siap">
+                        <div class="card-body p-0">
+                            <div class="text-center mb-4">
+                                <div class="bg-info-subtle d-inline-flex p-3 rounded-circle text-info mb-3"><i class="fa-solid fa-gavel display-5"></i></div>
+                                <h3 class="fw-bold text-dark">Ujian Kewarganegaraan (PKn)</h3>
+                                <p class="text-muted">Materi mencakup UUD 1945, Sistem Ketatanegaraan, dan Hak Asasi Manusia.</p>
+                            </div>
+                            <div class="text-start bg-light p-4 rounded-4 mb-4">
+                                <ul class="ps-3 mb-0 text-secondary">
+                                    <li>Kuis ini terdiri dari <strong>20 Soal Pilihan Ganda</strong>.</li>
+                                    <li>Terdapat batasan waktu <strong>40 detik per soal</strong>.</li>
+                                    <li>Sistem <strong>Anti-Cheat</strong> aktif. Dilarang berpindah tab browser.</li>
+                                </ul>
+                            </div>
+                            <div class="form-check d-inline-block text-start mb-4 p-3 bg-info-subtle rounded-3 px-5 border border-info border-opacity-25">
+                                <input class="form-check-input" type="checkbox" id="check-kesiapan" onchange="toggleTombolMulai()">
+                                <label class="form-check-label fw-bold text-dark" style="cursor: pointer;" for="check-kesiapan">Saya siap memulai kuis dengan jujur.</label>
+                            </div>
+                            <div>
+                                <button id="btn-mulai-ujian" class="btn btn-info btn-lg w-100 py-3 fw-bold rounded-3 shadow text-white" style="background-color: #0284C7; border:none;" disabled onclick="memulaiKuisSekarang()"><i class="fa-solid fa-play me-2"></i>Mulai Ujian Kewarganegaraan</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AREA SOAL -->
+                    <div id="box-kuis-utama" class="d-none">
+                        <div class="card border-0 p-3 shadow-sm rounded-4 mb-4 bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-secondary small"><i class="fa-solid fa-clock-rotate-left me-1 text-info"></i>SISA WAKTU SOAL INI</span>
+                                <span class="badge bg-dark fs-6 font-monospace px-3 py-1 text-warning" id="teks-timer">40 detik</span>
+                            </div>
+                            <div class="timer-progress"><div class="timer-bar" id="bar-timer" style="width: 100%;"></div></div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-secondary fw-medium small">PROGRES SOAL</span>
+                            <span class="badge px-3 py-2 rounded-pill fw-bold fs-7 text-white" style="background-color: #0284C7;" id="indikatorSoal">Soal 1 / 20</span>
+                        </div>
+                        <div class="progress mb-4"><div class="progress-bar" id="bar-progres" role="progressbar" style="width: 5%;"></div></div>
+
+                        <div class="card quiz-card p-4 p-md-5">
+                            <div class="card-body p-0">
+                                <h4 id="teksPertanyaan" class="lh-base fw-semibold text-dark mb-4">Sedang memuat...</h4>
+                                <div id="areaOpsi" class="mt-2"></div>
+                                <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                                    <button class="btn btn-info text-white px-4 py-2 fw-bold rounded-3 shadow-sm" style="background-color: #0284C7; border:none;" onclick="soalSelanjutnya()">Selanjutnya <i class="fa-solid fa-arrow-right ms-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal Peringatan & Selesai (Disamakan strukturnya) -->
+<div class="modal fade" id="modalPeringatan" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg" style="border-radius: 16px;"><div class="modal-body text-center p-4"><i class="fa-solid fa-circle-exclamation text-warning mb-3" style="font-size: 4rem;"></i><h4 class="fw-bold text-dark mb-2">Peringatan Kosong!</h4><p class="text-secondary mb-4">Pilih opsi jawaban sebelum melanjutkan.</p><button type="button" class="btn btn-warning fw-bold px-5 rounded-pill" data-bs-dismiss="modal">Pilih Jawaban</button></div></div></div>
+</div>
+
+<div class="modal fade" id="modalSelesai" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg" style="border-radius: 16px; border-top: 8px solid #0284C7;"><div class="modal-body text-center p-5"><i class="fa-solid fa-award text-info mb-3" style="font-size: 5rem;"></i><h3 class="fw-bold text-dark mb-1">Evaluasi Selesai!</h3><p class="text-secondary mb-4">Ujian Kewarganegaraan telah diserahkan.</p>
+        <div class="p-3 mb-4 rounded-4" style="background-color: #F0F9FF; border: 2px dashed #BAE6FD;"><span class="d-block text-muted small fw-bold mb-1">SKOR AKHIR</span><h1 class="fw-bold display-2 mb-0" id="teks-skor-akhir" style="color: #0284C7;">0</h1></div>
+        <button type="button" class="btn text-white w-100 fw-bold py-3 rounded-pill" style="background-color: #0284C7;" onclick="keHalamanRekapKwg()">Buka Rekap Kewarganegaraan <i class="fa-solid fa-arrow-right ms-2"></i></button>
+      </div></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const modalPeringatan = new bootstrap.Modal(document.getElementById('modalPeringatan'));
+    const modalSelesai = new bootstrap.Modal(document.getElementById('modalSelesai'));
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const namaUser = urlParams.get('username') || "Peserta Kuis";
+    const nimUser = urlParams.get('nim') || "NIM Peserta";
+    const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
+
+    document.getElementById('nama-peserta-ujian').innerText = `${namaUser} (${nimUser})`;
+    
+    // Tautan Navigasi (Update dengan link Kuis Kewarganegaraan)
+    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
+    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
+    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
+    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+    document.getElementById('link-kuis-kwg').href = "kuis-kewarganegaraan.html" + parameterQuery;
+    document.getElementById('link-rekap-kwg').href = "rekap-kewarganegaraan.html" + parameterQuery;
+
+    let kuisSedangBerjalan = false;
+    window.addEventListener('beforeunload', function (e) { if (kuisSedangBerjalan) { e.preventDefault(); e.returnValue = ''; } });
+
+    let jumlahCurang = 0;
+    document.addEventListener('visibilitychange', () => { if (document.hidden && kuisSedangBerjalan) { jumlahCurang++; } });
+
+    function toggleTombolMulai() { document.getElementById('btn-mulai-ujian').disabled = !document.getElementById('check-kesiapan').checked; }
+
+    function memulaiKuisSekarang() {
+        kuisSedangBerjalan = true;
+        document.getElementById('box-konfirmasi-siap').classList.add('d-none');
+        document.getElementById('box-kuis-utama').classList.remove('d-none');
+        tampilkanSoal();
+    }
+
+    // BANK SOAL KHUSUS KEWARGANEGARAAN (20 Soal)
+    const bankSoalKwg = [
+        { pertanyaan: "Lembaga negara yang berwenang menguji undang-undang terhadap UUD 1945 adalah...", opsi: ["Mahkamah Agung", "Mahkamah Konstitusi", "Komisi Yudisial", "Dewan Perwakilan Rakyat"], jawabanBenar: 1 },
+        { pertanyaan: "Pasal dalam UUD 1945 yang secara khusus dan komprehensif mengatur tentang Hak Asasi Manusia (HAM) pasca amandemen adalah...", opsi: ["Pasal 27", "Pasal 28A hingga 28J", "Pasal 29", "Pasal 33"], jawabanBenar: 1 },
+        { pertanyaan: "Sistem pemerintahan yang dianut oleh negara Indonesia menurut UUD 1945 adalah sistem...", opsi: ["Parlementer", "Monarki Konstitusional", "Presidensial", "Semiparlementer"], jawabanBenar: 2 },
+        { pertanyaan: "Undang-Undang Dasar 1945 telah mengalami perubahan (amandemen) sebanyak...", opsi: ["2 kali", "3 kali", "4 kali", "5 kali"], jawabanBenar: 2 },
+        { pertanyaan: "Kekuasaan tertinggi negara yang sebelumnya berada di tangan MPR, setelah amandemen UUD 1945 dikembalikan secara langsung kepada...", opsi: ["Presiden", "Mahkamah Konstitusi", "Rakyat", "DPR"], jawabanBenar: 2 },
+        { pertanyaan: "Anggota Dewan Perwakilan Daerah (DPD) dipilih secara langsung oleh rakyat melalui mekanisme...", opsi: ["Pemilu legislatif", "Pemilihan kepala daerah", "Penunjukan Presiden", "Sidang MPR"], jawabanBenar: 0 },
+        { pertanyaan: "Salah satu hak warga negara yang diatur dalam Pasal 27 ayat (2) UUD 1945 adalah hak atas...", opsi: ["Pendidikan", "Kebebasan beragama", "Pekerjaan dan penghidupan yang layak", "Kemerdekaan berserikat"], jawabanBenar: 2 },
+        { pertanyaan: "Komisi Pemberantasan Korupsi (KPK) termasuk dalam kategori lembaga negara bersifat...", opsi: ["Legislatif murni", "Eksekutif", "Lembaga independen negara", "Yudikatif"], jawabanBenar: 2 },
+        { pertanyaan: "Pelanggaran HAM berat di Indonesia diadili dan diputuskan oleh lembaga...", opsi: ["Pengadilan Agama", "Pengadilan Tata Usaha Negara", "Pengadilan Militer", "Pengadilan HAM"], jawabanBenar: 3 },
+        { pertanyaan: "Hukum dasar tertulis tertinggi dalam hierarki peraturan perundang-undangan di Indonesia adalah...", opsi: ["Ketetapan MPR", "Undang-Undang (UU)", "Peraturan Pemerintah", "UUD Tahun 1945"], jawabanBenar: 3 },
+        { pertanyaan: "Kewajiban warga negara untuk ikut serta dalam upaya pembelaan negara diatur tegas dalam UUD 1945 pasal...", opsi: ["Pasal 27 ayat 1", "Pasal 27 ayat 3", "Pasal 29 ayat 2", "Pasal 31"], jawabanBenar: 1 },
+        { pertanyaan: "Menteri-menteri negara diangkat dan diberhentikan secara hak prerogatif oleh...", opsi: ["DPR", "MPR", "Presiden", "Mahkamah Agung"], jawabanBenar: 2 },
+        { pertanyaan: "Berdasarkan pasal 33 ayat (3) UUD 1945, bumi, air, dan kekayaan alam yang terkandung di dalamnya dikuasai oleh negara dan dipergunakan untuk...", opsi: ["Kepentingan elit politik", "Modal investor asing", "Sebesar-besar kemakmuran rakyat", "Pembangunan infrastruktur ibukota"], jawabanBenar: 2 },
+        { pertanyaan: "Penyelenggaraan otonomi daerah yang seluas-luasnya merupakan implementasi dari UUD 1945 pasal...", opsi: ["Pasal 18", "Pasal 20", "Pasal 22", "Pasal 24"], jawabanBenar: 0 },
+        { pertanyaan: "Lembaga yang berwenang mengusulkan pengangkatan hakim agung kepada DPR adalah...", opsi: ["Mahkamah Konstitusi", "Komisi Yudisial", "Presiden", "Menteri Hukum dan HAM"], jawabanBenar: 1 },
+        { pertanyaan: "Contoh pengingkaran kewajiban sebagai warga negara di bidang hukum adalah...", opsi: ["Melakukan demonstrasi damai", "Tidak membayar pajak", "Menjadi relawan bencana", "Mengkritik kebijakan pemerintah"], jawabanBenar: 1 },
+        { pertanyaan: "Asas kewarganegaraan berdasarkan pertalian darah atau garis keturunan orang tua disebut asas...", opsi: ["Ius Soli", "Ius Sanguinis", "Bipatride", "Apatride"], jawabanBenar: 1 },
+        { pertanyaan: "Naturalisasi adalah proses hukum yang dilakukan untuk...", opsi: ["Kehilangan status warga negara", "Pindah negara tanpa izin", "Memperoleh kewarganegaraan suatu negara", "Membuang paspor lama"], jawabanBenar: 2 },
+        { pertanyaan: "Tugas utama badan legislatif dalam konsep Trias Politica adalah...", opsi: ["Menjalankan undang-undang", "Mengadili pelanggar hukum", "Membuat dan merancang undang-undang", "Melaksanakan kebijakan luar negeri"], jawabanBenar: 2 },
+        { pertanyaan: "Salah satu sifat dari Hak Asasi Manusia (HAM) adalah universal, yang artinya...", opsi: ["Berlaku bagi warga negara tertentu saja", "Berlaku untuk seluruh umat manusia tanpa diskriminasi", "Bisa dicabut oleh negara", "Diatur oleh hukum adat"], jawabanBenar: 1 }
+    ];
+
+    let indeksSoalSaatIni = 0;
+    let skor = 0;
+    let jawabanDipilih = null;
+    let sisaWaktu = 40;
+    let intervalTimer;
+
+    function mulaiTimerSoal() {
+        sisaWaktu = 40;
+        document.getElementById('teks-timer').innerText = `${sisaWaktu} detik`;
+        document.getElementById('bar-timer').style.width = "100%";
+        document.getElementById('bar-timer').style.backgroundColor = "#16A34A"; 
+        clearInterval(intervalTimer);
+        
+        intervalTimer = setInterval(() => {
+            sisaWaktu--;
+            document.getElementById('teks-timer').innerText = `${sisaWaktu} detik`;
+            document.getElementById('bar-timer').style.width = `${(sisaWaktu / 40) * 100}%`;
+
+            if(sisaWaktu <= 15) document.getElementById('bar-timer').style.backgroundColor = "#D97706";
+            if(sisaWaktu <= 7) document.getElementById('bar-timer').style.backgroundColor = "#DC2626";
+
+            if(sisaWaktu <= 0) { clearInterval(intervalTimer); waktuHabisOtomatis(); }
+        }, 1000);
+    }
+
+    function tampilkanSoal() {
+        jawabanDipilih = null;
+        const soal = bankSoalKwg[indeksSoalSaatIni];
+        
+        document.getElementById('teksPertanyaan').innerText = `${indeksSoalSaatIni + 1}. ${soal.pertanyaan}`;
+        document.getElementById('indikatorSoal').innerText = `Soal ${indeksSoalSaatIni + 1} / ${bankSoalKwg.length}`;
+        document.getElementById('bar-progres').style.width = `${((indeksSoalSaatIni + 1) / bankSoalKwg.length) * 100}%`;
+
+        const areaOpsi = document.getElementById('areaOpsi');
+        areaOpsi.innerHTML = '';
+
+        soal.opsi.forEach((pilihan, index) => {
+            const button = document.createElement('button');
+            button.className = 'opsi-jawaban shadow-sm';
+            button.innerHTML = `<span class="me-2 fw-bold" style="color:#0284C7;">${String.fromCharCode(65 + index)}.</span> ${pilihan}`;
+            button.onclick = () => pilihJawaban(button, index);
+            areaOpsi.appendChild(button);
+        });
+
+        mulaiTimerSoal(); 
+    }
+
+    function pilihJawaban(elemenTombol, index) {
+        document.querySelectorAll('.opsi-jawaban').forEach(btn => btn.classList.remove('opsi-terpilih'));
+        elemenTombol.classList.add('opsi-terpilih');
+        jawabanDipilih = index;
+    }
+
+    function waktuHabisOtomatis() {
+        if (indeksSoalSaatIni < bankSoalKwg.length - 1) { indeksSoalSaatIni++; tampilkanSoal(); } 
+        else { prosesSelesaiKuis(); }
+    }
+
+    function soalSelanjutnya() {
+        if (jawabanDipilih === null) { modalPeringatan.show(); return; }
+        if (jawabanDipilih === bankSoalKwg[indeksSoalSaatIni].jawabanBenar) { skor += 1; }
+        
+        if (indeksSoalSaatIni < bankSoalKwg.length - 1) { indeksSoalSaatIni++; tampilkanSoal(); } 
+        else { prosesSelesaiKuis(); }
+    }
+
+    function prosesSelesaiKuis() {
+        clearInterval(intervalTimer);
+        kuisSedangBerjalan = false; 
+        let nilaiAkhir = Math.round((skor / bankSoalKwg.length) * 100);
+        
+        // MENGGUNAKAN KEY DATABASE BARU KHUSUS KEWARGANEGARAAN
+        let rekapKwg = JSON.parse(localStorage.getItem('semuaNilaiKewarganegaraan')) || [];
+        rekapKwg.push({
+            nama: namaUser, nim: nimUser, nilai: nilaiAkhir, benar: skor, total: bankSoalKwg.length,
+            curang: jumlahCurang, waktu: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})
+        });
+        localStorage.setItem('semuaNilaiKewarganegaraan', JSON.stringify(rekapKwg));
+        
+        // Simpan Nilai Personal Khusus Kewarganegaraan
+        localStorage.setItem('nilaiPersonalKwg', nilaiAkhir);
+        localStorage.setItem('benarPersonalKwg', skor);
+        localStorage.setItem('totalPersonalKwg', bankSoalKwg.length);
+        localStorage.setItem('curangPersonalKwg', jumlahCurang);
+
+        document.getElementById('teks-skor-akhir').innerText = nilaiAkhir;
+        modalSelesai.show();
+    }
+
+    function keHalamanRekapKwg() { window.location.href = "rekap-kewarganegaraan.html" + parameterQuery; }
+
+    function keluarKuis() {
+        let pesan = kuisSedangBerjalan ? "Peringatan Besar: Kuis Kewarganegaraan sedang berjalan! Keluar berarti menggugurkan nilai." : "Batal ujian?";
+        if (confirm(pesan)) { kuisSedangBerjalan = false; clearInterval(intervalTimer); window.location.href = "dashboard.html" + parameterQuery; }
+    }
+</script>
+</body>
+</html>
