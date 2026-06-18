@@ -154,7 +154,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="kuis.html" class="nav-link" id="link-kuis">
-                            <i class="fa-solid fa-layer-group me-2"></i>Bank Soal (200)
+                            <i class="fa-solid fa-layer-group me-2"></i>Bank Soal (100)
                         </a>
                     </li>
                     <li class="nav-item">
@@ -199,7 +199,7 @@
 
                 <div class="row g-4 mb-4">
                     <div class="col-12 col-sm-6 col-xl-4">
-                        <div class="card stat-card p-3">
+                        <div class="card stat-card p-3 border-start border-4 border-danger">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
                                     <span class="text-muted fs-7 fw-medium d-block mb-1">TOTAL MATERI</span>
@@ -212,11 +212,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-4">
-                        <div class="card stat-card p-3">
+                        <div class="card stat-card p-3 border-start border-4 border-warning">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
                                     <span class="text-muted fs-7 fw-medium d-block mb-1">EVALUASI AKTIF</span>
-                                    <h3 class="fw-bold text-dark mb-0">200 Soal</h3>
+                                    <h3 class="fw-bold text-dark mb-0">100 Soal</h3>
                                 </div>
                                 <div class="icon-box bg-light-gold">
                                     <i class="fa-solid fa-circle-check"></i>
@@ -225,14 +225,15 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-4">
-                        <div class="card stat-card p-3">
+                        <div class="card stat-card p-3 border-start border-4 border-success">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted fs-7 fw-medium d-block mb-1">PROGRES ANDA</span>
-                                    <h3 class="fw-bold text-dark mb-0">0 / 200</h3>
+                                    <span class="text-muted fs-7 fw-medium d-block mb-1">NILAI TERAKHIR ANDA</span>
+                                    <h3 class="fw-bold text-success mb-0" id="nilai-dashboard">Belum Kuis</h3>
+                                    <small class="text-muted d-block mt-1" id="detail-benar" style="font-size: 0.8rem;"></small>
                                 </div>
                                 <div class="icon-box bg-light-success">
-                                    <i class="fa-solid fa-chart-pie"></i>
+                                    <i class="fa-solid fa-trophy"></i>
                                 </div>
                             </div>
                         </div>
@@ -246,8 +247,8 @@
                         </h5>
                         <ol class="text-secondary lh-lg ps-3 mb-0">
                             <li>Masuk ke halaman <strong class="text-dark">Materi Pancasila</strong> melalui menu samping untuk mempelajari materi dasar.</li>
-                            <li>Selesaikan seluruh soal kuis hingga akhir di menu <strong class="text-dark">Bank Soal (200)</strong>.</li>
-                            <li>Periksa perkembangan dan kalkulasi nilai Anda pada menu <strong class="text-dark">Rekap Nilai</strong>.</li>
+                            <li>Selesaikan seluruh soal kuis hingga akhir di menu <strong class="text-dark">Bank Soal (100)</strong>.</li>
+                            <li>Sistem akan langsung mencatat dan menampilkan perkembangan nilai Anda secara *real-time* pada bagian card rekap di atas.</li>
                         </ol>
                     </div>
                 </div>
@@ -271,13 +272,23 @@
     document.getElementById('header-welcome').innerText = namaUser;
     document.getElementById('header-status').innerText = `${namaUser} (${nimUser})`;
 
-    // 3. Otomatis selipkan nama & nim ke link navigasi agar data tidak hilang saat diklik
+    // 3. Otomatis selipkan nama & nim ke link navigasi agar data tidak hilang saat pindah halaman
     const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
     
     document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
     document.getElementById('link-materi').href = "materi.html" + parameterQuery;
     document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
     document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+
+    // 4. BACA NILAI DARI LOCAL STORAGE KUIS DAN TAMPILKAN DI DASHBOARD SECARA REKAP
+    const nilaiTersimpan = localStorage.getItem('nilaiAkhirPancasila');
+    const totalBenar = localStorage.getItem('totalBenar');
+    const totalSoal = localStorage.getItem('totalSoal');
+
+    if (nilaiTersimpan !== null) {
+        document.getElementById('nilai-dashboard').innerText = nilaiTersimpan + " / 100";
+        document.getElementById('detail-benar').innerText = `Jawaban Benar: ${totalBenar} dari ${totalSoal} soal`;
+    }
 </script>
 </body>
 </html>
