@@ -3,291 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPancasila - Dashboard Utama</title>
+    <title>EduPancasila - Hasil Rekap Nilai</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-red: #C8102E;     /* Merah Bendera */
-            --dark-navy: #111827;       /* Navy Gelap Profesional */
-            --accent-gold: #FFD700;     /* Emas Garuda */
-            --light-bg: #F3F4F6;        /* Background Ringan */
-        }
-
-        body {
-            background-color: var(--light-bg);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            background-color: var(--dark-navy);
-            min-height: 100vh;
-            color: #E5E7EB;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .profile-section {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .profile-img {
-            width: 85px;
-            height: 85px;
-            border: 3px solid var(--primary-red);
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .nav-pills .nav-link {
-            color: #9CA3AF;
-            margin-bottom: 8px;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .nav-pills .nav-link:hover {
-            color: #FFFFFF;
-            background-color: rgba(200, 16, 46, 0.1);
-        }
-
-        .nav-pills .nav-link.active {
-            background-color: var(--primary-red);
-            color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
-        }
-
-        .nav-pills .nav-link i {
-            width: 24px;
-            font-size: 1.1rem;
-        }
-
-        /* Top Navbar Styling */
-        .top-navbar {
-            background-color: #FFFFFF;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            border-bottom: 1px solid #E5E7EB;
-        }
-
-        /* Main Cards Styling */
-        .hero-banner {
-            background: linear-gradient(135deg, #C8102E 0%, #7A0A1C 100%);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(200, 16, 46, 0.15);
-        }
-
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            right: -50px;
-            bottom: -50px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 50%;
-        }
-
-        .stat-card {
-            border: none;
-            border-radius: 14px;
-            background-color: #FFFFFF;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .icon-box {
-            width: 55px;
-            height: 55px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .bg-light-red { background-color: rgba(200, 16, 46, 0.1); color: var(--primary-red); }
-        .bg-light-gold { background-color: rgba(255, 215, 0, 0.15); color: #B79400; }
-        .bg-light-success { background-color: rgba(25, 135, 84, 0.1); color: #198754; }
-
-        /* Footer */
-        .footer-text {
-            color: #9CA3AF;
-            font-size: 0.85rem;
-        }
+        :root { --primary-red: #C8102E; --dark-navy: #111827; --light-bg: #F3F4F6; }
+        body { background-color: var(--light-bg); font-family: 'Inter', sans-serif; }
+        .sidebar { background-color: var(--dark-navy); min-height: 100vh; color: #E5E7EB; }
+        .profile-section { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .profile-img { width: 85px; height: 85px; border: 3px solid var(--primary-red); object-fit: cover; }
+        .nav-pills .nav-link { color: #9CA3AF; margin-bottom: 8px; padding: 12px 20px; border-radius: 10px; }
+        .nav-pills .nav-link.active { background-color: var(--primary-red); color: #FFFFFF; }
+        .score-circle { width: 100px; height: 100px; border-radius: 50%; border: 6px solid var(--primary-red); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 2rem; font-weight: 800; color: var(--dark-navy); background-color: rgba(200, 16, 46, 0.05); }
     </style>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+        <!-- SIDEBAR -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
-                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle profile-img mb-3">
-                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">Memuat...</h6>
-                    <span class="badge bg-secondary px-2 py-1 fs-7" id="sidebar-nim">NIM: -</span>
+                    <img src="foto-saya.jpg.jpg" alt="Foto Profil" class="rounded-circle mb-3 profile-img">
+                    <h6 class="fw-bold mb-1 text-white" id="sidebar-name">User</h6>
+                    <span class="badge bg-secondary px-2 py-1 fs-7" id="sidebar-nim">NIM</span>
                 </div>
-                
                 <ul class="nav nav-pills flex-column mb-auto px-2">
-                    <li class="nav-item">
-                        <a href="dashboard.html" class="nav-link active" id="link-beranda">
-                            <i class="fa-solid fa-house me-2"></i>Beranda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="materi.html" class="nav-link" id="link-materi">
-                            <i class="fa-solid fa-book-open me-2"></i>Materi Pancasila
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="kuis.html" class="nav-link" id="link-kuis">
-                            <i class="fa-solid fa-layer-group me-2"></i>Bank Soal (100)
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="rekap.html" class="nav-link" id="link-rekap">
-                            <i class="fa-solid fa-chart-simple me-2"></i>Rekap Nilai
-                        </a>
-                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Mulai Kuis (40)</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link active" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap & Peringkat</a></li>
                 </ul>
-                
-                <div class="text-center pt-3 border-top border-secondary">
-                    <p class="footer-text mb-0">&copy; 2026 EduPancasila</p>
-                </div>
             </div>
         </nav>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
+        <!-- AREA UTAMA -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 p-4">
             
-            <div class="top-navbar d-flex justify-content-between align-items-center p-3 px-4">
-                <div class="text-muted fw-medium">
-                    Selamat Datang, <span class="text-dark fw-bold" id="header-welcome">User</span>!
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <small class="text-muted d-none d-sm-block">
-                        <i class="fa-solid fa-circle-user text-success me-1"></i>
-                        Peserta Aktif: <strong class="text-dark" id="header-status">Memuat...</strong>
-                    </small>
-                    <a href="index.html" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-medium">
-                        <i class="fa-solid fa-arrow-right-from-bracket me-1"></i>Keluar
-                    </a>
+            <!-- NILAI PRIBADI -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-12 col-md-8 text-center card border-0 p-4 shadow-sm rounded-4" style="border-top: 6px solid var(--primary-red) !important;">
+                    <h5 class="fw-bold mb-1">Rapor Evaluasi Anda</h5>
+                    <p class="text-secondary small mb-3">Lihat nilai Anda dan bandingkan dengan peringkat kelas di bawah.</p>
+                    
+                    <div class="score-circle" id="mhs-score-circle">-</div>
+                    
+                    <h6 class="fw-bold" id="mhs-status-text">Memuat...</h6>
+                    <p class="text-muted small mb-3" id="mhs-detail-text"></p>
+                    
+                    <div>
+                        <a href="#" id="btn-re-kuis" class="btn btn-outline-danger rounded-pill px-4 btn-sm">Ulangi Kuis</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="p-4">
-                
-                <div class="card hero-banner p-4 mb-4">
-                    <div class="card-body p-2" style="max-width: 700px;">
-                        <span class="badge bg-warning text-dark fw-bold mb-2 px-3 py-1 rounded-pill" style="font-size: 0.75rem;">PLATFORM RESMI</span>
-                        <h2 class="fw-bold mb-2">Selamat Datang di Platform Edukasi Pancasila</h2>
-                        <p class="mb-0 opacity-75 lh-base">Ruang digital terintegrasi untuk memperkuat pemahaman nilai-nilai luhur Pancasila. Akses evaluasi secara langsung melalui kuis interaktif yang tersedia dan pantau perkembangan nilai Anda.</p>
-                    </div>
+            <!-- TABEL KESELURUHAN (LEADERBOARD) -->
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat Kelas</h5>
                 </div>
 
-                <div class="row g-4 mb-4">
-                    <div class="col-12 col-sm-6 col-xl-4">
-                        <div class="card stat-card p-3 border-start border-4 border-danger">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <span class="text-muted fs-7 fw-medium d-block mb-1">TOTAL MATERI</span>
-                                    <h3 class="fw-bold text-dark mb-0">5 Modul</h3>
-                                </div>
-                                <div class="icon-box bg-light-red">
-                                    <i class="fa-solid fa-book"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-xl-4">
-                        <div class="card stat-card p-3 border-start border-4 border-warning">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <span class="text-muted fs-7 fw-medium d-block mb-1">EVALUASI AKTIF</span>
-                                    <h3 class="fw-bold text-dark mb-0">100 Soal</h3>
-                                </div>
-                                <div class="icon-box bg-light-gold">
-                                    <i class="fa-solid fa-circle-check"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-xl-4">
-                        <div class="card stat-card p-3 border-start border-4 border-success">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <span class="text-muted fs-7 fw-medium d-block mb-1">NILAI TERAKHIR ANDA</span>
-                                    <h3 class="fw-bold text-success mb-0" id="nilai-dashboard">Belum Kuis</h3>
-                                    <small class="text-muted d-block mt-1" id="detail-benar" style="font-size: 0.8rem;"></small>
-                                </div>
-                                <div class="icon-box bg-light-success">
-                                    <i class="fa-solid fa-trophy"></i>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card border-0 p-3 p-md-4 shadow-sm rounded-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>NIM</th>
+                                    <th>Benar</th>
+                                    <th>Nilai</th>
+                                    <th>Waktu Ujian</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-admin-body">
+                                <!-- Data Tabel Dimasukkan Javascript -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <div class="card border-0 shadow-sm rounded-4">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold text-dark mb-3 pb-2 border-bottom">
-                            <i class="fa-solid fa-circle-info text-danger me-2"></i>Panduan Penggunaan Platform:
-                        </h5>
-                        <ol class="text-secondary lh-lg ps-3 mb-0">
-                            <li>Masuk ke halaman <strong class="text-dark">Materi Pancasila</strong> melalui menu samping untuk mempelajari materi dasar.</li>
-                            <li>Selesaikan seluruh soal kuis hingga akhir di menu <strong class="text-dark">Bank Soal (100)</strong>.</li>
-                            <li>Sistem akan langsung mencatat dan menampilkan perkembangan nilai Anda secara *real-time* pada bagian card rekap di atas.</li>
-                        </ol>
-                    </div>
-                </div>
-
             </div>
+
         </main>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script strain="javascript">
-    // 1. Ambil data nama dan nim dari URL parameter (?username=...&nim=...)
+<script>
     const urlParams = new URLSearchParams(window.location.search);
-    const namaUser = urlParams.get('username') || "Sulviana Fahra";
-    const nimUser = urlParams.get('nim') || "45223113";
+    const username = urlParams.get('username') || 'User';
+    const nim = urlParams.get('nim') || '';
 
-    // 2. Tampilkan secara otomatis ke elemen halaman HTML
-    document.getElementById('sidebar-name').innerText = namaUser;
-    document.getElementById('sidebar-nim').innerText = "NIM: " + nimUser;
-    document.getElementById('header-welcome').innerText = namaUser;
-    document.getElementById('header-status').innerText = `${namaUser} (${nimUser})`;
+    // Terapkan Identitas
+    document.getElementById('sidebar-name').innerText = username;
+    document.getElementById('sidebar-nim').innerText = `NIM: ${nim}`;
 
-    // 3. Otomatis selipkan nama & nim ke link navigasi agar data tidak hilang saat pindah halaman
-    const parameterQuery = `?username=${encodeURIComponent(namaUser)}&nim=${encodeURIComponent(nimUser)}`;
+    // Modifikasi Tautan Menu
+    const query = `?username=${encodeURIComponent(username)}&nim=${encodeURIComponent(nim)}`;
+    document.getElementById('link-beranda').href = "dashboard.html" + query;
+    document.getElementById('link-materi').href = "materi.html" + query;
+    document.getElementById('link-kuis').href = "kuis.html" + query;
+    document.getElementById('link-rekap').href = "rekap.html" + query;
+    document.getElementById('btn-re-kuis').href = "kuis.html" + query;
+
+    // Render Data Pribadi
+    const nilaiPersonal = localStorage.getItem('nilaiAkhirPancasila');
+    const benarPersonal = localStorage.getItem('totalBenar');
+    const totalPersonal = localStorage.getItem('totalSoal');
+
+    if (nilaiPersonal !== null) {
+        document.getElementById('mhs-score-circle').innerText = nilaiPersonal;
+        if(nilaiPersonal >= 75) {
+            document.getElementById('mhs-status-text').innerText = "LULUS 🎉";
+            document.getElementById('mhs-status-text').className = "fw-bold text-success";
+        } else {
+            document.getElementById('mhs-status-text').innerText = "Remedial (Di bawah 75)";
+            document.getElementById('mhs-status-text').className = "fw-bold text-warning";
+        }
+        document.getElementById('mhs-detail-text').innerText = `Jawaban Benar: ${benarPersonal} dari ${totalPersonal} soal.`;
+    } else {
+        document.getElementById('mhs-score-circle').innerText = "-";
+        document.getElementById('mhs-status-text').innerText = "Belum Mengikuti Ujian";
+        document.getElementById('mhs-status-text').className = "fw-bold text-muted";
+    }
+
+    // Render Tabel Global
+    let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
+    const tbody = document.getElementById('tabel-admin-body');
+    tbody.innerHTML = "";
     
-    document.getElementById('link-beranda').href = "dashboard.html" + parameterQuery;
-    document.getElementById('link-materi').href = "materi.html" + parameterQuery;
-    document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
-    document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
+    if(semuaPeserta.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">Belum ada peserta yang menyelesaikan kuis.</td></tr>`;
+    } else {
+        // Urutkan nilai dari tinggi ke rendah
+        semuaPeserta.sort((a, b) => b.nilai - a.nilai);
 
-    // 4. BACA NILAI DARI LOCAL STORAGE KUIS DAN TAMPILKAN DI DASHBOARD SECARA REKAP
-    const nilaiTersimpan = localStorage.getItem('nilaiAkhirPancasila');
-    const totalBenar = localStorage.getItem('totalBenar');
-    const totalSoal = localStorage.getItem('totalSoal');
+        semuaPeserta.forEach((p, index) => {
+            let badge = p.nilai >= 75 
+                ? '<span class="badge bg-success-subtle text-success px-2 py-1">Lulus</span>' 
+                : '<span class="badge bg-danger-subtle text-danger px-2 py-1">Remedial</span>';
+            
+            // Beri warna kuning jika ini adalah baris nilai orang yang sedang login
+            let isCurrentUser = (p.nama === username && p.nim === nim) ? 'table-warning' : '';
 
-    if (nilaiTersimpan !== null) {
-        document.getElementById('nilai-dashboard').innerText = nilaiTersimpan + " / 100";
-        document.getElementById('detail-benar').innerText = `Jawaban Benar: ${totalBenar} dari ${totalSoal} soal`;
+            let peringkat = index + 1;
+            if(peringkat === 1) peringkat = `<i class="fa-solid fa-trophy text-warning fs-5"></i> 1`;
+            if(peringkat === 2) peringkat = `<i class="fa-solid fa-medal text-secondary fs-5"></i> 2`;
+            if(peringkat === 3) peringkat = `<i class="fa-solid fa-medal" style="color: #cd7f32;"></i> 3`;
+
+            tbody.innerHTML += `
+                <tr class="${isCurrentUser}">
+                    <td class="fw-bold">${peringkat}</td>
+                    <td class="fw-bold text-dark">${p.nama}</td>
+                    <td><code>${p.nim}</code></td>
+                    <td>${p.benar} / ${p.total}</td>
+                    <td class="fw-bold text-danger">${p.nilai}</td>
+                    <td class="small text-muted">${p.waktu}</td>
+                    <td>${badge}</td>
+                </tr>`;
+        });
     }
 </script>
 </body>
