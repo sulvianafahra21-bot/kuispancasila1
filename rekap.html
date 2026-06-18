@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPancasila - Hasil Rekap Nilai</title>
+    <title>Rekap Kuis Pancasila</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -21,6 +21,7 @@
 
 <div class="container-fluid">
     <div class="row">
+        <!-- SIDEBAR -->
         <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
@@ -31,18 +32,20 @@
                 <ul class="nav nav-pills flex-column mb-auto px-2">
                     <li class="nav-item"><a href="#" class="nav-link" id="link-beranda"><i class="fa-solid fa-house me-2"></i>Beranda</a></li>
                     <li class="nav-item"><a href="#" class="nav-link" id="link-materi"><i class="fa-solid fa-book-open me-2"></i>Materi Belajar</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Mulai Kuis (40)</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link active" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap & Peringkat</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="link-kuis"><i class="fa-solid fa-pen-to-square me-2"></i>Kuis Pancasila</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link active" id="link-rekap"><i class="fa-solid fa-chart-simple me-2"></i>Rekap Kuis Pancasila</a></li>
                 </ul>
             </div>
         </nav>
 
+        <!-- AREA UTAMA -->
         <main class="col-md-9 ms-sm-auto col-lg-10 p-4">
             
+            <!-- NILAI PRIBADI -->
             <div class="row justify-content-center mb-5">
                 <div class="col-12 col-md-8 text-center card border-0 p-4 shadow-sm rounded-4" style="border-top: 6px solid var(--primary-red) !important;">
                     <h5 class="fw-bold mb-1">Rapor Evaluasi <span id="nama-rapor" class="text-danger">Peserta</span></h5>
-                    <p class="text-secondary small mb-3">Lihat nilai Anda dan bandingkan dengan peringkat kelas di bawah.</p>
+                    <p class="text-secondary small mb-3">Nilai hasil pengerjaan mandiri terintegrasi.</p>
                     
                     <div class="score-circle" id="mhs-score-circle">-</div>
                     
@@ -56,9 +59,10 @@
                 </div>
             </div>
 
+            <!-- TABEL KESELURUHAN (LEADERBOARD) -->
             <div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat Kelas</h5>
+                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Rekap Kuis Pancasila</h5>
                 </div>
 
                 <div class="card border-0 p-3 p-md-4 shadow-sm rounded-4">
@@ -101,7 +105,7 @@
 
     let semuaPeserta = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
 
-    // --- REVISI UTAMA: RENDER DATA RAPOR PERSONAL BERDASARKAN NIM AKTIF ---
+    // Tampilkan data peserta yang login di rapor personal
     let dataKuisSaya = semuaPeserta.find(p => p.nim === nim);
 
     if (dataKuisSaya) {
@@ -123,7 +127,7 @@
         document.getElementById('mhs-curang-text').innerText = "";
     }
 
-    // Render Tabel Global
+    // Render Tabel Keseluruhan
     const tbody = document.getElementById('tabel-admin-body');
     tbody.innerHTML = "";
     
