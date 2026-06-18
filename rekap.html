@@ -21,7 +21,6 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- SIDEBAR (IDENTITAS KREATOR DIKUNCI) -->
         <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
             <div class="d-flex flex-column p-3 h-100">
                 <div class="text-center profile-section py-4 mb-4">
@@ -40,16 +39,16 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 p-4">
             
-            <!-- NILAI PRIBADI PESERTA -->
             <div class="row justify-content-center mb-5">
                 <div class="col-12 col-md-8 text-center card border-0 p-4 shadow-sm rounded-4" style="border-top: 6px solid var(--primary-red) !important;">
                     <h5 class="fw-bold mb-1">Rapor Evaluasi <span id="nama-rapor" class="text-danger">Peserta</span></h5>
-                    <p class="text-secondary small mb-3">Lihat nilai Anda dan bandingkan dengan peringkat kelas di bawah.</p>
+                    <p class="text-secondary small mb-3">Nilai hasil pengerjaan mandiri terintegrasi.</p>
                     
                     <div class="score-circle" id="mhs-score-circle">-</div>
                     
                     <h6 class="fw-bold" id="mhs-status-text">Memuat...</h6>
-                    <p class="text-muted small mb-3" id="mhs-detail-text"></p>
+                    <p class="text-muted small mb-1" id="mhs-detail-text"></p>
+                    <p class="text-danger small fw-bold mb-3" id="mhs-curang-text"></p>
                     
                     <div>
                         <a href="#" id="btn-re-kuis" class="btn btn-outline-danger rounded-pill px-4 btn-sm">Ulangi Kuis</a>
@@ -57,10 +56,9 @@
                 </div>
             </div>
 
-            <!-- TABEL KESELURUHAN (LEADERBOARD) -->
             <div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat Kelas</h5>
+                    <h5 class="fw-bold text-dark"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Papan Peringkat Ujian Kelas</h5>
                 </div>
 
                 <div class="card border-0 p-3 p-md-4 shadow-sm rounded-4">
@@ -74,7 +72,7 @@
                                     <th>Benar</th>
                                     <th>Nilai</th>
                                     <th>Waktu Ujian</th>
-                                    <th>Status</th>
+                                    <th>Status Pelanggaran</th>
                                 </tr>
                             </thead>
                             <tbody id="tabel-admin-body"></tbody>
@@ -92,7 +90,6 @@
     const username = urlParams.get('username') || 'Peserta';
     const nim = urlParams.get('nim') || '';
 
-    // Menampilkan nama peserta di kotak Rapor
     document.getElementById('nama-rapor').innerText = username;
 
     const query = `?username=${encodeURIComponent(username)}&nim=${encodeURIComponent(nim)}`;
@@ -106,6 +103,7 @@
     const nilaiPersonal = localStorage.getItem('nilaiAkhirPancasila');
     const benarPersonal = localStorage.getItem('totalBenar');
     const totalPersonal = localStorage.getItem('totalSoal');
+    const curangPersonal = localStorage.getItem('curangPersonal') || 0;
 
     if (nilaiPersonal !== null) {
         document.getElementById('mhs-score-circle').innerText = nilaiPersonal;
@@ -117,6 +115,7 @@
             document.getElementById('mhs-status-text').className = "fw-bold text-warning";
         }
         document.getElementById('mhs-detail-text').innerText = `Jawaban Benar: ${benarPersonal} dari ${totalPersonal} soal.`;
+        document.getElementById('mhs-curang-text').innerText = curangPersonal > 0 ? `⚠️ Anda terdeteksi keluar dari halaman ujian sebanyak ${curangPersonal} kali!` : '✅ Bersih: Tidak terdeteksi pelanggaran pindah tab.';
     } else {
         document.getElementById('mhs-score-circle').innerText = "-";
         document.getElementById('mhs-status-text').innerText = "Belum Mengikuti Ujian";
@@ -131,13 +130,19 @@
     if(semuaPeserta.length === 0) {
         tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">Belum ada peserta yang menyelesaikan kuis.</td></tr>`;
     } else {
-        // Mengurutkan dari nilai tertinggi ke terendah
         semuaPeserta.sort((a, b) => b.nilai - a.nilai);
 
         semuaPeserta.forEach((p, index) => {
-            let badge = p.nilai >= 75 ? '<span class="badge bg-success-subtle text-success px-2 py-1">Lulus</span>' : '<span class="badge bg-danger-subtle text-danger px-2 py-1">Remedial</span>';
+            // Evaluasi status kelulusan gabung kecurangan
+            let totalCurang = p.curang || 0;
+            let statusText = p.nilai >= 75 ? '<span class="badge bg-success-subtle text-success px-2 py-1">Lulus</span>' : '<span class="badge bg-danger-subtle text-danger px-2 py-1">Remedial</span>';
             
-            // Highlight baris jika ini adalah data orang yang login
+            if(totalCurang > 0) {
+                statusText += ` <span class="badge bg-warning text-dark px-2 py-1 d-block mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Curang (${totalCurang}x)</span>`;
+            } else {
+                statusText += ` <span class="badge bg-light text-secondary px-2 py-1 d-block mt-1"><i class="fa-solid fa-shield-halved"></i> Jujur</span>`;
+            }
+            
             let isCurrentUser = (p.nama === username && p.nim === nim) ? 'table-warning' : '';
 
             let peringkat = index + 1;
@@ -153,7 +158,7 @@
                     <td>${p.benar} / ${p.total}</td>
                     <td class="fw-bold text-danger">${p.nilai}</td>
                     <td class="small text-muted">${p.waktu}</td>
-                    <td>${badge}</td>
+                    <td>${statusText}</td>
                 </tr>`;
         });
     }
