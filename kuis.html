@@ -47,6 +47,7 @@
         .timer-bar { background-color: #16A34A; transition: width 1s linear; }
         
         .peserta-box { background-color: #E0F2FE; border-left: 5px solid #0284C7; }
+        .rules-list li { margin-bottom: 10px; color: #4B5563; }
     </style>
 </head>
 <body>
@@ -92,33 +93,70 @@
                         </div>
                     </div>
 
-                    <div class="card border-0 p-3 shadow-sm rounded-4 mb-4 bg-white">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-secondary small"><i class="fa-solid fa-clock-rotate-left me-1 text-danger"></i>SISA WAKTU SOAL INI</span>
-                            <span class="badge bg-dark fs-6 font-monospace px-3 py-1 text-warning" id="teks-timer">40 detik</span>
-                        </div>
-                        <div class="timer-progress">
-                            <div class="timer-bar" id="bar-timer" style="width: 100%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-secondary fw-medium small">PROGRES SOAL</span>
-                        <span class="badge bg-danger px-3 py-2 rounded-pill fw-bold fs-7" id="indikatorSoal">Soal 1 / 40</span>
-                    </div>
-                    <div class="progress mb-4">
-                        <div class="progress-bar" id="bar-progres" role="progressbar" style="width: 2.5%;"></div>
-                    </div>
-
-                    <div class="card quiz-card p-4 p-md-5">
+                    <div class="card quiz-card p-4 p-md-5 text-center shadow-sm" id="box-konfirmasi-siap">
                         <div class="card-body p-0">
-                            <h4 id="teksPertanyaan" class="lh-base fw-semibold text-dark mb-4" style="font-size: 1.25rem;">Sedang memuat pertanyaan kuis...</h4>
-                            <div id="areaOpsi" class="mt-2"></div>
+                            <div class="text-center mb-4">
+                                <div class="bg-danger-subtle d-inline-flex p-3 rounded-circle text-danger mb-3">
+                                    <i class="fa-solid fa-shield-halved display-5"></i>
+                                </div>
+                                <h3 class="fw-bold text-dark">Konfirmasi Kesiapan Ujian</h3>
+                                <p class="text-muted">Harap baca lembar instruksi pengerjaan di bawah ini secara teliti.</p>
+                            </div>
                             
-                            <div class="d-flex justify-content-end mt-4 pt-3 border-top">
-                                <button class="btn btn-danger px-4 py-2 fw-bold rounded-3 shadow-sm" onclick="soalSelanjutnya()">
-                                    Selanjutnya <i class="fa-solid fa-arrow-right ms-2"></i>
+                            <div class="text-start bg-light p-4 rounded-4 mb-4">
+                                <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-circle-info text-danger me-2"></i>Aturan Pembatasan Kompetensi:</h6>
+                                <ul class="rules-list ps-3 mb-0">
+                                    <li>Kuis ini terdiri dari <strong>40 Soal Pilihan Ganda</strong> pengayaan Pancasila.</li>
+                                    <li>Terdapat batasan waktu mundur otomatis selama <strong>40 detik per soal</strong>.</li>
+                                    <li>Sistem dilengkapi <strong>Anti-Cheat Tracker</strong>. Meninggalkan tab ujian atau membuka halaman browser lain akan dicatat sebagai tindakan curang dan memengaruhi reputasi nilai rekap kelas Anda.</li>
+                                    <li>Ujian tidak dapat di-pause. Selama kuis berjalan, Anda <strong>dilarang menyegarkan (refresh) halaman</strong> atau menutup aplikasi kuis.</li>
+                                </ul>
+                            </div>
+
+                            <div class="form-check d-inline-block text-start mb-4 p-3 bg-danger-subtle rounded-3 px-5 border border-danger border-opacity-25">
+                                <input class="form-check-input" type="checkbox" id="check-kesiapan" onchange="toggleTombolMulai()">
+                                <label class="form-check-label fw-bold text-dark" style="cursor: pointer;" for="check-kesiapan">
+                                    Saya menyatakan SIAP, memahami seluruh aturan, dan bersedia memulai ujian secara jujur.
+                                </label>
+                            </div>
+
+                            <div>
+                                <button id="btn-mulai-ujian" class="btn btn-danger btn-lg w-100 py-3 fw-bold rounded-3 shadow" disabled onclick="memulaiKuisSekarang()">
+                                    <i class="fa-solid fa-play me-2"></i>Mulai Kuis Sekarang
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="box-kuis-utama" class="d-none">
+                        <div class="card border-0 p-3 shadow-sm rounded-4 mb-4 bg-white">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-secondary small"><i class="fa-solid fa-clock-rotate-left me-1 text-danger"></i>SISA WAKTU SOAL INI</span>
+                                <span class="badge bg-dark fs-6 font-monospace px-3 py-1 text-warning" id="teks-timer">40 detik</span>
+                            </div>
+                            <div class="timer-progress">
+                                <div class="timer-bar" id="bar-timer" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-secondary fw-medium small">PROGRES SOAL</span>
+                            <span class="badge bg-danger px-3 py-2 rounded-pill fw-bold fs-7" id="indikatorSoal">Soal 1 / 40</span>
+                        </div>
+                        <div class="progress mb-4">
+                            <div class="progress-bar" id="bar-progres" role="progressbar" style="width: 2.5%;"></div>
+                        </div>
+
+                        <div class="card quiz-card p-4 p-md-5">
+                            <div class="card-body p-0">
+                                <h4 id="teksPertanyaan" class="lh-base fw-semibold text-dark mb-4" style="font-size: 1.25rem;">Sedang memuat...</h4>
+                                <div id="areaOpsi" class="mt-2"></div>
+                                
+                                <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                                    <button class="btn btn-danger px-4 py-2 fw-bold rounded-3 shadow-sm" onclick="soalSelanjutnya()">
+                                        Selanjutnya <i class="fa-solid fa-arrow-right ms-2"></i>
+                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -180,15 +218,38 @@
     document.getElementById('link-kuis').href = "kuis.html" + parameterQuery;
     document.getElementById('link-rekap').href = "rekap.html" + parameterQuery;
 
-    // --- LOGIKA UTAMA ANTI-CHEAT (DETEKSI PINDAH TAB) ---
-    let jumlahCurang = 0;
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            jumlahCurang++;
-            console.log(`Peserta terdeteksi keluar halaman kuis! Total: ${jumlahCurang} kali.`);
+    // --- PROTEKSI 1: LOCK BROWSER LEAVE/RELOAD EVENT (ANTI ACAL-ACAL KELUAR) ---
+    let kuisSedangBerjalan = false;
+    window.addEventListener('beforeunload', function (e) {
+        if (kuisSedangBerjalan) {
+            e.preventDefault();
+            e.returnValue = 'Peringatan: Kuis sedang berlangsung! Jika Anda meninggalkan halaman ini, seluruh nilai Anda akan dianggap gugur.';
         }
     });
 
+    // --- TRACKER KECURANGAN PINDAH TAB ---
+    let jumlahCurang = 0;
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && kuisSedangBerjalan) {
+            jumlahCurang++;
+        }
+    });
+
+    // Mengontrol aktivasi tombol Mulai berdasarkan Checkbox
+    function toggleTombolMulai() {
+        const checkbox = document.getElementById('check-kesiapan');
+        document.getElementById('btn-mulai-ujian').disabled = !checkbox.checked;
+    }
+
+    // Fungsi Trigger Perpindahan ke Area Soal Utama
+    function memulaiKuisSekarang() {
+        kuisSedangBerjalan = true;
+        document.getElementById('box-konfirmasi-siap').classList.add('d-none');
+        document.getElementById('box-kuis-utama').classList.remove('d-none');
+        tampilkanSoal();
+    }
+
+    // Bank Soal (40 Soal)
     const bankSoal = [
         { pertanyaan: "Pancasila secara etimologis berasal dari bahasa...", opsi: ["Sanskerta", "Kawi", "Jawa Kuno", "Melayu"], jawabanBenar: 0 },
         { pertanyaan: "Siapakah yang pertama kali mengemukakan istilah Pancasila secara resmi pada tanggal 1 Juni 1945?", opsi: ["Moh. Yamin", "Mr. Soepomo", "Ir. Soekarno", "Drs. Moh. Hatta"], jawabanBenar: 2 },
@@ -238,12 +299,11 @@
     let sisaWaktu = 40;
     let intervalTimer;
 
-    // --- LOGIKA TIMER PER SOAL (40 DETIK) ---
     function mulaiTimerSoal() {
         sisaWaktu = 40;
         document.getElementById('teks-timer').innerText = `${sisaWaktu} detik`;
         document.getElementById('bar-timer').style.width = "100%";
-        document.getElementById('bar-timer').style.backgroundColor = "#16A34A"; // Hijau
+        document.getElementById('bar-timer').style.backgroundColor = "#16A34A"; 
 
         clearInterval(intervalTimer);
         
@@ -254,12 +314,8 @@
             let persenWaktu = (sisaWaktu / 40) * 100;
             document.getElementById('bar-timer').style.width = `${persenWaktu}%`;
 
-            if(sisaWaktu <= 15) {
-                document.getElementById('bar-timer').style.backgroundColor = "#D97706"; // Jingga
-            }
-            if(sisaWaktu <= 7) {
-                document.getElementById('bar-timer').style.backgroundColor = "#DC2626"; // Merah bahaya
-            }
+            if(sisaWaktu <= 15) { document.getElementById('bar-timer').style.backgroundColor = "#D97706"; }
+            if(sisaWaktu <= 7) { document.getElementById('bar-timer').style.backgroundColor = "#DC2626"; }
 
             if(sisaWaktu <= 0) {
                 clearInterval(intervalTimer);
@@ -289,7 +345,7 @@
             areaOpsi.appendChild(button);
         });
 
-        mulaiTimerSoal(); // Reset dan jalankan timer baru untuk soal ini
+        mulaiTimerSoal(); 
     }
 
     function pilihJawaban(elemenTombol, index) {
@@ -299,7 +355,6 @@
         jawabanDipilih = index;
     }
 
-    // Pindah otomatis jika waktu 40 detik habis
     function waktuHabisOtomatis() {
         if (indeksSoalSaatIni < bankSoal.length - 1) {
             indeksSoalSaatIni++;
@@ -311,7 +366,7 @@
 
     function soalSelanjutnya() {
         if (jawabanDipilih === null) {
-            modalPeringatan.show(); // Tampilkan notifikasi modal besar jika belum pilih
+            modalPeringatan.show(); 
             return;
         }
 
@@ -327,9 +382,9 @@
 
     function prosesSelesaiKuis() {
         clearInterval(intervalTimer);
+        kuisSedangBerjalan = false; // Matikan proteksi keluar tab karena ujian sukses selesai
         let nilaiAkhir = Math.round((skor / bankSoal.length) * 100);
         
-        // REKAM HASIL DAN TOTAL KECURANGAN KE DATABASE ADMIN
         let rekapAdmin = JSON.parse(localStorage.getItem('semuaNilaiPancasila')) || [];
         rekapAdmin.push({
             nama: namaUser,
@@ -337,7 +392,7 @@
             nilai: nilaiAkhir,
             benar: skor,
             total: bankSoal.length,
-            curang: jumlahCurang, // Menyimpan total curang pindah tab
+            curang: jumlahCurang, 
             waktu: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'})
         });
         localStorage.setItem('semuaNilaiPancasila', JSON.stringify(rekapAdmin));
@@ -347,7 +402,6 @@
         localStorage.setItem('totalSoal', bankSoal.length);
         localStorage.setItem('curangPersonal', jumlahCurang);
 
-        // Munculkan skor di dalam modal popup besar
         document.getElementById('teks-skor-akhir').innerText = nilaiAkhir;
         modalSelesai.show();
     }
@@ -357,13 +411,16 @@
     }
 
     function keluarKuis() {
-        if (confirm("Yakin ingin membatalkan kuis? Progres tidak akan disimpan.")) {
+        let pesanPeringatan = kuisSedangBerjalan 
+            ? "Peringatan Besar: Anda sedang dalam sesi pengerjaan soal kuis aktif! Membatalkan di tengah jalan akan menggugurkan seluruh progres pengerjaan dan merekam poin Anda sebagai remedial. Tetap paksa keluar?"
+            : "Apakah Anda yakin ingin membatalkan pengerjaan evaluasi dan kembali ke halaman Beranda?";
+            
+        if (confirm(pesanPeringatan)) {
+            kuisSedangBerjalan = false; // Matikan proteksi browser agar bisa redirect lancar
             clearInterval(intervalTimer);
             window.location.href = "dashboard.html" + parameterQuery;
         }
     }
-
-    tampilkanSoal();
 </script>
 </body>
 </html>
