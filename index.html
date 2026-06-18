@@ -57,19 +57,11 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
             <label class="form-label fw-semibold text-dark">NIM</label>
             <div class="input-group">
                 <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-id-card"></i></span>
                 <input type="text" id="nim" class="form-control" required placeholder="Masukkan NIM Anda">
-            </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="form-label fw-semibold text-dark">Token Akses</label>
-            <div class="input-group">
-                <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-key"></i></span>
-                <input type="password" id="token" class="form-control" required placeholder="Masukkan token kuis">
             </div>
         </div>
 
@@ -87,22 +79,9 @@
         
         const nama = document.getElementById('username').value.trim();
         const nim = document.getElementById('nim').value.trim();
-        const token = document.getElementById('token').value.trim();
         const alertContainer = document.getElementById('alert-container');
 
-        // Memeriksa kecocokan token akses
-        if (token !== "kuispancasila") {
-            // Tampilan notifikasi merah jika token yang diketik salah
-            alertContainer.innerHTML = `
-                <div class="alert alert-danger d-flex align-items-center rounded-3 mb-3 py-2 fs-7" role="alert">
-                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                    <div>Token akses salah! Silakan hubungi dosen/admin kuis.</div>
-                </div>
-            `;
-            return; // Hentikan proses jika salah
-        }
-
-        // Tampilan notifikasi hijau jika berhasil lolos validasi
+        // Tampilan notifikasi hijau langsung sukses tanpa cek token
         alertContainer.innerHTML = `
             <div class="alert alert-success d-flex align-items-center rounded-3 mb-3 py-2" role="alert">
                 <i class="fa-solid fa-circle-check me-2"></i>
