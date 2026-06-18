@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis - EduPancasila</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Sidebar (Sama) */
+        :root { --primary-red: #C8102E; --dark-bg: #1A1A2E; }
+        body { background-color: #f4f6f9; font-family: sans-serif; }
+        .sidebar { background-color: var(--dark-bg); min-height: 100vh; color: white; }
+        .profile-img { width: 80px; height: 80px; border: 3px solid var(--primary-red); object-fit: cover; }
+        .nav-link { color: #adb5bd; margin-bottom: 5px; border-radius: 8px; }
+        .nav-link:hover, .nav-link.active { background-color: var(--primary-red); color: white; }
+        .nav-link i { margin-right: 10px; width: 20px; text-align: center; }
+        
+        /* CSS Khusus Kuis */
+        .opsi-jawaban {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background: white;
+            transition: 0.2s;
+        }
+        .opsi-jawaban:hover { background: #f8f9fa; border-color: var(--primary-red); }
+        .opsi-terpilih { background: var(--primary-red) !important; color: white !important; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar py-4">
+            <div class="text-center pb-4 mb-4 border-bottom">
+                <img src="foto-saya.jpg.jpg" alt="Profile" class="rounded-circle profile-img mb-3">
+                <h6 class="mb-0">Sulviana Fahra</h6>
+            </div>
+            <ul class="nav flex-column px-3">
+                <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="materi.html"><i class="fas fa-book-open"></i> Materi Pancasila</a></li>
+                <li class="nav-item"><a class="nav-link active" href="kuis.html"><i class="fas fa-tasks"></i> Bank Soal (200)</a></li>
+            </ul>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Evaluasi Pemahaman</h2>
+                <span class="badge bg-danger fs-6" id="indikatorSoal">Soal 1 / 200</span>
+            </div>
+            
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h5 id="teksPertanyaan" class="mb-4 lh-base">Memuat pertanyaan...</h5>
+                    
+                    <div id="areaOpsi">
+                        </div>
+
+                    <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                        <button class="btn btn-danger" onclick="soalSelanjutnya()">Selanjutnya <i class="fas fa-arrow-right ms-1"></i></button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    // DATA 200 SOAL (Tambahkan soalmu di sini)
+    const bankSoal = [
+        {
+            pertanyaan: "Tanggal berapakah Pancasila pertama kali dicetuskan oleh Soekarno?",
+            opsi: ["1 Juni 1945", "17 Agustus 1945", "18 Agustus 1945", "29 Mei 1945"],
+            jawabanBenar: 0 // Index 0 artinya "1 Juni 1945"
+        },
+        {
+            pertanyaan: "Sila kedua Pancasila dilambangkan dengan...",
+            opsi: ["Bintang", "Rantai Emas", "Pohon Beringin", "Kepala Banteng"],
+            jawabanBenar: 1 // Index 1 artinya "Rantai Emas"
+        },
+        {
+            pertanyaan: "Badan yang dibentuk untuk menyelidiki usaha-usaha persiapan kemerdekaan Indonesia adalah...",
+            opsi: ["PPKI", "KNIP", "BPUPKI", "Panitia Sembilan"],
+            jawabanBenar: 2 
+        }
+        // Lanjutkan menambah kurung kurawal {...} sampai 200 soal sesuai format di atas
+    ];
+
+    let indeksSoalSaatIni = 0;
+
+    function tampilkanSoal() {
+        const soal = bankSoal[indeksSoalSaatIni];
+        document.getElementById('teksPertanyaan').innerText = soal.pertanyaan;
+        document.getElementById('indikatorSoal').innerText = `Soal ${indeksSoalSaatIni + 1} / ${bankSoal.length}`;
+        
+        const areaOpsi = document.getElementById('areaOpsi');
+        areaOpsi.innerHTML = ''; // Bersihkan opsi sebelumnya
+
+        soal.opsi.forEach((pilihan, index) => {
+            const button = document.createElement('button');
+            button.className = 'opsi-jawaban';
+            button.innerText = pilihan;
+            button.onclick = () => pilihJawaban(button);
+            areaOpsi.appendChild(button);
+        });
+    }
+
+    function pilihJawaban(elemenTombol) {
+        // Hapus warna dari semua tombol
+        const semuaTombol = document.querySelectorAll('.opsi-jawaban');
+        semuaTombol.forEach(btn => btn.classList.remove('opsi-terpilih'));
+        
+        // Beri warna pada tombol yang diklik
+        elemenTombol.classList.add('opsi-terpilih');
+    }
+
+    function soalSelanjutnya() {
+        // Pindah ke soal berikutnya jika belum habis
+        if (indeksSoalSaatIni < bankSoal.length - 1) {
+            indeksSoalSaatIni++;
+            tampilkanSoal();
+        } else {
+            alert("Kuis Selesai! Kamu telah mengerjakan seluruh soal.");
+            // Arahkan ke rekap.html
+            // window.location.href = "rekap.html";
+        }
+    }
+
+    // Jalankan pertama kali saat halaman dimuat
+    tampilkanSoal();
+</script>
+
+</body>
+</html>
